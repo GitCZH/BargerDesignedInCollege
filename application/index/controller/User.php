@@ -23,7 +23,7 @@ class User extends Controller {
 //        $user->save();
 //        print_r($user->select());
 //        return $this->fetch();
-        $this->checkLogin();
+        return $this->fetch();
     }
 
     public function checkLogin(Request $request) {
@@ -31,15 +31,17 @@ class User extends Controller {
         $user = model('user');
         $query = [
             'loginname' => $params['loginname'],
-            'loginpwd' => $params['loginpwd'],
+            'loginpwd' => md5($params['loginpwd']),
             'isvalid' => 1
         ];
-        print_r($query);
-        $sql = $user->where($query)->find()->getLastSql();
+//        $sql = $user->where($query)->find()->getLastSql();
         $res = $user->where($query)->find();
+        if(!$res) {
+            return 1;
+        }
 //        找到返回模型对象，未找到返回null
-        print_r($sql);
-        print_r($res->getData());
+//        print_r($sql);
+        $userAccount = $res->getData();
         session('uid', $res->getData()['id']);
         session('uname', $params['loginname']);
     }
@@ -73,11 +75,12 @@ class User extends Controller {
         $user = model('user');
         if(!$this->checkEmailNew($params['loginemail'])) {
             echo '邮箱已被使用';
+            return ;
         }
-        $res = $user->data($params)->save();
-        echo $user->id;
-        $this->delUserById($user->id);
-        var_dump($res);
+        $res = $user->data($params, true)->save();
+        if($res) {
+            echo 'success';
+        }
     }
 
     public function delUserById($uid) {
