@@ -83,20 +83,4 @@ class User extends Controller {
         }
     }
 
-    public function delUserById($uid) {
-        $user = model('user');
-        $res = $user->save(['isvalid'=>0], ['id'=>$uid]);
-        var_dump($res);
-    }
-
-    public function getUserById($uid) {
-        $user = model('user');
-        return $user->get($uid) === null ? null : $user->getData();
-    }
-
-    public function checkEmailNew($email) {
-        $user = model('user');
-        $res = $user->where(['loginemail' => $email])->find();
-        return $res === null ? true : false;
-    }
 }

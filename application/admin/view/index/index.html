@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+</head>
+<body>
+<table>
+    <tr>
+    <td>序号</td>
+    <td>用户名</td>
+    <td>注册时间</td>
+    <td>状态</td>
+    <td>操作</td>
+    </tr>
+    {volist name='userlist' id='data' empty='暂无用户'}
+    <tr>
+        <td>{$i}</td>
+        <td><a href="{:url('admin/user/showUserDetail')}?uid={$data.id}">{$data.loginname}</a></td>
+        <td>{$data.create_time}</td>
+        <td>{$data.isvalid}</td>
+        <td><a href="{:url('admin/user/delUser')}">删除</a></td>
+    </tr>
+    {/volist}
+</table>
+</body>
+</html>
