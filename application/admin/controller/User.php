@@ -7,11 +7,20 @@
  */
 namespace app\admin\controller;
 use app\index\model\UserCredit;
-use think\Controller;
 use think\Request;
 
-class User extends Controller
+class User extends Base
 {
+    public function login () {
+        return $this->fetch();
+    }
+    public function checkLogin (Request $request) {
+        $params = $request->param();
+        session('uid', 1);
+        echo 111;
+        var_dump(session('uid'));
+        $this->redirect('index/index');
+    }
     public function showUserDetail (Request $request)
     {
         $uid = $request->param('uid');

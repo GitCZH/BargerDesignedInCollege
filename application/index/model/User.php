@@ -27,9 +27,9 @@ class User extends Model
         return $status[$val];
     }
 
-    public function getUserPaging($condition = [], $start = 0, $limit = 10) {
+    public function getUserPaging($condition = [], $page = 0, $limit = 10) {
         return $this->where($condition)
-            ->limit($start,$limit)
+            ->page($page, $limit)
             ->select();
     }
     public function delUserById($uid) {
@@ -38,13 +38,12 @@ class User extends Model
     }
 
     public function getUserById($uid) {
-        $user = model('user');
-        return $user->get($uid) === null ? null : $user->getData();
+        return $this->get($uid) === null ? null : $user->getData();
     }
 
     public function checkEmailNew($email) {
-        $user = model('user');
-        $res = $user->where(['loginemail' => $email])->find();
+        $res = $this->where(['loginemail' => $email])->find();
         return $res === null ? true : false;
     }
+
 }

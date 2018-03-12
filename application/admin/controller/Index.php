@@ -7,15 +7,11 @@
  */
 namespace app\admin\controller;
 use app\index\model\User;
-use think\Controller;
 
-class Index extends Controller
+class Index extends Base
 {
     public function index()
     {
-        $u = new User();
-        $res = $u->getUserPaging();
-        $this->assign('userlist', $res);
         return $this->fetch();
     }
 }
