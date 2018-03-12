@@ -16,14 +16,13 @@ class User extends Base
     }
     public function checkLogin (Request $request) {
         $params = $request->param();
-        session('uid', 1);
-        echo 111;
-        var_dump(session('uid'));
-        $this->redirect('index/index');
+        $data['errCode'] = 0;
+        $data['errMsg'] = 'success';
+        return json_encode($data);
     }
     public function showUserDetail (Request $request)
     {
-        $uid = $request->param('uid');
+        $uid = $request->param();
         $ucredit = new UserCredit();
         var_dump($ucredit->getUserDetailByUid($uid));
     }

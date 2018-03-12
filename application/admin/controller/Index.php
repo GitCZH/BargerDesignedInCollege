@@ -12,6 +12,6 @@ class Index extends Base
 {
     public function index()
     {
-        return $this->fetch();
+        return $this->fetch('goods/goodslist');
     }
 }
