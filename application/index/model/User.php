@@ -29,6 +29,10 @@ class User extends Model
     }
 
     public function getUserPaging($condition = [], $page = 0, $limit = 10) {
+        $params = [
+            'order' => 'create_time desc',
+            'where' => '`isvalid` = 1'
+        ];
         return $this->where($condition)
             ->page($page, $limit)
             ->select();
