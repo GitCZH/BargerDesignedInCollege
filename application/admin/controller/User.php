@@ -21,6 +21,12 @@ class User extends Base
         session('uid', 1);
         return json_encode($data);
     }
+
+    public function exitLogin()
+    {
+        session('uid', null);
+        $this->success('成功退出', 'user/login');
+    }
     public function showUserDetail (Request $request)
     {
         $uid = $request->param();
@@ -43,6 +49,7 @@ class User extends Base
     public function userList(Request $request)
     {
         $user = new \app\index\model\User();
+        $userCredit = new UserCredit();
         $page = $request->param('page');
         if ($page < 0) {
             $page = 0;
@@ -57,10 +64,26 @@ class User extends Base
         } else {
             foreach ($res as &$v) {
                 $v = $v->getData();
+                if (null !== $uc = $userCredit->getUserDetailByUid($v['id'])) {
+                    $v['realname'] = $uc->getData()['realname'];
+                } else {
+                    $v['realname'] = '佚名';
+                }
             }
             $this->assign('userlist', $res);
         }
         $this->assign('totalpage', $totalPage);
         return $this->fetch();
+    }
+
+    public function searchUser()
+    {
+
+    }
+
+    public function delUser(Request $request)
+    {
+        $uid = $request->param('uid');
+        return json_encode($uid);
     }
 }

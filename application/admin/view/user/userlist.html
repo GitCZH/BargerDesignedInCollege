@@ -44,16 +44,6 @@
                 </div>
                 <div class="tpl-block">
                     <div class="am-g">
-                        <div class="am-u-sm-12 am-u-md-6">
-                            <div class="am-btn-toolbar">
-                                <div class="am-btn-group am-btn-group-xs">
-                                    <button type="button" class="am-btn am-btn-default am-btn-success"><span class="am-icon-plus"></span> 新增</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-secondary"><span class="am-icon-save"></span> 保存</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-warning"><span class="am-icon-archive"></span> 审核</button>
-                                    <button type="button" class="am-btn am-btn-default am-btn-danger"><span class="am-icon-trash-o"></span> 删除</button>
-                                </div>
-                            </div>
-                        </div>
                         <div class="am-u-sm-12 am-u-md-3">
                             <div class="am-form-group">
                                 <select data-am-selected="{btnSize: 'sm'}">
@@ -78,10 +68,10 @@
                                         <tr>
                                             <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
                                             <th class="table-id">ID</th>
-                                            <th class="table-title">标题</th>
-                                            <th class="table-type">类别</th>
-                                            <th class="table-author am-hide-sm-only">作者</th>
-                                            <th class="table-date am-hide-sm-only">修改日期</th>
+                                            <th class="table-title">用户名</th>
+                                            <th class="table-type">邮箱</th>
+                                            <th class="table-author am-hide-sm-only">真实姓名</th>
+                                            <th class="table-date am-hide-sm-only">注册日期</th>
                                             <th class="table-set">操作</th>
                                         </tr>
                                     </thead>
@@ -91,28 +81,36 @@
                                             <td><input type="checkbox"></td>
                                             <td>{$i}</td>
                                             <td><a href="#">{$vol.loginname}</a></td>
-                                            <td>default</td>
-                                            <td class="am-hide-sm-only">测试1号</td>
+                                            <td>{$vol.loginemail}</td>
+                                            <td class="am-hide-sm-only">{$vol.realname}</td>
                                             <td class="am-hide-sm-only">{$vol.create_time|date='Y-m-d H:i:s', ###}</td>
                                             <td>
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
-                                                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary"><span class="am-icon-pencil-square-o"></span> 编辑</button>
-                                                        <button class="am-btn am-btn-default am-btn-xs am-hide-sm-only"><span class="am-icon-copy"></span> 复制</button>
-                                                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                                        <button data-uid="{$vol.id}" class=" del-btn am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
                                                     </div>
                                                 </div>
                                             </td>
                                         </tr>
                                     {/volist}
+                                    <tr>
+                                        <td colspan="6">
+                                            <input class="tpl-table-fz-check" type="checkbox" id="select-all">&nbsp;&nbsp;<label for="select-all">全选</label>
+                                            &nbsp;&nbsp;&nbsp;
+                                            <input class="tpl-table-ufz-check" type="checkbox" id="non-select-all">&nbsp;&nbsp;<label for="non-select-all">全不选</label>
+                                        </td>
+                                        <td>
+                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                                 <div class="am-cf">
                                     <div class="am-fr">
                                         <ul class="am-pagination tpl-pagination">
-                                            <li {if $Request.param.page == 1} class="am-disabled" {/if}><a href="{:url('admin/user/userlist')}?page=1">«</a></li>
-                                            {for start = "1" end = "$totalpage" name = "i"}
-                                            <li {if $Request.param.page == $i} class="am-active" {/if}>
+                                            <li {if $Request.param.page == 1 || $Request.param.page == null} class="am-disabled" {/if}><a href="{:url('admin/user/userlist')}?page=1">«</a></li>
+                                            {for start = "1" end = "$totalpage + 1" name = "i"}
+                                            <li {if $Request.param.page == $i || ($i == 1 && $Request.param.page == null)} class="am-active" {/if}>
                                             <a href="{:url('admin/user/userlist')}?page={$i}">{$i}</a>
                                             </li>
                                             {/for}
@@ -138,5 +136,23 @@
 {include file="footerjs"}
 {include file="left-menujs"}
 </body>
-
+<script>
+    $(function () {
+        $('.del-btn').click(function () {
+            var uid = $(this).attr('data-uid')
+//        ajax删除
+            var url = '{:url("admin/user/delUser")}';
+            var data = {uid:uid}
+            $.ajax({
+                'url':url,
+                'type':'post',
+                'dataType':'json',
+                'data':data,
+                'success':function (res) {
+                    console.log(res)
+                }
+            })
+        })
+    })
+</script>
 </html>
