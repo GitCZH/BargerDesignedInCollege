@@ -16,16 +16,23 @@ class User extends Base
     }
     public function checkLogin (Request $request) {
         $params = $request->param();
-        $data['errCode'] = 0;
-        $data['errMsg'] = 'success';
-        session('uid', 1);
+        $business = new \app\common\User();
+        if ($business->checkLogin($params)) {
+            $data['errCode'] = 0;
+            $data['errMsg'] = 'success';
+        } else {
+            $data['errCode'] = -1;
+            $data['errMsg'] = 'wrong';
+        }
         return json_encode($data);
     }
 
     public function exitLogin()
     {
-        session('uid', null);
-        $this->success('成功退出', 'user/login');
+        $business = new \app\common\User();
+        if ($business->exitLogin()) {
+            $this->success('成功退出', 'user/login');
+        }
     }
     public function showUserDetail (Request $request)
     {
