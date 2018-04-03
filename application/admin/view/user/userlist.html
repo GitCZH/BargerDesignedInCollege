@@ -33,14 +33,6 @@
                     <div class="caption font-green bold">
                         <span class="am-icon-code"></span> 用户列表
                     </div>
-                    <div class="tpl-portlet-input tpl-fz-ml">
-                        <div class="portlet-input input-small input-inline">
-                            <div class="input-icon right">
-                                <i class="am-icon-search"></i>
-                                <input type="text" class="form-control form-control-solid" placeholder="搜索..."> </div>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="tpl-block">
                     <div class="am-g">
@@ -51,14 +43,15 @@
             </select>
                             </div>
                         </div>
+                        <form method="get" action="{:url('admin/user/userlist')}" name="blur-form">
                         <div class="am-u-sm-12 am-u-md-3">
                             <div class="am-input-group am-input-group-sm">
-                                <input type="text" class="am-form-field">
+                                <input name="key" value="{$Request.param.key??''}" type="text" class="am-form-field" placeholder="模糊搜索...">
                                 <span class="am-input-group-btn">
-            <button class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search" type="button"></button>
-          </span>
+                                    <input type="submit" class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"></span>
                             </div>
                         </div>
+                        </form>
                     </div>
                     <div class="am-g">
                         <div class="am-u-sm-12">
@@ -82,12 +75,14 @@
                                             <td>{$i}</td>
                                             <td><a href="#">{$vol.loginname}</a></td>
                                             <td>{$vol.loginemail}</td>
-                                            <td class="am-hide-sm-only">{$vol.realname}</td>
+                                            <td class="am-hide-sm-only">{$vol.detail['realname'] ?? '佚名'}</td>
                                             <td class="am-hide-sm-only">{$vol.create_time|date='Y-m-d H:i:s', ###}</td>
                                             <td>
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
-                                                        <button data-uid="{$vol.id}" class=" del-btn am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 删除</button>
+                                                        <button data-uid="{$vol.id}" class=" del-btn am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                            <span class="am-icon-trash-o"></span> 封禁
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -108,14 +103,14 @@
                                 <div class="am-cf">
                                     <div class="am-fr">
                                         <ul class="am-pagination tpl-pagination">
-                                            <li {if $Request.param.page == 1 || $Request.param.page == null} class="am-disabled" {/if}><a href="{:url('admin/user/userlist')}?page=1">«</a></li>
+                                            <li {if $Request.param.page == 1 || $Request.param.page == null} class="am-disabled" {/if}><a href="{:url('admin/user/userlist')}?page=1&{$keyWord|empty ? '' : 'key='.$keyWord}">«</a></li>
                                             {for start = "1" end = "$totalpage + 1" name = "i"}
                                             <li {if $Request.param.page == $i || ($i == 1 && $Request.param.page == null)} class="am-active" {/if}>
-                                            <a href="{:url('admin/user/userlist')}?page={$i}">{$i}</a>
+                                            <a href="{:url('admin/user/userlist')}?page={$i}&{$keyWord|empty ? '' : 'key='.$keyWord}">{$i}</a>
                                             </li>
                                             {/for}
                                             <li {if $Request.param.page == $totalpage - 1} class="am-disabled" {/if}>
-                                                <a href="{:url('admin/user/userlist')}?page={$totalpage - 1}">»</a>
+                                                <a href="{:url('admin/user/userlist')}?page={$totalpage - 1}&{$keyWord|empty ? '' : 'key='.$keyWord}">»</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -152,6 +147,13 @@
                     console.log(res)
                 }
             })
+        })
+
+        /**
+         * 模糊搜索ajax
+         */
+        $('#blur-search').click(function () {
+            $([name=blur-form]).submit()
         })
     })
 </script>

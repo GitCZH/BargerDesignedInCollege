@@ -58,17 +58,22 @@ class User extends Base
         $user = new \app\common\dataoper\User();
         $userCredit = new \app\common\model\UserCredit();
         $page = (int)$request->param('page');
+        $key = !empty($request->param('key')) ? $request->param('key') : null;
+        $where = '';
+        if (!is_null($key)) {
+            $where = 'loginname like \'%' . $key . '%\'';
+        }
         if ($page < 0) {
             $page = 0;
         }
-        $limit = 3;
+        $limit = 10;
 //        获取总页数
-        $counts = $user->getAllUserCount(['where' => ['isvalid' => 1]], $user);
+
+        $where .= !empty($where)  ? ' and isvalid=1' : 'isvalid=1';
+        $counts = $user->getAllUserCount(['where' => $where]);
         $totalPage = ceil($counts / $limit);
         $res = $user->getPagingUser([
-            'where' => [
-                'isvalid' => 1
-            ],
+            'where' => $where,
             'order' => 'create_time desc'
         ], $page, $limit);
         if (!$res) {
@@ -77,14 +82,17 @@ class User extends Base
             foreach ($res as &$v) {
                 $v = $v->getData();
                 if (null !== $uc = $userCredit->getUserDetailByUid($v['id'])) {
-                    $v['realname'] = $uc->getData()['realname'];
+                    $v['detail'] = $uc->getData();
                 } else {
-                    $v['realname'] = '佚名';
+                    $v['detail'] = [];
                 }
             }
             $this->assign('userlist', $res);
         }
         $this->assign('totalpage', $totalPage);
+        if (!is_null($key)) {
+            $this->assign('keyWord', $key);
+        }
         return $this->fetch();
     }
 
@@ -95,7 +103,7 @@ class User extends Base
 
     public function delUser(Request $request)
     {
-        $uid = $request->param('uid');
+        $uid = (int)$request->param('uid');
         return json_encode($uid);
     }
 }

@@ -7,6 +7,8 @@
  * Time: 21:25
  */
 namespace app\common\dataoper;
+use app\common\Functions;
+
 class User
 {
     private static $userObj = null;
@@ -20,6 +22,7 @@ class User
     }
     public static function checkLogin($params)
     {
+        session('uid', 'tmp');
         return true;
     }
     public function exitLogin()
