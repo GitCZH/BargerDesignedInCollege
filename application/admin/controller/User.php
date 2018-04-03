@@ -16,7 +16,7 @@ class User extends Base
     }
     public function checkLogin (Request $request) {
         $params = $request->param();
-        $business = new \app\common\User();
+        $business = new \app\common\controller\UserCheck();
         if ($business->checkLogin($params)) {
             $data['errCode'] = 0;
             $data['errMsg'] = 'success';
@@ -37,7 +37,7 @@ class User extends Base
     public function showUserDetail (Request $request)
     {
         $uid = $request->param();
-        $ucredit = new UserCredit();
+        $ucredit = new \app\common\model\UserCredit();
         var_dump($ucredit->getUserDetailByUid($uid));
     }
 
@@ -47,7 +47,7 @@ class User extends Base
      */
     public function countUser()
     {
-        $user = new \app\index\model\User();
+        $user = new \app\common\dataoper\User();
         $data = $user->getChartData();
         $this->assign('totalNum', $data);
         return $this->fetch();
@@ -55,17 +55,22 @@ class User extends Base
 
     public function userList(Request $request)
     {
-        $user = new \app\index\model\User();
-        $userCredit = new UserCredit();
-        $page = $request->param('page');
+        $user = new \app\common\dataoper\User();
+        $userCredit = new \app\common\model\UserCredit();
+        $page = (int)$request->param('page');
         if ($page < 0) {
             $page = 0;
         }
         $limit = 3;
 //        获取总页数
-        $counts = $user->where(['isvalid' => 1])->count();
+        $counts = $user->getAllUserCount(['where' => ['isvalid' => 1]], $user);
         $totalPage = ceil($counts / $limit);
-        $res = $user->where(['isvalid' => 1])->order('create_time desc')->page($page, $limit)->select();
+        $res = $user->getPagingUser([
+            'where' => [
+                'isvalid' => 1
+            ],
+            'order' => 'create_time desc'
+        ], $page, $limit);
         if (!$res) {
             $this->assign('userlist', []);
         } else {

@@ -6,12 +6,15 @@
  * Date: 2018/3/20
  * Time: 21:32
  */
-namespace app\common;
+namespace app\common\controller;
+use app\common\dataoper\User;
+
 class UserCheck
 {
-    public static function checkLogin()
+    public function checkLogin($params)
     {
-        return true;
+//        调用数据相关操作方法
+        return User::checkLogin($params);
     }
     public static function exitLogin()
     {

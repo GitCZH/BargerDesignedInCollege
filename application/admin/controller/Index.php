@@ -6,7 +6,6 @@
  * Time: 23:49
  */
 namespace app\admin\controller;
-use app\index\model\User;
 
 class Index extends Base
 {

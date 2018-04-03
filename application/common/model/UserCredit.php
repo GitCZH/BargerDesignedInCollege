@@ -5,7 +5,7 @@
  * Date: 2018/3/12
  * Time: 0:12
  */
-namespace app\index\model;
+namespace app\common\model;
 use think\Model;
 
 class UserCredit extends Model

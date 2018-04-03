@@ -5,9 +5,8 @@
  * Date: 2018/3/7
  * Time: 22:20
  */
-namespace app\index\model;
+namespace app\common\model;
 
-use app\common\Functions;
 use think\Model;
 
 class User extends Model
@@ -49,24 +48,5 @@ class User extends Model
     public function checkEmailNew($email) {
         $res = $this->where(['loginemail' => $email])->find();
         return $res === null ? true : false;
-    }
-
-    public function getChartData()
-    {
-        $timestampArr = Functions::getEachMonthTimestamp();
-
-        $userData = [];
-        foreach ($timestampArr as $value) {
-//            总数
-            $res = $this
-                ->where("isvalid = 1 and create_time > {$value['start']} and create_time < {$value['end']}")
-                ->select();
-            if (!$res) {
-                $userData[] = 0;
-            } else {
-                $userData[] = count($res);
-            }
-        }
-        return json_encode($userData);
     }
 }
