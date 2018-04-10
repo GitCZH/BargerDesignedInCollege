@@ -81,4 +81,25 @@ class Functions
 
         return $data;
     }
+
+    /**
+     * 测试账号生成规则
+     */
+    public static function accountsRule($num = 20)
+    {
+        $accountArr = [];
+        $pwd = '123456';
+        for($i = 0; $i < $num; $i++) {
+            $preName = 'ttttest_';
+            $unique = uniqid($preName, true);
+            $preName = $unique;
+            $preEmail = $unique . '@1.com';
+            $accountArr[] = [
+                'loginname' => $preName,
+                'loginemail' => $preEmail,
+                'loginpwd' => $pwd
+            ];
+        }
+        return $accountArr;
+    }
 }

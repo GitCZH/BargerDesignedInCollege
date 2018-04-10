@@ -32,6 +32,7 @@
                 <div class="portlet-title">
                     <div class="caption font-green bold">
                         <span class="am-icon-code"></span> 用户列表
+                        <span>共&nbsp;<em class="font-red">{$totalNum}</em>&nbsp;条</span>
                     </div>
                 </div>
                 <div class="tpl-block">
@@ -144,7 +145,11 @@
                 'dataType':'json',
                 'data':data,
                 'success':function (res) {
-                    console.log(res)
+                    res = $.parseJSON(res)
+                    alert(res.errorMsg)
+                    if (res.errorCode != 0) {
+                        return false
+                    }
                 }
             })
         })

@@ -49,7 +49,7 @@ class User extends Base
     {
         $user = new \app\common\dataoper\User();
         $data = $user->getChartData();
-        $this->assign('totalNum', $data);
+        $this->assign('totalNum', json_encode($data));
         return $this->fetch();
     }
 
@@ -95,6 +95,7 @@ class User extends Base
             $this->assign('userlist', $res);
         }
         $this->assign('totalpage', $totalPage);
+        $this->assign('totalNum', $counts);
         if (!is_null($key)) {
             $this->assign('keyWord', $key);
         }
@@ -109,6 +110,23 @@ class User extends Base
     public function delUser(Request $request)
     {
         $uid = (int)$request->param('uid');
-        return json_encode($uid);
+        $user = new \app\common\dataoper\User();
+        $res = $user->delUserByUid($uid);
+        $res = ($res !== false) && !empty($res) ? 1 : 0;
+        $msg = $res ? 'success' : 'failed';
+        return json_encode(['errorCode' => $res, 'errorMsg' => $msg]);
+    }
+
+    /**
+     * 生成测试账户
+     */
+    public function generateAccounts()
+    {
+        $res = \app\common\dataoper\User::generateAccounts();
+
+        if (!empty($res)) {
+            $this->success('创建成功', 'user/userlist', '', 1);
+        }
+        $this->error('创建失败', 'admin/index/index', '', 1);
     }
 }

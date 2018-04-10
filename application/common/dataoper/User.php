@@ -36,6 +36,36 @@ class User
     }
 
     /**
+     * 新增账户
+     * @param $accounts
+     * @return array|false|int
+     * @throws \Exception
+     */
+    public function saveAccount($accounts)
+    {
+        if (empty($accounts) && !is_array($accounts)) {
+            return 0;
+        }
+        $user = self::getUserModelObj();
+        if (is_array(reset($accounts))) {
+//            保存多条数据
+            return $user->saveAll($accounts);
+        }
+        return $user->save($accounts);
+    }
+
+    /**
+     * 根据uid删除用户
+     * @param $uid
+     * @return int
+     */
+    public function delUserByUid($uid)
+    {
+        $user = self::getUserModelObj();
+        return $user->where(['id' => $uid])->delete();
+    }
+
+    /**
      * 获取用户账户信息
      * @param $id
      */
@@ -108,6 +138,15 @@ class User
                 $userData[] = count($res);
             }
         }
-        return json_encode($userData);
+        return $userData;
+    }
+
+    /**
+     * 生成测试账号
+     */
+    public static function generateAccounts()
+    {
+        $accountArr = Functions::accountsRule();
+        return (new self)->saveAccount($accountArr);
     }
 }
