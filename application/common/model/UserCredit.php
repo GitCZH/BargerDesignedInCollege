@@ -12,8 +12,4 @@ class UserCredit extends Model
 {
     protected $table = 'ex_user';
 
-    public function getUserDetailByUid ($uid) {
-        return $this->where(['id' => $uid])
-            ->find();
-    }
 }

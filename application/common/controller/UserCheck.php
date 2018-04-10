@@ -16,10 +16,12 @@ class UserCheck
 //        调用数据相关操作方法
         return User::checkLogin($params);
     }
+
     public static function exitLogin()
     {
         return true;
     }
+
     public static function checkReg()
     {
         return true;

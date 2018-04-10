@@ -27,24 +27,11 @@ class User extends Model
         return $status[$val];
     }
 
-    public function getUserPaging($condition = [], $page = 0, $limit = 10) {
-        $params = [
-            'order' => 'create_time desc',
-            'where' => '`isvalid` = 1'
-        ];
-        return $this->where($condition)
-            ->page($page, $limit)
-            ->select();
-    }
-    public function delUserById($uid) {
-        $res = $this->save(['isvalid'=>0], ['id'=>$uid]);
-        var_dump($res);
-    }
-
-    public function getUserById($uid) {
-        return $this->get($uid) === null ? null : $this->getData();
-    }
-
+    /**
+     * 检测是否是已注册的邮箱
+     * @param $email
+     * @return bool
+     */
     public function checkEmailNew($email) {
         $res = $this->where(['loginemail' => $email])->find();
         return $res === null ? true : false;

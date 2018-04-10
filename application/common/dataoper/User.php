@@ -12,7 +12,7 @@ use app\common\Functions;
 class User
 {
     private static $userObj = null;
-    public static function getUserModelObj()
+    private static function getUserModelObj()
     {
         if (!is_null(self::$userObj)) {
             return self::$userObj;
@@ -25,17 +25,14 @@ class User
         session('uid', 'tmp');
         return true;
     }
-    public function exitLogin()
+    public static function exitLogin()
     {
-        UserCheck::exitLogin();
         session('uid', null);
         return true;
     }
     public function checkReg()
     {
-        if (UserCheck::checkReg()) {
-            return true;
-        }
+        return true;
     }
 
     /**
@@ -44,16 +41,8 @@ class User
      */
     public function getUserAccountById($id)
     {
-
-    }
-
-    /**
-     * 获取用户详细信息
-     * @param $id
-     */
-    public function getUserDetailById($id)
-    {
-
+        $user = self::getUserModelObj();
+        return $user->where(['id' => $id])->find();
     }
 
     /**
@@ -64,10 +53,6 @@ class User
         $user = self::getUserModelObj();
         $user = $this->parseCondition($conditions, $user);
         return $user->count();
-    }
-    public function getUserCharData()
-    {
-
     }
 
     /**

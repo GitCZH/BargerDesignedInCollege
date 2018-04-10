@@ -5,12 +5,12 @@
  * Date: 2018/3/20
  * Time: 21:50
  */
-namespace app\common;
+namespace app\common\dataoper;
 class UserCredit
 {
 
     private static $userCreditObj = null;
-    public static function getUserModelObj()
+    private static function getUserModelObj()
     {
         if (!is_null(self::$userCreditObj)) {
             return self::$userCreditObj;
@@ -19,6 +19,11 @@ class UserCredit
         return self::$userCreditObj;
     }
 
+    /**
+     * 根据uid获取用户的详细信息
+     * @param $uid
+     * @return array|false|\PDOStatement|string|\think\Model
+     */
     public function getUserDetailByUid ($uid) {
         $userCreditObj = self::getUserModelObj();
         return $userCreditObj->where(['id' => $uid])

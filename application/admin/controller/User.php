@@ -53,10 +53,15 @@ class User extends Base
         return $this->fetch();
     }
 
+    /**
+     * 用户列表
+     * @param Request $request
+     * @return mixed
+     */
     public function userList(Request $request)
     {
         $user = new \app\common\dataoper\User();
-        $userCredit = new \app\common\model\UserCredit();
+        $userCredit = new \app\common\dataoper\UserCredit();
         $page = (int)$request->param('page');
         $key = !empty($request->param('key')) ? $request->param('key') : null;
         $where = '';
@@ -96,11 +101,11 @@ class User extends Base
         return $this->fetch();
     }
 
-    public function searchUser()
-    {
-
-    }
-
+    /**
+     * 删除用户接口
+     * @param Request $request
+     * @return string
+     */
     public function delUser(Request $request)
     {
         $uid = (int)$request->param('uid');
