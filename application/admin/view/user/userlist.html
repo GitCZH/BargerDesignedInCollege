@@ -71,17 +71,19 @@
                                     </thead>
                                     <tbody>
                                     {volist name='userlist' id='vol' empty='暂无数据'}
-                                        <tr>
+                                        <tr id="tr_{$vol.id}">
                                             <td><input type="checkbox"></td>
                                             <td>{$i}</td>
-                                            <td><a href="#">{$vol.loginname}</a></td>
+                                            <td>
+                                                <span data-uid="{$vol.id}" class="udetail am-btn am-text-primary" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 600, height: 450}">{$vol.loginname}</span>
+                                            </td>
                                             <td>{$vol.loginemail}</td>
                                             <td class="am-hide-sm-only">{$vol.detail['realname'] ?? '佚名'}</td>
                                             <td class="am-hide-sm-only">{$vol.create_time|date='Y-m-d H:i:s', ###}</td>
                                             <td>
                                                 <div class="am-btn-toolbar">
                                                     <div class="am-btn-group am-btn-group-xs">
-                                                        <button data-uid="{$vol.id}" class=" del-btn am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                        <button type="button" data-uid="{$vol.id}" class="del-btn am-btn am-btn-xs am-text-danger">
                                                             <span class="am-icon-trash-o"></span> 封禁
                                                         </button>
                                                     </div>
@@ -96,7 +98,9 @@
                                             <input class="tpl-table-ufz-check" type="checkbox" id="non-select-all">&nbsp;&nbsp;<label for="non-select-all">全不选</label>
                                         </td>
                                         <td>
-                                            <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"><span class="am-icon-trash-o"></span> 封禁所选</button>
+                                            <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                                <span class="am-icon-trash-o"></span> 封禁所选
+                                            </button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -131,9 +135,55 @@
 
 {include file="footerjs"}
 {include file="left-menujs"}
+<!--模态框-->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">
+            <span id="user">Test</span>
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <div id="errMsg" class="am-panel am-panel-default">
+                <div class="am-panel-bd">
+                    <span id="errMsg-text"></span>
+                </div>
+            </div>
+            <ul id="userdetail" class="am-list am-list-static am-list-border am-text-left">
+                <li>
+                    <i class="am-icon-circle"></i>
+                    <span class="am-text-primary">昵称</span>：<span class="am-text-danger am-nick">nickname</span>
+                </li>
+                <li>
+                    <i class="am-icon-circle"></i>
+                    <span class="am-text-primary">真实姓名</span>：<span class="am-text-danger am-real">nickname</span>
+                </li>
+                <li>
+                    <i class="am-icon-circle"></i>
+                    <span class="am-text-primary">性别</span>：<span class="am-text-danger am-sex">nickname</span>
+                </li>
+                <li>
+                    <i class="am-icon-circle"></i>
+                    <span class="am-text-primary">住址</span>：<span class="am-text-danger am-live">nickname</span>
+                </li>
+                <li>
+                    <i class="am-icon-circle"></i>
+                    <span class="am-text-primary">电话</span>：<span class="am-text-danger am-phone">nickname</span>
+                </li>
+                <li>
+                    <i class="am-icon-circle"></i>
+                    <span class="am-text-primary">信誉积分</span>：<span class="am-text-danger am-credit">nickname</span>
+                </li>
+                <li class="am-text-center">
+                    <button class="am-btn am-btn-xs am-btn-primary" data-am-modal-close>关闭</button>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
 </body>
 <script>
     $(function () {
+//        封禁 ajax请求
         $('.del-btn').click(function () {
             var uid = $(this).attr('data-uid')
 //        ajax删除
@@ -147,8 +197,8 @@
                 'success':function (res) {
                     res = $.parseJSON(res)
                     alert(res.errorMsg)
-                    if (res.errorCode != 0) {
-                        return false
+                    if (res.errorCode == 1) {
+                        $('#tr_' + uid).remove()
                     }
                 }
             })
@@ -159,6 +209,40 @@
          */
         $('#blur-search').click(function () {
             $([name=blur-form]).submit()
+        })
+
+//        查看详细信息ajax请求
+        $('.udetail').click(function () {
+            var loginname = $(this).html()
+            var uid = $(this).attr('data-uid')
+//        ajax获取详细信息
+            var url = '{:url("admin/user/getUserDetailed")}';
+            var data = {uid:uid}
+            $.ajax({
+                'url':url,
+                'type':'get',
+                'dataType':'json',
+                'data':data,
+                'success':function (res) {
+                    $('#user').html(loginname)
+                    res = $.parseJSON(res)
+                    var result = res.result
+                    if (res.result != '') {
+                        $('#userdetail').css('display', 'block')
+                        $('#errMsg').css('display', 'none')
+                        $('.am-nick').html(result.nickname)
+                        $('.am-real').html(result.realname)
+                        $('.am-live').html(result.livelocation)
+                        $('.am-sex').html(result.sex == 1 ? '男' : '女')
+                        $('.am-phone').html(result.phone)
+                        $('.am-credit').html(result.credit)
+                    } else {
+                        $('#userdetail').css('display', 'none')
+                        $('#errMsg').css('display', 'block')
+                        $('#errMsg-text').html(res.errorMsg)
+                    }
+                }
+            })
         })
     })
 </script>

@@ -15,7 +15,7 @@ class UserCredit
         if (!is_null(self::$userCreditObj)) {
             return self::$userCreditObj;
         }
-        self::$userCreditObj = new \app\common\model\User();
+        self::$userCreditObj = new \app\common\model\UserCredit();
         return self::$userCreditObj;
     }
 
@@ -26,7 +26,7 @@ class UserCredit
      */
     public function getUserDetailByUid ($uid) {
         $userCreditObj = self::getUserModelObj();
-        return $userCreditObj->where(['id' => $uid])
+        return $userCreditObj->where(['idnum' => $uid])
             ->find();
     }
 }

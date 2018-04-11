@@ -118,6 +118,29 @@ class User extends Base
     }
 
     /**
+     * 获取用户详细信息接口
+     */
+    public function getUserDetailed(Request $request)
+    {
+        $uid = (int)$request->param('uid');
+        $user = new \app\common\dataoper\UserCredit();
+        $detailed = $user->getUserDetailByUid($uid);
+        $errCode = 1;
+        $errMsg = '详细信息如下！';
+        if (empty($detailed)) {
+            $errCode = 0;
+            $errMsg = '暂无详细信息';
+        }
+        return json_encode(
+            [
+                'errorCode' => $errCode,
+                'result' => empty($detailed) ? '' : $detailed,
+                'errorMsg' => $errMsg
+            ]
+        );
+    }
+
+    /**
      * 生成测试账户
      */
     public function generateAccounts()
