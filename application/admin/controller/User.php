@@ -6,6 +6,7 @@
  * Time: 0:18
  */
 namespace app\admin\controller;
+use app\common\Functions;
 use app\index\model\UserCredit;
 use think\Request;
 
@@ -34,12 +35,6 @@ class User extends Base
             $this->success('成功退出', 'user/login');
         }
     }
-    public function showUserDetail (Request $request)
-    {
-        $uid = $request->param();
-        $ucredit = new \app\common\model\UserCredit();
-        var_dump($ucredit->getUserDetailByUid($uid));
-    }
 
     /**
      * 用户统计
@@ -54,7 +49,7 @@ class User extends Base
     }
 
     /**
-     * 用户列表
+     * 用户列表  TODO 依据注册时间筛选用户
      * @param Request $request
      * @return mixed
      */
@@ -114,7 +109,7 @@ class User extends Base
         $res = $user->delUserByUid($uid);
         $res = ($res !== false) && !empty($res) ? 1 : 0;
         $msg = $res ? 'success' : 'failed';
-        return json_encode(['errorCode' => $res, 'errorMsg' => $msg]);
+        return json(['errorCode' => $res, 'errorMsg' => $msg]);
     }
 
     /**

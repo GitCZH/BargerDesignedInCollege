@@ -61,7 +61,7 @@
                                     <thead>
                                         <tr>
                                             <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
-                                            <th class="table-id">ID</th>
+                                            <th class="table-id">序号</th>
                                             <th class="table-title">用户名</th>
                                             <th class="table-type">邮箱</th>
                                             <th class="table-author am-hide-sm-only">真实姓名</th>
@@ -195,7 +195,6 @@
                 'dataType':'json',
                 'data':data,
                 'success':function (res) {
-                    res = $.parseJSON(res)
                     alert(res.errorMsg)
                     if (res.errorCode == 1) {
                         $('#tr_' + uid).remove()

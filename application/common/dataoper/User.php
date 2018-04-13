@@ -30,8 +30,15 @@ class User
         session('uid', null);
         return true;
     }
-    public function checkReg()
+
+    /**
+     * 检测是否有重复的注册邮箱
+     * @return bool
+     */
+    public function checkReg($params)
     {
+        $user = self::getUserModelObj();
+
         return true;
     }
 
@@ -62,7 +69,7 @@ class User
     public function delUserByUid($uid)
     {
         $user = self::getUserModelObj();
-        return $user->where(['id' => $uid])->delete();
+        return $user->where(['id' => $uid])->update(['isvalid' => 0]);
     }
 
     /**

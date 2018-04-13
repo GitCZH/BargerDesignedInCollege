@@ -7,6 +7,10 @@
  */
 namespace app\common;
 
+use think\File;
+use think\Log;
+use think\Request;
+
 class Functions
 {
     public static function getEachMonthTimestamp()
@@ -80,6 +84,32 @@ class Functions
         ];
 
         return $data;
+    }
+
+    /**
+     * 日志记录管理 【复述日志记录方式】
+     */
+    public static function logs($msg, $type = 'log', $drive = 'File', $path = APP_PATH . 'logs')
+    {
+        Log::init([
+            'type' => $drive,
+            'path' => $path
+        ]);
+        Log::record($msg, $type);
+    }
+
+    /**
+     * 文件上传方法
+     * @return false | File
+     */
+    public static function uploads
+    (
+        File $file,
+        array $validate = ['size' => 2097152, 'ext' => 'jpg,jpeg,png,gif'],
+        $path = ROOT_PATH . 'public/static/avatars/'
+    )
+    {
+        return $file->validate($validate)->move($path);
     }
 
     /**

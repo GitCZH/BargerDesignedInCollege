@@ -22,7 +22,7 @@ class UserCheck
         return true;
     }
 
-    public static function checkReg()
+    public static function checkReg($params)
     {
         return true;
     }
