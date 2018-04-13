@@ -29,4 +29,13 @@ class UserCredit
         return $userCreditObj->where(['idnum' => $uid])
             ->find();
     }
+
+    /**
+     * 修改用户信誉积分
+     */
+    public function changeCredit($uid, $credit)
+    {
+        $userCreditObj = self::getUserModelObj();
+        return $userCreditObj->where(['idnum' => $uid])->update(['credit' => $credit]);
+    }
 }

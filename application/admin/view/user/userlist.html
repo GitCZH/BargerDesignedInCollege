@@ -114,8 +114,8 @@
                                             <a href="{:url('admin/user/userlist')}?page={$i}&{$keyWord|empty ? '' : 'key='.$keyWord}">{$i}</a>
                                             </li>
                                             {/for}
-                                            <li {if $Request.param.page == $totalpage - 1} class="am-disabled" {/if}>
-                                                <a href="{:url('admin/user/userlist')}?page={$totalpage - 1}&{$keyWord|empty ? '' : 'key='.$keyWord}">»</a>
+                                            <li {if $Request.param.page == $totalpage} class="am-disabled" {/if}>
+                                                <a href="{:url('admin/user/userlist')}?page={$totalpage}&{$keyWord|empty ? '' : 'key='.$keyWord}">»</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -171,7 +171,7 @@
                 </li>
                 <li>
                     <i class="am-icon-circle"></i>
-                    <span class="am-text-primary">信誉积分</span>：<span class="am-text-danger am-credit">nickname</span>
+                    <span class="am-text-primary">信誉积分</span>：<input data-uid="" type="text" class="am-form-field am-credit" style="display: inline-block;width: 180px;"/>
                 </li>
                 <li class="am-text-center">
                     <button class="am-btn am-btn-xs am-btn-primary" data-am-modal-close>关闭</button>
@@ -235,12 +235,44 @@
                         $('.am-live').html(result.livelocation)
                         $('.am-sex').html(result.sex == 1 ? '男' : '女')
                         $('.am-phone').html(result.phone)
-                        $('.am-credit').html(result.credit)
+                        $('.am-credit').val(result.credit)
+                        $('.am-credit').attr('data-uid', uid)
                     } else {
                         $('#userdetail').css('display', 'none')
                         $('#errMsg').css('display', 'block')
                         $('#errMsg-text').html(res.errorMsg)
                     }
+                }
+            })
+        })
+
+//        修改用户信誉积分接口请求【有权限的管理员可操作】
+        $('.am-credit').keyup(function () {
+            var newCredit = $(this).val()
+            var uid = $(this).attr('data-uid')
+//            数据验证[newCredit] TODO
+            var pattern = /^[1-9]\d{0,2}$/
+            if (!pattern.test(newCredit) || newCredit > 100) {
+                alert('只允许正整数，1~100')
+                $(this).val(newCredit.substring(0, newCredit.length-1))
+                return false
+            }
+//            调用接口
+            var url = "{:url('admin/user/changeCredit')}"
+            var data = {uid:uid, credit:newCredit}
+
+            $.ajax({
+                url:url,
+                type:'post',
+                dataType:'json',
+                data:data,
+                success: function (res) {
+                    if (res.errorCode == 0) {
+                        alert(res.errorMsg)
+                    }
+                },
+                complete: function () {
+
                 }
             })
         })

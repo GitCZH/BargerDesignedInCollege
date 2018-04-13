@@ -141,6 +141,20 @@ class User extends Base
     }
 
     /**
+     * 修改用户信誉积分
+     */
+    public function changeCredit(Request $request)
+    {
+        $uid = (int)$request->param('uid');
+        $credit = (int)$request->param('credit');
+
+        $ucredit = new \app\common\dataoper\UserCredit();
+        $res = $ucredit->changeCredit($uid, $credit);
+        $errCode = !empty($res) ? 1 : 0;
+        $errMsg = !empty($res) ? '更新成功' : '更新失败';
+        return json(['errorCode' => $errCode, 'errorMsg' => $errMsg]);
+    }
+    /**
      * 生成测试账户
      */
     public function generateAccounts()
