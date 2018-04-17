@@ -30,6 +30,7 @@ class Error
     public function setMsg($msg)
     {
         $this->msg = $msg;
+        self::$errArr[$this->getCode()] = $this->getMsg();
     }
 
     /**
@@ -61,7 +62,7 @@ class Error
      */
     public function setErrArr($errArr)
     {
-        self::$errArr = $errArr;
+        self::$errArr = array_merge(self::$errArr, $errArr);
     }
 
     public static function getCodeMsg($code)

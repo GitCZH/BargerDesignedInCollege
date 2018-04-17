@@ -41,14 +41,21 @@ class Category extends Base
     {
         $catBigName = $request->param('bigName');
         $catSmallName = $request->param('smallName', ' ');
-        $catFid = (int)$request->param('fid');
+        $catFid = (int)$request->param('fid', 0);
         $id = (int)$request->param('id');
 
         if (empty($catBigName)) {
             return json(['errorCode' => 1, 'errorMsg' => '分类名不能为空']);
         }
         $category = Factory::getOperObj('category');
-        $res = $category->edit($id, ['catnameB' => $catBigName]);
+        if (!empty($catSmallName)) {
+            $data['catnameS'] = $catSmallName;
+        }
+        if (!empty($catFid)) {
+            $data['fid'] = $catFid;
+        }
+        $data['catnameB'] = $catBigName;
+        $res = $category->editById($id, $data);
 
         $errCode = $res ? 0 : 1;
         $errArr = Error::getCodeMsgArr($errCode);
@@ -61,6 +68,22 @@ class Category extends Base
      */
     public function del(Request $request)
     {
+        $id = (int)$request->param('id');
 
+        $category = Factory::getOperObj('category');
+        $res = $category->delById($id);
+        $errCode = $res ? 0 : 1;
+        $errArr = Error::getCodeMsgArr($errCode);
+
+        return json($errArr);
+    }
+
+    /**
+     * 分类列表
+     */
+    public function catsList()
+    {
+        $category = Factory::getOperObj('category');
+        $category->getAllCats();
     }
 }
