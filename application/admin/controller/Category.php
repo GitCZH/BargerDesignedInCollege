@@ -7,6 +7,8 @@
  * Time: 15:45
  */
 namespace app\admin\controller;
+use app\common\Error;
+use app\common\Factory;
 use think\Request;
 
 class Category extends Base
@@ -16,7 +18,20 @@ class Category extends Base
      */
     public function create(Request $request)
     {
+        $catBigName = $request->param('bigName');
+        $catSmallName = $request->param('smallName', ' ');
+        $catFid = (int)$request->param('fid');
 
+        if (empty($catBigName)) {
+            return json(['errorCode' => 1, 'errorMsg' => '分类名不能为空']);
+        }
+        $category = Factory::getOperObj('category');
+        $res = $category->create($catBigName, $catSmallName, $catFid);
+        $errCode = $res ? 0 : 2;
+        $errMsg = $res ? '创建成功' : '创建失败';
+        $msg = Error::getCodeMsg($errCode);
+
+        return json(['errorCode' => $errCode, 'errorMsg' => $errMsg]);
     }
 
     /**
@@ -24,7 +39,21 @@ class Category extends Base
      */
     public function edit(Request $request)
     {
+        $catBigName = $request->param('bigName');
+        $catSmallName = $request->param('smallName', ' ');
+        $catFid = (int)$request->param('fid');
+        $id = (int)$request->param('id');
 
+        if (empty($catBigName)) {
+            return json(['errorCode' => 1, 'errorMsg' => '分类名不能为空']);
+        }
+        $category = Factory::getOperObj('category');
+        $res = $category->edit($id, ['catnameB' => $catBigName]);
+
+        $errCode = $res ? 0 : 1;
+        $errArr = Error::getCodeMsgArr($errCode);
+
+        return json($errArr);
     }
 
     /**

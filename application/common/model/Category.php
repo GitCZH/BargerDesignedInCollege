@@ -11,8 +11,6 @@ use think\Model;
 
 class Category extends Model
 {
-    protected $table = 'ex_uaccount';
-    protected $autoWriteTimestamp = true;
-
+    protected $table = 'ex_cat';
 
 }
