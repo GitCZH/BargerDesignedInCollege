@@ -24,6 +24,12 @@ class Category
         return $model->data($data)->save();
     }
 
+    public function getById($id)
+    {
+        $model = Factory::getModelObj('category');
+        return $model->where(['id' => $id, 'islist' => 1])->find();
+    }
+
     public function editById($id, $data)
     {
         $model = Factory::getModelObj('category');
@@ -33,7 +39,7 @@ class Category
     public function delById($id)
     {
         $model = Factory::getModelObj('category');
-        return $model->where(['id' => $id])->delete();
+        return $model->save(['id' => $id], ['islist' => 0]);
     }
 
     /**

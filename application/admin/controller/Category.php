@@ -9,6 +9,7 @@
 namespace app\admin\controller;
 use app\common\Error;
 use app\common\Factory;
+use app\common\Functions;
 use think\Request;
 
 class Category extends Base
@@ -18,6 +19,15 @@ class Category extends Base
      */
     public function create(Request $request)
     {
+        if (empty($request->param())) {
+//            获取已有的分类
+            $category = Factory::getOperObj('category');
+            $cats = $category->getAllCats();
+
+            Functions::pasteArrToOptions($cats, $option);
+            $this->assign('cats', $option);
+            return $this->fetch();
+        }
         $catBigName = $request->param('bigName');
         $catSmallName = $request->param('smallName', ' ');
         $catFid = (int)$request->param('fid');
@@ -27,11 +37,10 @@ class Category extends Base
         }
         $category = Factory::getOperObj('category');
         $res = $category->create($catBigName, $catSmallName, $catFid);
-        $errCode = $res ? 0 : 2;
-        $errMsg = $res ? '创建成功' : '创建失败';
-        $msg = Error::getCodeMsg($errCode);
+        $errCode = $res ? 0 : 1;
+        $errArr = Error::getCodeMsgArr($errCode);
 
-        return json(['errorCode' => $errCode, 'errorMsg' => $errMsg]);
+        return json($errArr);
     }
 
     /**
@@ -41,7 +50,7 @@ class Category extends Base
     {
         $catBigName = $request->param('bigName');
         $catSmallName = $request->param('smallName', ' ');
-        $catFid = (int)$request->param('fid', 0);
+        $catFid = (int)$request->param('fid', null);
         $id = (int)$request->param('id');
 
         if (empty($catBigName)) {
@@ -51,7 +60,7 @@ class Category extends Base
         if (!empty($catSmallName)) {
             $data['catnameS'] = $catSmallName;
         }
-        if (!empty($catFid)) {
+        if ($catFid !== null) {
             $data['fid'] = $catFid;
         }
         $data['catnameB'] = $catBigName;
@@ -61,6 +70,23 @@ class Category extends Base
         $errArr = Error::getCodeMsgArr($errCode);
 
         return json($errArr);
+    }
+
+    /**
+     * 获取要编辑的分类相关信息
+     */
+    public function getEditInfo(Request $request)
+    {
+        $category = Factory::getOperObj('category');
+
+        $id = (int)$request->param('id');
+        $cat = $category->getById($id);
+        $topStr = '';
+        if ($cat->getData()['fid'] != 0) {
+            $topCats = $category->getCatsByFid();
+            Functions::pasteArrToOptions($topCats, $topStr);
+        }
+        return json(['options' => $topStr, 'cat' => $cat]);
     }
 
     /**
@@ -115,10 +141,10 @@ class Category extends Base
                 <td>
                     <div class=\"am-btn-toolbar\">
                     <div class=\"am-btn-group am-btn-group-xs\">
-                    <button type=\"button\" data-uid=\"%d\" class=\"del-btn am-btn am-btn-xs am-text-primary\">
+                    <button data-am-modal=\"{target: '#doc-modal-1', closeViaDimmer: 0}\" type=\"button\" data-id=\"%d\" class=\"edit-cat del-btn am-btn am-btn-xs am-text-primary\">
                         <span class=\"am-icon-pencil-square-o\"></span> 编辑
                     </button>
-                    <button type=\"button\" data-uid=\"%d\" class=\"del-btn am-btn am-btn-xs am-text-danger\">
+                    <button type=\"button\" data-id=\"%d\" class=\"del-cat del-btn am-btn am-btn-xs am-text-danger\">
                         <span class=\"am-icon-trash-o\"></span> 封禁
                     </button>
                     </div>

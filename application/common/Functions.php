@@ -125,6 +125,23 @@ class Functions
         });
         return $dataSet;
     }
+
+    /**
+     * 拼接select数据
+     */
+    public static function pasteArrToOptions($data, &$str = '', $times = 0, $option = '<option value="%s">%s%s</option>')
+    {
+        if (empty($data)) {
+            return '';
+        }
+
+        foreach($data as $item) {
+            $str .= sprintf($option, $item['id'], str_repeat('-', $times), $item['catnameB']);
+            if (isset($item['child'])) {
+                self::pasteArrToOptions($item['child'], $str, $times+1);
+            }
+        }
+    }
     /**
      * 测试账号生成规则
      */

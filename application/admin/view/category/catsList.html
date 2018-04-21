@@ -87,10 +87,10 @@
                                     <td>
                                         <div class="am-btn-toolbar">
                                             <div class="am-btn-group am-btn-group-xs">
-                                                <button type="button" data-uid="{$vol.id}" class="del-btn am-btn am-btn-xs am-text-primary">
+                                                <button type="button" data-id="{$vol.id}" class="edit-cat del-btn am-btn am-btn-xs am-text-primary" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0}">
                                                     <span class="am-icon-pencil-square-o"></span> 编辑
                                                 </button>
-                                                <button type="button" data-uid="{$vol.id}" class="del-btn am-btn am-btn-xs am-text-danger">
+                                                <button type="button" data-id="{$vol.id}" class="del-cat del-btn am-btn am-btn-xs am-text-danger">
                                                     <span class="am-icon-trash-o"></span> 封禁
                                                 </button>
                                             </div>
@@ -124,6 +124,41 @@
     </div>
 </div>
 
+<!--模态框  begin-->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">修改分类名
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form class="am-form am-form-horizontal">
+                <div class="am-form-group">
+                    <label for="cat-fid" class="am-u-sm-3">已有分类</label>
+                    <select name="fid" class="am-u-sm-9" id="cat-fid" data-am-selected="{searchBox: 1,maxHeight:180}">
+                        <option value="0">顶级</option>
+                    </select>
+                </div>
+                <div class="am-form-group">
+                    <label class="am-u-sm-3" for="doc-1">分类名</label>
+                    <div class="am-u-sm-9">
+                        <input name="bigName" type="text" class="" id="doc-1" placeholder="输入分类名">
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label class="am-u-sm-3" for="doc-2">分类别名</label>
+                    <div class="am-u-sm-9">
+                        <input name="smallName"  type="text" class="" id="doc-2" placeholder="输入分类别名">
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <input type="hidden" value="">
+                    <button type="button" class="btn-submit am-btn am-btn-success">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--模态框  end-->
 {include file="footerjs"}
 {include file="left-menujs"}
 </body>
@@ -159,74 +194,71 @@
         })
 
         /**
-         * 模糊搜索ajax
+         * 删除分类
          */
-        $('#blur-search').click(function () {
-            $([name=blur-form]).submit()
-        })
+        $('body').on('click', '.del-cat', function () {
+            var id = $(this).attr('data-id')
 
-//        查看详细信息ajax请求
-        $('.udetail').click(function () {
-            var loginname = $(this).html()
-            var uid = $(this).attr('data-uid')
-//        ajax获取详细信息
-            var url = '{:url("admin/user/getUserDetailed")}';
-            var data = {uid:uid}
+            var url = '{:url("admin/category/del")}'
+            var data = {id:id}
             $.ajax({
                 'url':url,
-                'type':'get',
+                'type':'post',
                 'dataType':'json',
                 'data':data,
                 'success':function (res) {
-                    $('#user').html(loginname)
-                    res = $.parseJSON(res)
-                    var result = res.result
-                    if (res.result != '') {
-                        $('#userdetail').css('display', 'block')
-                        $('#errMsg').css('display', 'none')
-                        $('.am-nick').html(result.nickname)
-                        $('.am-real').html(result.realname)
-                        $('.am-live').html(result.livelocation)
-                        $('.am-sex').html(result.sex == 1 ? '男' : '女')
-                        $('.am-phone').html(result.phone)
-                        $('.am-credit').val(result.credit)
-                        $('.am-credit').attr('data-uid', uid)
+                    if (res.errorCode == 0) {
+                        $('#tr_' + id).fadeOut()
                     } else {
-                        $('#userdetail').css('display', 'none')
-                        $('#errMsg').css('display', 'block')
-                        $('#errMsg-text').html(res.errorMsg)
+                        alert(res.errorMsg)
                     }
                 }
             })
         })
 
-//        修改用户信誉积分接口请求【有权限的管理员可操作】
-        $('.am-credit').keyup(function () {
-            var newCredit = $(this).val()
-            var uid = $(this).attr('data-uid')
-//            数据验证[newCredit] TODO
-            var pattern = /^[1-9]\d{0,2}$/
-            if (!pattern.test(newCredit) || newCredit > 100) {
-                alert('只允许正整数，1~100')
-                $(this).val(newCredit.substring(0, newCredit.length-1))
-                return false
-            }
-//            调用接口
-            var url = "{:url('admin/user/changeCredit')}"
-            var data = {uid:uid, credit:newCredit}
-
+//        修改分类  获取分类信息
+        $('body').on('click', '.edit-cat', function () {
+            var id = $(this).attr('data-id')
+//            获取到分类信息
+            var url = '{:url("admin/category/getEditInfo")}'
+            var data = {id:id}
             $.ajax({
-                url:url,
-                type:'post',
-                dataType:'json',
-                data:data,
-                success: function (res) {
-                    if (res.errorCode == 0) {
-                        alert(res.errorMsg)
-                    }
-                },
-                complete: function () {
+                'url':url,
+                'type':'post',
+                'dataType':'json',
+                'data':data,
+                'success':function (res) {
+                    console.log(res)
+//                    填充信息
+                    $('[name=fid]').append(res.options)
+                    $('[name=bigName]').val(res.cat.catnameB)
+                    $('[name=smallName]').val(res.cat.catnameS)
+                    $('[type=hidden]').val(res.cat.id)
+                }
+            })
+        })
 
+        /**
+         * 修改分类
+         */
+        $('.btn-submit').click(function(){
+            var fid = $('[name=fid]').val()
+            var bigName = $('[name=bigName]').val()
+            var smallName = $('[name=smallName]').val()
+            var id = $('[type=hidden]').val()
+
+            var url = '{:url("admin/category/edit")}'
+            var data = {id:id, fid:fid, bigName:bigName, smallName:smallName}
+            $.ajax({
+                'url':url,
+                'type':'post',
+                'dataType':'json',
+                'data':data,
+                'success':function (res) {
+                    alert(res.errorMsg)
+                    if (res.errorCode == 0) {
+                        location.reload()
+                    }
                 }
             })
         })
