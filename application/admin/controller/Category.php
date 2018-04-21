@@ -84,6 +84,54 @@ class Category extends Base
     public function catsList()
     {
         $category = Factory::getOperObj('category');
-        $category->getAllCats();
+        $cats = $category->getAllCats();
+
+        $this->assign('cats', $cats);
+        return $this->fetch();
+    }
+
+    /**
+     * 根据fid获取子分类
+     */
+    public function getChildCats(Request $request)
+    {
+        $fid = (int)$request->param('fid');
+
+        $category = Factory::getOperObj('category');
+        $childs = $category->getCatsByFid($fid);
+
+        $errCode = empty($childs) ? 2 : 0;
+        $errArr = Error::getCodeMsgArr($errCode);
+        if (!empty($childs)) {
+//            拼接输出HTML字符串
+        $html = "<tr id='tr_%d' class='tr_%d' data-fid='tr_%d'>
+                <td><input type=\"checkbox\"></td><td> </td>
+                <td class=\"cat-hover\" data-fid=\"%d\">
+                    <span class=\"am-text-primary\">%s
+                        <i class=\"am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right\"></i>
+                    </span>
+                </td>
+                <td>%s</td>
+                <td>
+                    <div class=\"am-btn-toolbar\">
+                    <div class=\"am-btn-group am-btn-group-xs\">
+                    <button type=\"button\" data-uid=\"%d\" class=\"del-btn am-btn am-btn-xs am-text-primary\">
+                        <span class=\"am-icon-pencil-square-o\"></span> 编辑
+                    </button>
+                    <button type=\"button\" data-uid=\"%d\" class=\"del-btn am-btn am-btn-xs am-text-danger\">
+                        <span class=\"am-icon-trash-o\"></span> 封禁
+                    </button>
+                    </div>
+                    </div>
+                 </td>
+                </tr>";
+            $childsStr = '';
+            foreach($childs as $child) {
+                $catnameS = empty($child['catnameS']) ? ' ' : $child['catnameS'];
+                $childsStr .= sprintf($html, $child['id'], $fid, $child['id'], $child['id'], $child['catnameB'], $catnameS, $child['id'], $child['id']);
+            }
+            $errArr['result'] = $childsStr;
+        }
+        return json($errArr);
     }
 }

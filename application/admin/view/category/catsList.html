@@ -1,0 +1,235 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>分类列表</title>
+    {include file="head"}
+    <style>
+        .cat-hover:hover{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body data-type="generalComponents">
+{include file="header"}
+<div class="tpl-page-container tpl-page-header-fixed">
+
+
+    <div class="tpl-left-nav tpl-left-nav-hover">
+        <div class="tpl-left-nav-title">
+            Amaze UI 列表
+        </div>
+        <div class="tpl-left-nav-list">
+            {include file="menu"}
+        </div>
+    </div>
+    <div class="tpl-content-wrapper">
+        <div class="tpl-content-page-title">
+            Amaze UI 文字列表
+        </div>
+        <ol class="am-breadcrumb">
+            <li><a href="#" class="am-icon-home">首页</a></li>
+            <li><a href="#">Amaze UI CSS</a></li>
+            <li class="am-active">文字列表</li>
+        </ol>
+        <div class="tpl-portlet-components">
+            <div class="portlet-title">
+                <div class="caption font-green bold">
+                    <span class="am-icon-code"></span> 分类列表
+                    <span>共&nbsp;<em class="font-red">{$cats|count}</em>&nbsp;大类</span>
+                </div>
+            </div>
+            <div class="tpl-block">
+                <div class="am-g">
+                    <div class="am-u-sm-12 am-u-md-3">
+                        <div class="am-form-group">
+                            <select data-am-selected="{btnSize: 'sm'}">
+                                <option value="option1">所有</option>
+                            </select>
+                        </div>
+                    </div>
+                    <form method="get" action="{:url('admin/user/userlist')}" name="blur-form">
+                        <div class="am-u-sm-12 am-u-md-3">
+                            <div class="am-input-group am-input-group-sm">
+                                <input name="key" value="{$Request.param.key??''}" type="text" class="am-form-field" placeholder="模糊搜索...">
+                                <span class="am-input-group-btn">
+                                    <input type="submit" class="am-btn  am-btn-default am-btn-success tpl-am-btn-success am-icon-search"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="am-g">
+                    <div class="am-u-sm-12">
+                        <form class="am-form">
+                            <table class="am-table am-table-striped am-table-hover table-main">
+                                <thead>
+                                <tr>
+                                    <th class="table-check"><input type="checkbox" class="tpl-table-fz-check"></th>
+                                    <th class="table-id">序号</th>
+                                    <th class="table-title">分类名</th>
+                                    <th class="table-type">分类别名</th>
+                                    <th class="table-set">操作</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {volist name='cats' id='vol' empty='暂无数据'}
+                                <tr id="tr_{$vol.id}">
+                                    <td><input type="checkbox"></td>
+                                    <td>{$i}</td>
+                                    <td class="cat-hover" data-fid="{$vol.id}">
+                                        <span class="am-text-primary">
+                                            {$vol.catnameB}
+                                            <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right"></i>
+                                        </span>
+                                    </td>
+                                    <td>{$vol.catnameS ?: '暂无别名'}</td>
+                                    <td>
+                                        <div class="am-btn-toolbar">
+                                            <div class="am-btn-group am-btn-group-xs">
+                                                <button type="button" data-uid="{$vol.id}" class="del-btn am-btn am-btn-xs am-text-primary">
+                                                    <span class="am-icon-pencil-square-o"></span> 编辑
+                                                </button>
+                                                <button type="button" data-uid="{$vol.id}" class="del-btn am-btn am-btn-xs am-text-danger">
+                                                    <span class="am-icon-trash-o"></span> 封禁
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {/volist}
+                                <tr>
+                                    <td colspan="4">
+                                        <input class="tpl-table-fz-check" type="checkbox" id="select-all">&nbsp;&nbsp;<label for="select-all">全选</label>
+                                        &nbsp;&nbsp;&nbsp;
+                                        <input class="tpl-table-ufz-check" type="checkbox" id="non-select-all">&nbsp;&nbsp;<label for="non-select-all">全不选</label>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only">
+                                            <span class="am-icon-trash-o"></span> 封禁所选
+                                        </button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+            <div class="tpl-alert"></div>
+        </div>
+
+    </div>
+</div>
+
+{include file="footerjs"}
+{include file="left-menujs"}
+</body>
+<script>
+    $(function () {
+//        获取子分类 ajax请求
+        $('body').on('click', '.cat-hover', function () {
+            var fid = $(this).attr('data-fid')
+
+            if ($('.tr_' + fid).length != 0) {
+                $('.tr_' + fid).fadeOut()
+                $(this).children('span').children('i').removeClass('tpl-left-nav-more-ico-rotate')
+                setTimeout(function(){$('.tr_' + fid).remove()}, 1000)
+                return false
+            }
+//        ajax请求
+            var url = '{:url("admin/category/getchildcats")}';
+            var data = {fid:fid}
+            $(this).children('span').children('i').addClass('tpl-left-nav-more-ico-rotate')
+            $.ajax({
+                'url':url,
+                'type':'get',
+                'dataType':'json',
+                'data':data,
+                'success':function (res) {
+                    if (res.errorCode == 0) {
+                        if ($('.tr_' + fid).length == 0) {
+                            $('#tr_' + fid).after(res.result)
+                        }
+                    }
+                }
+            })
+        })
+
+        /**
+         * 模糊搜索ajax
+         */
+        $('#blur-search').click(function () {
+            $([name=blur-form]).submit()
+        })
+
+//        查看详细信息ajax请求
+        $('.udetail').click(function () {
+            var loginname = $(this).html()
+            var uid = $(this).attr('data-uid')
+//        ajax获取详细信息
+            var url = '{:url("admin/user/getUserDetailed")}';
+            var data = {uid:uid}
+            $.ajax({
+                'url':url,
+                'type':'get',
+                'dataType':'json',
+                'data':data,
+                'success':function (res) {
+                    $('#user').html(loginname)
+                    res = $.parseJSON(res)
+                    var result = res.result
+                    if (res.result != '') {
+                        $('#userdetail').css('display', 'block')
+                        $('#errMsg').css('display', 'none')
+                        $('.am-nick').html(result.nickname)
+                        $('.am-real').html(result.realname)
+                        $('.am-live').html(result.livelocation)
+                        $('.am-sex').html(result.sex == 1 ? '男' : '女')
+                        $('.am-phone').html(result.phone)
+                        $('.am-credit').val(result.credit)
+                        $('.am-credit').attr('data-uid', uid)
+                    } else {
+                        $('#userdetail').css('display', 'none')
+                        $('#errMsg').css('display', 'block')
+                        $('#errMsg-text').html(res.errorMsg)
+                    }
+                }
+            })
+        })
+
+//        修改用户信誉积分接口请求【有权限的管理员可操作】
+        $('.am-credit').keyup(function () {
+            var newCredit = $(this).val()
+            var uid = $(this).attr('data-uid')
+//            数据验证[newCredit] TODO
+            var pattern = /^[1-9]\d{0,2}$/
+            if (!pattern.test(newCredit) || newCredit > 100) {
+                alert('只允许正整数，1~100')
+                $(this).val(newCredit.substring(0, newCredit.length-1))
+                return false
+            }
+//            调用接口
+            var url = "{:url('admin/user/changeCredit')}"
+            var data = {uid:uid, credit:newCredit}
+
+            $.ajax({
+                url:url,
+                type:'post',
+                dataType:'json',
+                data:data,
+                success: function (res) {
+                    if (res.errorCode == 0) {
+                        alert(res.errorMsg)
+                    }
+                },
+                complete: function () {
+
+                }
+            })
+        })
+    })
+</script>
+</html>

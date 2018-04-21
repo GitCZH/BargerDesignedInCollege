@@ -113,6 +113,19 @@ class Functions
     }
 
     /**
+     * select数据集转Data数组
+     */
+    public static function dataSetToArray($dataSet)
+    {
+        if (empty($dataSet)) {
+            return [];
+        }
+        array_walk($dataSet, function(&$item){
+            $item = $item->getData();
+        });
+        return $dataSet;
+    }
+    /**
      * 测试账号生成规则
      */
     public static function accountsRule($num = 20)

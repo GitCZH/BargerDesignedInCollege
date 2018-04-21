@@ -8,6 +8,7 @@
  */
 namespace app\common\dataoper;
 use app\common\Factory;
+use app\common\Functions;
 
 class Category
 {
@@ -35,36 +36,45 @@ class Category
         return $model->where(['id' => $id])->delete();
     }
 
+    /**
+     * 根据fid获取子分类
+     * @param int $fid
+     * @return array
+     */
     public function getCatsByFid($fid = 0)
     {
         $model = Factory::getModelObj('category');
         $cats = $model->where(['islist' => 1, 'fid' => $fid])->select();
-        return $cats->getData();
+        return !empty($cats) ? Functions::dataSetToArray($cats) : [];
     }
 
-    public function getChildrenCat($cats)
+    /**
+     * 递归获取无限极分类
+     * @param $cats
+     */
+    public function getChildrenCat(&$cats)
     {
         $model = Factory::getModelObj('category');
         foreach ($cats as &$cat) {
-            $child = $model->where(['islist' => 1, 'fid' => $cat['id']])->select();
-            if (!empty($child)) {
-                $cats['child'] = $child->getData();
-                $this->getChildrenCat($child->getData());
+            $childs = $model->where(['islist' => 1, 'fid' => $cat['id']])->select();
+            if (!empty($childs)) {
+                $cat['child'] = Functions::dataSetToArray($childs);
+                $this->getChildrenCat($cat['child']);
             }
         }
-        return $cats;
     }
+
+    /**
+     * 获取所有分类【无限极】
+     * @return array
+     */
     public function getAllCats()
     {
         $model = Factory::getModelObj('category');
         $cats = $model->where(['islist' => 1, 'fid' => 0])->select();
-        if (!empty($cats)) {
-            $cats = $cats->getData();
-        }
 
-        foreach ($cats as &$cat) {
-            $child = $this->getCatsByFid($cat['id']);
-        }
+        $cats = Functions::dataSetToArray($cats);
+        $this->getChildrenCat($cats);
         return $cats;
     }
 }

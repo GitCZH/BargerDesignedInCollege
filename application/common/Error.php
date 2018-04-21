@@ -13,7 +13,8 @@ class Error
     private $msg = '';
     private static $errArr = [
         0 => '成功',
-        1 => '失败'
+        1 => '失败',
+        2 => '空数据'
     ];
 
     /**
