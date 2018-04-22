@@ -39,17 +39,6 @@
                             18
                         </i>
                     </a>
-                    <a href="form-news.html">
-                            <i class="am-icon-angle-right"></i>
-                            <span>消息列表</span>
-                            <i class="tpl-left-nav-content tpl-badge-primary">
-                                5
-                            </i>
-                    </a>
-                     <a href="form-news-list.html">
-                                <i class="am-icon-angle-right"></i>
-                                <span>文字列表</span>
-                     </a>
                 </li>
             </ul>
         </li>
@@ -73,10 +62,6 @@
                         <i class="tpl-left-nav-content tpl-badge-success">
                             18
                         </i></a>
-                    <a href="form-news-list.html">
-                        <i class="am-icon-angle-right"></i>
-                        <span>文字列表</span>
-                    </a>
                 </li>
             </ul>
         </li>
@@ -89,27 +74,27 @@
             </a>
             <ul class="tpl-left-nav-sub-menu">
                 <li>
-                    <a href="table-font-list.html">
+                    <a href="{:url('admin/goods/overallSituation')}">
                         <i class="am-icon-angle-right"></i>
                         <span>物品统计</span>
                         <i class="am-icon-star tpl-left-nav-content-ico am-fr am-margin-right"></i>
                     </a>
-                    <a href="table-images-list.html">
+                    <a href="{:url('admin/goods/goodsList')}">
                         <i class="am-icon-angle-right"></i>
                         <span>物品列表</span>
                         <i class="tpl-left-nav-content tpl-badge-success">
                             18
                         </i></a>
-                    <a href="form-news.html">
+                    <a href="{:url('admin/goods/auditList')}">
                         <i class="am-icon-angle-right"></i>
-                        <span>消息列表</span>
+                        <span>待审核列表</span>
                         <i class="tpl-left-nav-content tpl-badge-primary">
                             5
                         </i></a>
 
-                    <a href="form-news-list.html">
+                    <a href="{:url('admin/goods/theShelves')}">
                         <i class="am-icon-angle-right"></i>
-                        <span>文字列表</span>
+                        <span>下架列表</span>
                     </a>
                 </li>
             </ul>
@@ -174,7 +159,7 @@
         <li class="tpl-left-nav-item">
             <a href="javascript:;" class="nav-link tpl-left-nav-link-list">
                 <i class="am-icon-wpforms"></i>
-                <span>测试账户</span>
+                <span>后台部分功能测试</span>
                 <i class="am-icon-angle-right tpl-left-nav-more-ico am-fr am-margin-right tpl-left-nav-more-ico-rotate"></i>
             </a>
             <ul class="tpl-left-nav-sub-menu" style="display: none;">
@@ -184,6 +169,9 @@
                     </a>
                     <a href="form-line.html">
                         <span>删除测试账户</span>
+                    </a>
+                    <a href="{:url('admin/goods/create')}">
+                        <span>新增物品</span>
                     </a>
                 </li>
             </ul>

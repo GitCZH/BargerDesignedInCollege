@@ -127,21 +127,33 @@ class Functions
     }
 
     /**
-     * 拼接select数据
+     * 拼接select分类数据
      */
-    public static function pasteArrToOptions($data, &$str = '', $times = 0, $option = '<option value="%s">%s%s</option>')
+    public static function pasteArrToOptions($data, &$str = '', $fids = null, $times = 0, $option = '<option value="%s">%s%s</option>')
     {
         if (empty($data)) {
             return '';
         }
 
         foreach($data as $item) {
-            $str .= sprintf($option, $item['id'], str_repeat('-', $times), $item['catnameB']);
+            if (is_null($fids)) {
+//                value值需要用到fid值时
+                $value = $item['id'];
+            } else {
+                $value = $fids . '-' . $item['id'];
+            }
+            $str .= sprintf($option, $value, str_repeat('-', $times), $item['catnameB']);
             if (isset($item['child'])) {
-                self::pasteArrToOptions($item['child'], $str, $times+1);
+                if (is_null($fids)) {
+                    self::pasteArrToOptions($item['child'], $str, $times + 1);
+                } else {
+                    self::pasteArrToOptions($item['child'], $str, $fids . '-' . $item['id'], $times + 1);
+                }
             }
         }
     }
+
+
     /**
      * 测试账号生成规则
      */
