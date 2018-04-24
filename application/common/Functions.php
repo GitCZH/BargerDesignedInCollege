@@ -105,8 +105,8 @@ class Functions
     public static function uploads
     (
         File $file,
-        array $validate = ['size' => 2097152, 'ext' => 'jpg,jpeg,png,gif'],
-        $path = ROOT_PATH . 'public/static/avatars/'
+        $path = ROOT_PATH . 'public/static/avatars/',
+        array $validate = ['size' => 2097152, 'ext' => 'jpg,jpeg,png,gif']
     )
     {
         return $file->validate($validate)->move($path);

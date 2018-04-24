@@ -44,12 +44,12 @@
                 <div class="tpl-block">
                     <div class="am-g">
                         <div class="tpl-form-body tpl-form-line">
-                            <form class="am-form tpl-form-line-form">
+                            <form name="gform" method="post" enctype="multipart/form-data" action="{:url('admin/goods/create')}" class="am-form tpl-form-line-form">
                                 <div class="am-form-group">
                                     <label for="goods-name" class="am-u-sm-3 am-form-label">上架闲物名
                                         <span class="tpl-form-line-small-title">Goods Name</span></label>
                                     <div class="am-u-sm-9">
-                                        <input type="text" class="tpl-form-input" id="goods-name" placeholder="请输入商品名">
+                                        <input type="text" name="gname" class="tpl-form-input" id="goods-name" placeholder="请输入商品名">
                                         <small>请填写商品名2-10字左右。</small>
                                     </div>
                                 </div>
@@ -58,10 +58,10 @@
                                     <label class="am-u-sm-3 am-form-label">是否全新 <span class="tpl-form-line-small-title">Brand New</span></label>
                                     <div class="am-u-sm-9">
                                         <label class="am-radio-inline am-secondary">
-                                            <input type="radio" name="isnew" value="" data-am-ucheck> 是
+                                            <input type="radio" name="isnew" value="1" data-am-ucheck> 是
                                         </label>
                                         <label class="am-radio-inline am-secondary">
-                                            <input type="radio" name="isnew" value="" data-am-ucheck checked> 否
+                                            <input type="radio" name="isnew" value="0" data-am-ucheck checked> 否
                                         </label>
                                     </div>
                                 </div>
@@ -69,17 +69,17 @@
                                     <label class="am-u-sm-3 am-form-label">是否可购买 <span class="tpl-form-line-small-title">Be Buy</span></label>
                                     <div class="am-u-sm-9">
                                         <label class="am-radio-inline am-secondary">
-                                            <input type="radio" name="bebuy" value="" data-am-ucheck> 是
+                                            <input type="radio" name="canbuy" value="1" data-am-ucheck> 是
                                         </label>
                                         <label class="am-radio-inline am-secondary">
-                                            <input type="radio" name="bebuy" value="" data-am-ucheck checked> 否
+                                            <input type="radio" name="canbuy" value="0" data-am-ucheck checked> 否
                                         </label>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
                                     <label for="cat" class="am-u-sm-3 am-form-label">选择所属分类 <span class="tpl-form-line-small-title">Category</span></label>
                                     <div id="cat" class="am-u-sm-9">
-                                        <select data-am-selected="{searchBox:1, maxHeight:180}">
+                                        <select name="cid" data-am-selected="{searchBox:1, maxHeight:180}">
                                           <option value="0">请选择所属分类</option>
                                           {$cats}
                                         </select>
@@ -88,7 +88,7 @@
                                 <div class="am-form-group">
                                     <label class="am-u-sm-3 am-form-label">选择所在地区 <span class="tpl-form-line-small-title">Location</span></label>
                                     <div class="am-u-sm-3">
-                                        <select name='provinces'>
+                                        <select name='gpid'>
                                             <option value="0">省份</option>
                                             {volist name='provinces' id='vo'}
                                             <option value="{$vo.provinceid}">{$vo.province}</option>
@@ -96,12 +96,12 @@
                                         </select>
                                     </div>
                                     <div class="am-u-sm-3">
-                                        <select name='cities'>
+                                        <select name='gcid'>
                                             <option value="0">市区</option>
                                         </select>
                                     </div>
                                     <div class="am-u-sm-3">
-                                        <select name='areas'>
+                                        <select name='gaid'>
                                             <option value="0">区县</option>
                                         </select>
                                     </div>
@@ -109,7 +109,7 @@
                                 <div class="am-form-group">
                                     <label for="user-intro" class="am-u-sm-3 am-form-label">闲物描述 <span class="tpl-form-line-small-title">Description</span></label>
                                     <div class="am-u-sm-9">
-                                        <textarea class="" rows="10" id="user-intro" placeholder="简单描述下要交易的闲物~"></textarea>
+                                        <textarea name="gdescribe" rows="10" id="user-intro" placeholder="简单描述下要交易的闲物~"></textarea>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
@@ -121,13 +121,13 @@
                                             </div>
                                             <button type="button" class="am-btn am-btn-danger am-btn-sm">
     <i class="am-icon-cloud-upload"></i> 添加闲物图片</button>
-                                            <input id="doc-form-file" type="file" multiple>
+                                            <input id="doc-form-file" type="file" name="gimgs[]" multiple>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="am-form-group">
                                     <div class="am-u-sm-9 am-u-sm-push-3">
-                                        <button type="button" class="am-btn am-btn-primary tpl-btn-bg-color-success ">提交</button>
+                                        <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="提交">
                                     </div>
                                 </div>
                             </form>
@@ -143,24 +143,33 @@
 </body>
 <script>
     $(function () {
-        $('[name=provinces]').change(function () {
+        $('[name=gpid]').change(function () {
 //            获取此省份下的市区
             var pid = $(this).val()
             if (pid == 0) {
 //                清空市区和区县下拉框 TODO
-                $('[name=cities]').children('option:first').nextAll().remove()
-                $('[name=areas]').children('option:first').nextAll().remove()
+                $('[name=gcid]').children('option:first').nextAll().remove()
+                $('[name=gaid]').children('option:first').nextAll().remove()
                 return
             }
             var url = '{:url("admin/location/getcities")}'
             var data = {pid:pid}
             $.ajax({
                 url:url,
-                type:'post',
+                type:'get',
                 dataType:'json',
                 data:data,
                 success: function (res) {
                     console.log(res)
+                    if (res.errorCode != 0) {
+                        return
+                    }
+//                        先清空已有的信息
+                    $('[name=gcid]').children('option:first').nextAll().remove()
+//                    填充市区信息
+                    $.each(res.result, function(index, item){
+                        $('[name=gcid]').append('<option value="'+ item.cityid +'">' + item.city + '</option>')
+                    })
                 }
             })
         })
@@ -168,25 +177,45 @@
         /**
          * 获取区县接口
          */
-        $('[name=cities]').change(function () {
+        $('[name=gcid]').change(function () {
 //            获取此市区下的区县
             var cid = $(this).val()
             if (cid == 0) {
 //                清空区县数据 TODO
-                $('[name=areas]').children('option:first').nextAll().remove()
+                $('[name=gaid]').children('option:first').nextAll().remove()
                 return
             }
             var url = '{:url("admin/location/getareas")}'
-            var data = {pid:cid}
+            var data = {cid:cid}
             $.ajax({
                 url:url,
-                type:'post',
+                type:'get',
                 dataType:'json',
                 data:data,
                 success: function (res) {
-                    console.log(res)
+                    if (res.errorCode != 0) {
+                        return
+                    }
+//                        先清空已有的信息
+                    $('[name=gaid]').children('option:first').nextAll().remove()
+//                    填充区县信息
+                    $.each(res.result, function(index, item){
+                        $('[name=gaid]').append('<option value="'+ item.areaid +'">' + item.area + '</option>')
+                    })
                 }
             })
+        })
+
+//        表单提交前数据验证
+        $('[name=gform]').submit(function () {
+            if (gform.gname.value == '') {
+                alert('闲物名必填')
+                return false
+            }
+            if (gform.gdescribe.value == '') {
+                alert('描述必填')
+                return false
+            }
         })
     })
 </script>

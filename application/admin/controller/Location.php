@@ -27,7 +27,7 @@ class Location extends Base
     {
         $cid = (int)$request->param('cid');
         $location = Factory::getOperObj('location');
-        $areas = $location->getCities($cid);
+        $areas = $location->getAreas($cid);
         $errCode = empty($areas) ? 2 : 0;
         $errArr = Error::getCodeMsgArr($errCode);
         $errArr['result'] = $areas;

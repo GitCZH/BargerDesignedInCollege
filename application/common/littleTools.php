@@ -10,6 +10,9 @@ class LittleTools
 {
     /**
      * 计算PSI 生物钟规律
+     * 0 高潮期
+     * 1 临界期
+     * 2 低潮期
      */
     public static function soothSaying($year, $month, $day)
     {

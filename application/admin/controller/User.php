@@ -6,6 +6,7 @@
  * Time: 0:18
  */
 namespace app\admin\controller;
+use app\common\controller\UserCheck;
 use app\common\Functions;
 use app\index\model\UserCredit;
 use think\Request;
@@ -30,7 +31,7 @@ class User extends Base
 
     public function exitLogin()
     {
-        $business = new \app\common\User();
+        $business = new UserCheck();
         if ($business->exitLogin()) {
             $this->success('成功退出', 'user/login');
         }

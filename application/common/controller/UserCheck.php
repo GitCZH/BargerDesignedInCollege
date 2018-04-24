@@ -19,7 +19,7 @@ class UserCheck
 
     public static function exitLogin()
     {
-        return true;
+        return User::exitLogin();
     }
 
     public static function checkReg($params)

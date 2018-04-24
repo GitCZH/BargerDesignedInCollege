@@ -27,4 +27,22 @@ class Location
         $model = Factory::getModelObj('location');
         return $model->getAreas($cid);
     }
+
+    public function getProvinceByPid($pid)
+    {
+        $model = Factory::getModelObj('location');
+        return $model->getProvinceByPid($pid);
+    }
+
+    public function getCityByCid($cid)
+    {
+        $model = Factory::getModelObj('location');
+        return $model->getCityByCid($cid);
+    }
+
+    public function getAreaByAid($aid)
+    {
+        $model = Factory::getModelObj('location');
+        return $model->getAreaByAid($aid);
+    }
 }

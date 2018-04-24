@@ -34,4 +34,34 @@ class Location
     {
         return Db::table('areas')->where('cityid', $cid)->select();
     }
+
+    /**
+     * 获取单个省份
+     * @param $pid
+     * @return array|false|\PDOStatement|string|\think\Model
+     */
+    public function getProvinceByPid($pid)
+    {
+        return Db::table('provinces')->where(['provinceid' => $pid])->find();
+    }
+
+    /**
+     * 获取单个城市
+     * @param $cid
+     * @return array|false|\PDOStatement|string|\think\Model
+     */
+    public function getCityByCid($cid)
+    {
+        return Db::table('cities')->where('cityid', $cid)->find();
+    }
+
+    /**
+     * 获取单个区县
+     * @param $aid
+     * @return array|false|\PDOStatement|string|\think\Model
+     */
+    public function getAreaByAid($aid)
+    {
+        return Db::table('areas')->where('areaid', $aid)->find();
+    }
 }
