@@ -8,5 +8,6 @@
 namespace app\common;
 class Cons
 {
+//    TODO 绝对路径  需要修改
     const UPLOAD_GOODS_IMG_PATH = ROOT_PATH . 'public/static/goods/upload/';
 }

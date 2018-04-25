@@ -38,17 +38,89 @@ class Goods extends Base
     /**
      * 待审核列表
      */
-    public function auditList()
+    public function auditList(Request $request)
+    {
+        $goods = Factory::getOperObj('goods');
+
+        $page = (int)$request->param('page', 1);
+        $totalCounts = $goods->getTotalCountsByStatus(0);
+        $limit = 10;
+        $totalPage = ceil($totalCounts / $limit);
+        $unauditGoods = $goods->getUnauditGoods($page,$limit);
+        $this->assign('totalNum', $totalCounts);
+        $this->assign('totalpage', $totalPage);
+        if (empty($unauditGoods)) {
+            $this->assign('unauditGoods', $unauditGoods);
+            return $this->fetch();
+        }
+        $imgs = Factory::getOperObj('gimgs');
+        $user = Factory::getOperObj('user');
+        $category = Factory::getOperObj('category');
+        $unauditGoods = Functions::dataSetToArray($unauditGoods);
+        foreach ($unauditGoods as &$item) {
+            //        获取闲物的一张图片
+            $img = $imgs->getImgsByGid($item['id'], 0);
+            if (!empty($img)) {
+                $item['img'] = $img;
+            }
+//            获取发布人
+            $u = $user->getUserAccountById($item['uid']);
+            if (!empty($u)) {
+                $item['uid'] = $u->getData()['loginname'];
+            } else {
+                $item['uid'] = '佚名';
+            }
+//            获取所属分类
+            $catArr = explode('-', $item['cid']);
+            array_shift($catArr);
+            $catStr = '';
+            foreach ($catArr as $value) {
+                $cat = $category->getById($value);
+                if (!empty($cat)) {
+                    $catStr .= $cat->getData()['catnameB'] . '>';
+                }
+            }
+            $item['cid'] = rtrim($catStr, '>');
+        }
+//        dump($unauditGoods);exit;
+//        图片目录
+        $this->assign('imgpath', '/ExchangeGit/public/static/goods/upload/');
+        $this->assign('unauditGoods', $unauditGoods);
+        return $this->fetch();
+    }
+
+    /**
+     * 审核通过
+     */
+    public function passAudit(Request $request)
+    {
+        $id = (int)$request->param('id');
+        $goods = Factory::getOperObj('goods');
+        $res = $goods->passAudit($id);
+        $errCode = $res ? 0 : 1;
+        $errArr = Error::getCodeMsgArr($errCode);
+        return json($errArr);
+    }
+
+    /**
+     * 下架闲物列表
+     */
+    public function theThelvesList()
     {
 
     }
 
     /**
-     * 下架列表
+     * 下架闲物
      */
-    public function theShelves()
+    public function theShelves(Request $request)
     {
-
+        $id = (int)$request->param('id');
+        $goods = Factory::getOperObj('goods');
+        $res = $goods->theShelvesGoods($id);
+        $errCode = $res ? 0 : 1;
+        $errArr = Error::getCodeMsgArr($errCode);
+        return json($errArr);
     }
 
     /**
