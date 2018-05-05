@@ -12,8 +12,6 @@ use app\common\Cons;
 use app\common\Error;
 use app\common\Factory;
 use app\common\Functions;
-use app\common\LittleTools;
-use think\Config;
 use think\Request;
 
 class Goods extends Base
@@ -28,11 +26,33 @@ class Goods extends Base
     }
 
     /**
-     *商品列表
+     *已审核商品列表
      */
     public function goodsList()
     {
+        $goods = Factory::getOperObj('goods');
+        $goodsList = $goods->getGoodsList();
+        $goodsList = Functions::dataSetToArray($goodsList);
 
+        $user = Factory::getOperObj('user');
+        $category = Factory::getOperObj('category');
+        foreach($goodsList as &$item) {
+//            填充用户名
+            $dbUser = $user->getUserAccountById($item['uid']);
+            $item['uid'] = empty($user) ? '佚名' : $dbUser->getData()['loginname'];
+//            填充分类
+            $cats = explode('-', $item['cid']);
+            array_shift($cats);
+            $item['cid'] = '';
+            foreach($cats as $cat) {
+                $dbCat = $category->getById($cat);
+                if (!empty($dbCat)) {
+                    $item['cid'] .= $dbCat->getData()['catnameB'] . '>';
+                }
+            }
+            $item['cid'] = rtrim($item['cid'], '>');
+        }
+        dump($goodsList);
     }
 
     /**

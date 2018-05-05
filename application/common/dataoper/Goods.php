@@ -43,6 +43,16 @@ class Goods
         $model = Factory::getModelObj('goods');
         return $model->where(['id' => $id, 'islist' => 1])->update(['status' => 1]);
     }
+
+    /**
+     * 获取已审核物品列表
+     */
+    public function getGoodsList()
+    {
+        $model = Factory::getModelObj('goods');
+        return $model->where(['status' => 1, 'islist' => 1])->select();
+    }
+
     /**
      * 下架闲物
      */
