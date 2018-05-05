@@ -12,6 +12,10 @@ use think\Validate;
 
 class User extends Controller {
 
+    /**
+     * 登录模板
+     * @return mixed
+     */
     public function loginIn() {
         $user = model('user');
         $data = [
@@ -26,6 +30,11 @@ class User extends Controller {
         return $this->fetch();
     }
 
+    /**
+     * 登录验证
+     * @param Request $request
+     * @return int
+     */
     public function checkLogin(Request $request) {
         $params = $request->param();
         $user = model('user');
@@ -37,13 +46,14 @@ class User extends Controller {
 //        $sql = $user->where($query)->find()->getLastSql();
         $res = $user->where($query)->find();
         if(!$res) {
-            return 1;
+            return $this->error('登录失败');
         }
 //        找到返回模型对象，未找到返回null
 //        print_r($sql);
         $userAccount = $res->getData();
         session('uid', $res->getData()['id']);
         session('uname', $params['loginname']);
+        return $this->redirect('index/index');
     }
 
     public function exitLogin() {

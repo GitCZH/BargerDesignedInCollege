@@ -1,15 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>登录</title>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>Login Page | Amaze UI Example</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  {include file='assets'}
+  <style>
+    .header {
+      text-align: center;
+    }
+    .header h1 {
+      font-size: 200%;
+      color: #333;
+      margin-top: 30px;
+    }
+    .header p {
+      font-size: 14px;
+    }
+  </style>
 </head>
 <body>
-<form action="{:url('user/checkLogin')}" method="post">
-    <input type="text" name="loginname">
-    <input type="password" name="loginpwd">
-    <input type="submit" value="Login">
-</form>
-<a href="{:url('user/register')}">注册</a>
+<div class="header">
+  <div class="am-g">
+    <h1>物物交换</h1>
+    <p>Exchange<br/>闲物 交换 价值</p>
+  </div>
+  <hr />
+</div>
+<div class="am-container">
+    <div class="am-u-md-3">
+        <ul class="am-list">
+            <li><span class="am-text-secondary">我把最深沉的秘密放在那里。</span></li>
+        </ul>
+    </div>
+    <form method="post" action="{:url('index/user/checkLogin')}" class="am-form am-form-horizontal am-u-md-6">
+        <div class="am-form-group">
+            <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">用户名</label>
+            <div class="am-u-sm-10">
+                <input type="text" name="loginname" id="doc-ipt-3" placeholder="输入你的登录账户">
+            </div>
+        </div>
+
+        <div class="am-form-group">
+            <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">密码</label>
+            <div class="am-u-sm-10">
+                <input type="password" name="loginpwd" id="doc-ipt-pwd-2" placeholder="输入你的密码">
+            </div>
+        </div>
+
+        <div class="am-form-group">
+            <div class="am-u-sm-offset-2 am-u-sm-10">
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> 记住十万年
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="am-form-group">
+            <div class="am-u-sm-10 am-u-sm-offset-2">
+                <button type="submit" class="am-btn am-btn-default">提交登入</button>
+            </div>
+        </div>
+    </form>
+    <div class="am-u-md-3">
+        <ul class="am-list">
+            <li><span class="am-text-success">每个人都有一个死角， 自己走不出来，别人也闯不进去。</span></li>
+        </ul>
+    </div>
+</div>
 </body>
 </html>
