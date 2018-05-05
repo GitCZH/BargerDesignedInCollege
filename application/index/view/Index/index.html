@@ -6,12 +6,12 @@
     {include file='assets'}
     <style>
         .l-menu{
-            height: 30px;
+            height:55px;
         }
         .sub-menu{
             position: relative;
             left:100%;
-            top:-25px;
+            top:-52px;
             z-index: 999;
         }
         .md-top{
@@ -26,7 +26,7 @@
 <body>
 <header class="am-topbar">
     <h1 class="am-topbar-brand">
-        <a href="#">Amaze UI</a>
+        <a href="#">Exchange</a>
     </h1>
 
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
@@ -51,77 +51,139 @@
 
         <form class="am-topbar-form am-topbar-left am-form-inline" role="search">
             <div class="am-form-group">
-                <input type="text" class="am-form-field am-input-sm" placeholder="搜索">
+                <input type="text" name="key-word" class="am-form-field am-input-sm" placeholder="搜索">
+            </div>
+            <div class="am-form-group">
+                <input type="submit" class="am-btn am-btn-success am-radius am-btn-sm" value="搜索">
             </div>
         </form>
 
         <div class="am-topbar-right">
-            <div class="am-dropdown" data-am-dropdown="{boundary: '.am-topbar'}">
-                <button class="am-btn am-btn-secondary am-topbar-btn am-btn-sm am-dropdown-toggle" data-am-dropdown-toggle>其他 <span class="am-icon-caret-down"></span></button>
-                <ul class="am-dropdown-content">
-                    <li><a href="#">注册</a></li>
-                    <li><a href="#">随便看看</a></li>
-                </ul>
-            </div>
+            <a href="{:url('index/user/register')}" target="_blank" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm " >注册</a>
         </div>
-
         <div class="am-topbar-right">
-            <button class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</button>
+            <a href="{:url('index/user/loginin')}" target="_blank" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</a>
         </div>
     </div>
 </header>
 <!--分类  与  轮播图-->
 <div class="md-top am-container">
-    <div class="am-u-md-3">
+    <div class="am-u-md-4">
         <ul class="am-list am-list-border">
-            <li class="l-menu">
+            <li class="l-menu am-padding-sm">
                 <div>
-                    <span class="am-icon-qq"></span> <a href="#" class="am-inline am-text-warning">闲置数码</a>
+                    <span class="am-icon-qq"></span>
+                    <a href="#" class="am-inline am-text-warning am-text-lg">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm am-padding-left-sm">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm am-padding-sm">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm">闲置数码</a>
                 </div>
                 <div class="sub-menu am-hide am-animation-slide-bottom">
-                    <ul class="am-list am-list-border">
-                        <li>00001</li>
-                        <li>00002</li>
-                        <li>00003</li>
-                        <li>00004</li>
-                        <li>00005</li>
-                        <li>00006</li>
-                    </ul>
+                    <div class="am-margin-left-sm" style="background-color: #fff">
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
-            <li class="l-menu">
+            <li class="l-menu am-padding-sm">
                 <div>
-                    <span class="am-icon-qq"></span> <a href="#" class="am-inline am-text-warning">闲置数码</a>
+                    <span class="am-icon-qq"></span>
+                    <a href="#" class="am-inline am-text-warning am-text-lg">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm am-padding-left-sm">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm am-padding-sm">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm">闲置数码</a>
                 </div>
                 <div class="sub-menu am-hide am-animation-slide-bottom">
-                    <ul class="am-list am-list-border">
-                        <li>00001</li>
-                        <li>00002</li>
-                        <li>00003</li>
-                        <li>00004</li>
-                        <li>00005</li>
-                        <li>00006</li>
-                    </ul>
+                    <div class="am-margin-left-sm" style="background-color: #fff">
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
-            <li class="l-menu">
+            <li class="l-menu am-padding-sm">
                 <div>
-                    <span class="am-icon-qq"></span> <a href="#" class="am-inline am-text-warning">闲置数码</a>
+                    <span class="am-icon-qq"></span>
+                    <a href="#" class="am-inline am-text-warning am-text-lg">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm am-padding-left-sm">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm am-padding-sm">闲置数码</a>
+                    <a href="#" class="am-inline am-text-default am-text-sm">闲置数码</a>
                 </div>
                 <div class="sub-menu am-hide am-animation-slide-bottom">
-                    <ul class="am-list am-list-border">
-                        <li>00001</li>
-                        <li>00002</li>
-                        <li>00003</li>
-                        <li>00004</li>
-                        <li>00005</li>
-                        <li>00006</li>
-                    </ul>
+                    <div class="am-margin-left-sm" style="background-color: #fff">
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="am-text-warning am-padding-left-sm am-margin-left-sm am-margin-top-sm" style="border-left: 2px solid #F37B1D">手机</h4>
+                            <div class="h-sub-menu am-margin-left-sm">
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                                <a href="#" class="am-inline">充电宝</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </li>
         </ul>
     </div>
-    <div class="am-u-md-9">
+    <div class="am-u-md-8">
         <div class="slider autoplay">
             <div>
                 <img width="360" height="200" class="am-radius" src="__ROOT__/static/demo/1.jpg">
@@ -366,6 +428,7 @@
 
 <!--精选分类展示-->
 <div class="am-container">
+    <hr class="am-divider">
     <h4 class="am-text-success">
         数码控 <span class="am-text-sm">Digital</span>
         <a href="#" class="am-fr">更多</a>
@@ -477,8 +540,9 @@
     </div>
 </div>
 <div class="am-container">
-    <h4 class="am-text-success">
-        数码控 <span class="am-text-sm">Digital</span>
+    <hr class="am-divider">
+    <h4 class="am-text-secondary">
+        爱运动 <span class="am-text-sm">Sport</span>
         <a href="#" class="am-fr">更多</a>
     </h4>
     <hr class="am-divider">
@@ -588,8 +652,9 @@
     </div>
 </div>
 <div class="am-container">
-    <h4 class="am-text-success">
-        数码控 <span class="am-text-sm">Digital</span>
+    <hr class="am-divider">
+    <h4 class="am-text-danger">
+        爱车 <span class="am-text-sm">Car</span>
         <a href="#" class="am-fr">更多</a>
     </h4>
     <hr class="am-divider">

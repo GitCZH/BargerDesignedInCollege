@@ -1,16 +1,77 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
+<head lang="en">
     <meta charset="UTF-8">
-    <title>注册</title>
+    <title>注册 | Register</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    {include file='assets'}
+    <style>
+        .header {
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 200%;
+            color: #333;
+            margin-top: 30px;
+        }
+        .header p {
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-<form action="{:url('user/checkRegister')}" method="post" name="register">
-    <input type="text" name="loginname" >
-    <input type="password" name="loginpwd">
-    <input type="email" name="loginemail">
-    <input type="submit" value="注册">
-</form>
-<a href="{:url('user/loginin')}">登录</a>
+<div class="header">
+    <div class="am-g">
+        <h1>物物交换</h1>
+        <p>Exchange<br/>闲物 交换 价值</p>
+    </div>
+    <hr />
+</div>
+<hr class="am-divider">
+<div class="am-container">
+    <div class="am-g">
+        <form method="post" action="{:url('index/user/checkLogin')}" class="am-form am-form-horizontal am-u-md-6 am-u-md-centered">
+            <div class="am-form-group">
+                <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">用户名</label>
+                <div class="am-u-sm-10">
+                    <input type="text" name="loginname" id="doc-ipt-3" placeholder="设置登录用户名">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">密码</label>
+                <div class="am-u-sm-10">
+                    <input type="password" name="loginpwd" id="doc-ipt-pwd-2" placeholder="设置你的密码">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-pwd-3" class="am-u-sm-2 am-form-label">确认密码</label>
+                <div class="am-u-sm-10">
+                    <input type="password" name="loginpwd" id="doc-ipt-pwd-3" placeholder="确认密码">
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <label for="doc-ipt-4" class="am-u-sm-2 am-form-label">用户名</label>
+                <div class="am-u-sm-10">
+                    <input type="text" name="loginname" id="doc-ipt-4" placeholder="设置登录邮箱">
+                    <small class="am-text-success">可以使用此邮箱与密码登录</small>
+                </div>
+            </div>
+
+            <div class="am-form-group">
+                <div class="am-u-sm-10 am-u-sm-offset-2">
+                    <button type="submit" class="am-btn am-btn-success">提交注册</button>
+                    <a href="{:url('index/user/loginin')}" target="_blank" class="am-btn am-btn-secondary am-margin-left-xl">已有账户？去登录</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 </body>
 </html>
