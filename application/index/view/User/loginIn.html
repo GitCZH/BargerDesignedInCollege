@@ -37,7 +37,11 @@
             <li><span class="am-text-secondary">我把最深沉的秘密放在那里。</span></li>
         </ul>
     </div>
-    <form method="post" action="{:url('index/user/checkLogin')}" class="am-form am-form-horizontal am-u-md-6">
+    <div class="am-form am-form-horizontal am-u-md-6">
+        <div class="am-alert am-alert-danger am-animation-slide-top" style="display: none" data-am-alert>
+            <span class="am-fr am-text-sm">3秒后自动关闭</span>
+            <p class="am-inline" id="err-result">没什么可给你，但求凭这阙歌。谢谢你风雨里，都不退愿陪着我。</p>
+        </div>
         <div class="am-form-group">
             <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">用户名</label>
             <div class="am-u-sm-10">
@@ -56,7 +60,7 @@
             <div class="am-u-sm-offset-2 am-u-sm-10">
                 <div class="checkbox">
                     <label>
-                        <input type="checkbox"> 记住十万年
+                        <input type="checkbox" name="remember" value="1"> 记住十万年
                     </label>
                 </div>
             </div>
@@ -64,11 +68,11 @@
 
         <div class="am-form-group">
             <div class="am-u-sm-10 am-u-sm-offset-2">
-                <button type="submit" class="am-btn am-btn-success">提交登入</button>
+                <button id="submit" class="am-btn am-btn-success">提交登入</button>
                 <a href="{:url('index/user/register')}" target="_blank" class="am-btn am-btn-radius am-btn-secondary am-margin-left-xl">还没账户？去注册</a>
             </div>
         </div>
-    </form>
+    </div>
     <div class="am-u-md-3">
         <ul class="am-list">
             <li><span class="am-text-success">每个人都有一个死角， 自己走不出来，别人也闯不进去。</span></li>
@@ -76,4 +80,34 @@
     </div>
 </div>
 </body>
+<script>
+    $(function () {
+//        表单ajax登录
+        $('#submit').click(function () {
+            var loginName = $('[name=loginname]').val()
+            var loginPwd = $('[name=loginpwd]').val()
+            var remember = $('[name=remember]').prop('checked') ? 1 : 0
+
+            var url = "{:url('index/user/checkLogin')}"
+            var data = {loginName:loginName, loginPwd:loginPwd, remember:remember}
+            console.log(loginName+loginPwd+remember)
+
+            $.ajax({
+                url:url,
+                type:'post',
+                dataType:'json',
+                data:data,
+                success: function (res) {
+                    if (res.errorCode != 0) {
+                        $('#err-result').html(res.result)
+                        $('.am-alert').prop('style', false)
+                        $('.am-alert').delay(3000).toggle('slow')
+                        return false;
+                    }
+                    window.location.href = '{:url("index/index/index")}';
+                }
+            })
+        })
+    })
+</script>
 </html>

@@ -25,7 +25,8 @@
                 <img src="__ROOT__/static/demo/2.jpg" class="am-inline am-radius" width="120" alt="">
                 <div class="am-fr am-text-sm am-text-center">
                     <p class="am-text-secondary">向阳而生</p>
-                    <b class="am-text-success">女</b>
+                    <p><span>信誉积分：</span><b class="am-text-danger">89</b></p>
+                    <p><span>性别：</span><b class="am-text-success">女</b></p>
                 </div>
             </div>
 
@@ -45,7 +46,7 @@
             </div>
 
             <div class="am-u-sm-1 am-text-middle">
-                <a href="#" class="am-fr am-text-danger"><b>举报宝贝</b></a>
+                <button class="am-fr am-btn am-btn-danger report"><b>举报宝贝</b></button>
             </div>
         </div>
     </div>
@@ -199,20 +200,19 @@
         <p><b>所在地：</b><span class="am-text-danger">北京市 城区</span></p>
         <p><b>联系方式：</b><span class="am-text-danger">暂无</span></p>
         <p><b>交易方式：</b><span class="am-text-danger">在线交易</span></p>
-        <button class="am-btn am-btn-primary">加入收藏</button>
-        <button class="am-btn am-btn-success">立即交易</button>
+        <a href="#" class="am-btn am-btn-primary">加入收藏</a>
+        <a href="#" class="am-btn am-btn-success" data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 520}">立即交易</a>
         <br><br>
-        <button class="am-btn am-btn-warning">喜欢这个，给他留言</button>
+        <a href="#" class="am-btn am-btn-warning" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 520}">喜欢这个，给他留言</a>
         <hr class="am-divider">
 
         <div class="am-panel am-panel-default">
             <div class="am-panel-hd"><a href="#">卖家其他闲置</a> <b class="am-fr am-text-danger">(99)</b></div>
             <div class="am-panel-bd">
-                <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
-  am-avg-md-3 am-avg-lg-4 am-gallery-bordered" data-am-gallery="{  }" >
+                <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-bordered" data-am-gallery="{  }" >
                     <li>
                         <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-1.jpg" class="">
+                            <a href="{:url('index/goods/detail')}?gid=1" class="">
                                 <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg"/>
                                 <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
                                 <div class="am-gallery-desc">2375-09-26</div>
@@ -221,45 +221,36 @@
                     </li>
                     <li>
                         <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
-                                <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
+                            <a href="{:url('index/goods/detail')}?gid=1" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"/>
+                                <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
                                 <div class="am-gallery-desc">2375-09-26</div>
                             </a>
                         </div>
                     </li>
                     <li>
                         <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
-                                <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
+                            <a href="{:url('index/goods/detail')}?gid=1" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"/>
+                                <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
                                 <div class="am-gallery-desc">2375-09-26</div>
                             </a>
                         </div>
                     </li>
                     <li>
                         <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
-                                <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
+                            <a href="{:url('index/goods/detail')}?gid=1" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"/>
+                                <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
                                 <div class="am-gallery-desc">2375-09-26</div>
                             </a>
                         </div>
                     </li>
                     <li>
                         <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
-                                <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
-                                <div class="am-gallery-desc">2375-09-26</div>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
-                                <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
+                            <a href="{:url('index/goods/detail')}?gid=1" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg"/>
+                                <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
                                 <div class="am-gallery-desc">2375-09-26</div>
                             </a>
                         </div>
@@ -273,6 +264,135 @@
 </div>
 <!--商品信息  end-->
 {include file='footer'}
+
+<!--留言 模态框-->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">写下你的留言吧
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <form class="am-form">
+                <fieldset>
+                    <div class="am-form-group">
+                        <label for="doc-ta-1">留言区</label>
+                        <textarea class="" rows="5" id="doc-ta-1" placeholder="说你想说吧..."></textarea>
+                    </div>
+                    <p><button type="submit" class="am-btn am-btn-success">提交</button></p>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--交易模态框-->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-2">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">选择交易方式
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <select data-am-selected id="trade-way">
+                <option value="0">请选择</option>
+                <option value="1">直接购买</option>
+                <option value="2">物物交换</option>
+            </select>
+            <div class="am-form-group">
+                <label for="local">收货地址:</label>
+                <br>
+                <div class="am-btn-group doc-js-btn-1" data-am-button id="local">
+                    <label class="am-btn am-btn-primary am-block">
+                        <input type="radio" name="options" value="选项 1" id="option1"> XXX XX XXX XXXXXXXXXX
+                    </label>
+                    <br>
+                    <label class="am-btn am-btn-primary am-block">
+                        <input type="radio" name="options" value="选项 1" id="option2"> XXX XXX XXX XXX
+                    </label>
+                    <br>
+                    <label class="am-btn am-btn-primary am-block">
+                        <input type="radio" name="options" value="选项 1" id="option3"> XXX XX XXX XXXXXXXXXX
+                    </label>
+                    <br>
+                </div>
+            </div>
+            <hr class="am-divider">
+            <div class="trade-buy am-animation-slide-top am-hide">
+                <div class="am-form">
+                    <div class="am-form-group">
+                        <label for="price">出价：</label>
+                        <input type="text" id="price" placeholder="输入你的出价">
+                    </div>
+                    <div class="am-form-group">
+                        <button class="am-btn am-btn-success">提交</button>
+                    </div>
+                </div>
+            </div>
+            <div class="trade-exchange am-animation-slide-top am-hide">
+                <h4 class="am-text-warning">选择你要交换的物品</h4>
+                <ul data-am-widget="gallery" class="am-gallery am-avg-sm-1 am-gallery-default" data-am-gallery="{ pureview: true }" >
+                    <li>
+                        <div class="am-btn-group" data-am-button>
+                            <label class="am-btn am-btn-success">
+                                <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
+                            </label>
+                        </div>
+                        <div class="am-gallery-item">
+                            <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
+                                <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
+                                <div class="am-gallery-desc">2375-09-26</div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="am-btn-group" data-am-button>
+                            <label class="am-btn am-btn-success">
+                                <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
+                            </label>
+                        </div>
+                        <div class="am-gallery-item">
+                            <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
+                                <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
+                                <div class="am-gallery-desc">2375-09-26</div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="am-btn-group" data-am-button>
+                            <label class="am-btn am-btn-success">
+                                <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
+                            </label>
+                        </div>
+                        <div class="am-gallery-item">
+                            <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
+                                <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
+                                <div class="am-gallery-desc">2375-09-26</div>
+                            </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="am-btn-group" data-am-button>
+                            <label class="am-btn am-btn-success">
+                                <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
+                            </label>
+                        </div>
+                        <div class="am-gallery-item">
+                            <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg" class="">
+                                <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
+                                <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
+                                <div class="am-gallery-desc">2375-09-26</div>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+                <p><span>共选择：</span><b class="am-text-danger">1</b>件</p>
+                <button class="am-btn am-btn-success">提交</button>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <script>
     $(function() {
@@ -291,6 +411,30 @@
             autoplay: true,
             autoplaySpeed: 2000
         });
+//切换交易方式
+        $('#trade-way').change(function () {
+            var v = $(this).val()
+            console.log(v)
+            if (v == 1) {
+                $('.trade-buy').removeClass('am-hide')
+                $('.trade-exchange').addClass('am-hide')
+            }
+            if (v == 2) {
+                $('.trade-buy').addClass('am-hide')
+                $('.trade-exchange').removeClass('am-hide')
+            }
+            if ( v == 0) {
+                $('.trade-buy').addClass('am-hide')
+                $('.trade-exchange').addClass('am-hide')
+            }
+        })
+//        举报js
+        $('.report').click(function () {
+            if (!confirm('确认举报？(恶意举报会被扣除信誉积分的)')) {
+                return false
+            }
+            alert('已举报')
+        })
     });
 </script>
 </html>

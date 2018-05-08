@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交易详情 - Exchange</title>
+    {include file='assets'}
+</head>
+<body>
+{include file='header'}
+<div class="am-container">
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-bd">
+            <h3 class="am-text-danger">
+                Order Name <b class="am-text-success am-margin-left">[直接购买]</b>
+            </h3>
+        </div>
+    </div>
+</div>
+
+<!--订单列表-->
+<div class="am-container">
+    <div class="am-panel am-panel-default">
+        <div class="am-panel-bd am-g">
+            <h3 class="am-text-danger">订单详情</h3>
+            <hr class="am-divider">
+            <div>
+                <h4 class="am-text-warning">我的物品</h4>
+                <div>
+                    <div class="am-container">
+                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
+                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
+                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+                    </div>
+                    <hr class="am-divider">
+                    <div class="am-container am-scrollable-vertical">
+                        <div class="am-u-sm-4">
+                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
+                            <br>
+                            <a href="#">
+                                Unsitheic Kiius Unsitheic Kiius
+                                Unsitheic Kiius Unsitheic Kiius Unsitheic
+                                Kiius Unsitheic Kiius
+                            </a>
+                        </div>
+                        <div class="am-u-sm-2">
+                            <span class="am-badge am-badge-success am-radius">发起请求</span>
+                            <span class="am-icon-chevron-circle-right am-text-primary"></span>
+                            <br>
+                            <span class="am-badge am-badge-success am-radius">接受请求</span>
+                            <span class="am-icon-chevron-circle-right am-text-primary"></span>
+                            <br>
+                            <span class="am-badge am-badge-default am-radius">交易中</span>
+                            <span class="am-icon-chevron-circle-right am-text-default"></span>
+                            <br>
+                            <span class="am-badge am-badge-default am-radius">交易完成</span>
+                        </div>
+                        <div class="am-u-sm-1">
+                            <a href="#">Self</a>
+                        </div>
+                        <div class="am-u-sm-3">
+                            <div>
+                                <button class="am-btn am-btn-secondary" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0}">添加状态信息</button>
+                            </div>
+                            <ul class="am-list am-text-sm">
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="am-u-sm-2">
+                            <a href="#" class="am-btn am-btn-primary">更新交易状态</a>
+                        </div>
+                    </div>
+                    <hr class="am-divider">
+                </div>
+            </div>
+            <div>
+                <h4 class="am-text-warning">对方的物品</h4>
+                <div>
+                    <div class="am-container">
+                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
+                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
+                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+                    </div>
+                    <hr class="am-divider">
+                    <div class="am-container am-scrollable-vertical">
+                        <div class="am-u-sm-4">
+                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
+                            <br>
+                            <a href="#">
+                                Unsitheic Kiius Unsitheic Kiius
+                                Unsitheic Kiius Unsitheic Kiius Unsitheic
+                                Kiius Unsitheic Kiius
+                            </a>
+                        </div>
+                        <!-- 状态更新-->
+                        <div class="am-u-sm-2">
+                            <span class="am-badge am-badge-success am-radius">发起请求</span>
+                            <span class="am-icon-chevron-circle-right am-text-primary"></span>
+                            <br>
+                            <span class="am-badge am-badge-success am-radius">接受请求</span>
+                            <span class="am-icon-chevron-circle-right am-text-primary"></span>
+                            <br>
+                            <span class="am-badge am-badge-default am-radius">交易中</span>
+                            <span class="am-icon-chevron-circle-right am-text-default"></span>
+                            <br>
+                            <span class="am-badge am-badge-default am-radius">交易完成</span>
+                        </div>
+                        <!--状态更新  end-->
+                        <div class="am-u-sm-1">
+                            <a href="#">Sale</a>
+                        </div>
+                        <!--流程信息-->
+                        <div class="am-u-sm-3">
+                            <ul class="am-list am-text-sm">
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                                <li>
+                                    <span>2018-01-01 11:11:11</span>
+                                    <span>已交付快递公司</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <!--流程信息   end-->
+                        <div class="am-u-sm-2">
+                            <span>更新交易状态</span>
+                        </div>
+                    </div>
+                    <hr class="am-divider">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--订单列表  end-->
+{include file='footer'}
+<!--添加流程信息  模态框-->
+<div class="am-modal am-modal-no-btn" tabindex="-1" id="doc-modal-1">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">添加流程信息 - 订单Name
+            <a href="javascript: void(0)" class="am-close am-close-spin" data-am-modal-close>&times;</a>
+        </div>
+        <div class="am-modal-bd">
+            <hr class="am-divider">
+            <textarea name="process-info" id="" cols="30" rows="10" placeholder="输入流程信息..." class="am-form-field"></textarea>
+            <br>
+            <button class="am-btn am-btn-success">提交</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

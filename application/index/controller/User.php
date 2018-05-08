@@ -6,6 +6,8 @@
  * Time: 22:04
  */
 namespace app\index\controller;
+use app\common\controller\UserCheck;
+use app\common\Error;
 use think\Controller;
 use think\Request;
 use think\Validate;
@@ -37,27 +39,21 @@ class User extends Controller {
      */
     public function checkLogin(Request $request) {
         $params = $request->param();
-        $user = model('user');
-        $query = [
-            'loginname' => $params['loginname'],
-            'loginpwd' => md5($params['loginpwd']),
-            'isvalid' => 1
-        ];
-//        $sql = $user->where($query)->find()->getLastSql();
-        $res = $user->where($query)->find();
-        if(!$res) {
-            return $this->error('登录失败');
+        $common = new UserCheck();
+        $res = $common->checkLogin($params);
+        $errCode = $res ? 0 : 1;
+        $errArr = Error::getCodeMsgArr($errCode);
+        if ($res) {
+            $errArr['result'] = "登录失败，请重新输入账户信息！";
         }
-//        找到返回模型对象，未找到返回null
-//        print_r($sql);
-        $userAccount = $res->getData();
-        session('uid', $res->getData()['id']);
-        session('uname', $params['loginname']);
-        return $this->redirect('index/index');
+        return json($errArr);
     }
 
     public function exitLogin() {
-
+        $common = new UserCheck();
+        if ($common->exitLogin()) {
+            return $this->redirect('index/index/index');
+        }
     }
 
     public function register() {

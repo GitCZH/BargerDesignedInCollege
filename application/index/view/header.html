@@ -1,13 +1,13 @@
 <header class="am-topbar">
     <h1 class="am-topbar-brand">
-        <a href="#">Exchange</a>
+        <a href="{:url('index/index/index')}">Exchange</a>
     </h1>
 
     <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#doc-topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
 
     <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-active"><a href="#">首页</a></li>
+            <li class="am-active"><a href="{:url('index/index/index')}">首页</a></li>
             <li><a href="#">发布闲置</a></li>
             <li class="am-dropdown" data-am-dropdown>
                 <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
@@ -15,8 +15,8 @@
                 </a>
                 <ul class="am-dropdown-content">
                     <li class="am-dropdown-header">与我相关</li>
-                    <li><a href="#">出售中 <span class="am-badge am-badge-warning am-round am-margin-left">5</span></a></li>
-                    <li><a href="#">交易中 <span class="am-badge am-badge-success am-round am-margin-left">5</span></a></li>
+                    <li><a href="{:url('index/trade/tradelist')}?status=3">出售中 <span class="am-badge am-badge-warning am-round am-margin-left">5</span></a></li>
+                    <li><a href="{:url('index/trade/tradelist')}?status=2">交易中 <span class="am-badge am-badge-success am-round am-margin-left">5</span></a></li>
                     <li><a href="#">新留言 <span class="am-badge am-badge-secondary am-round am-margin-left">5</span></a></li>
                     <li class="am-divider"></li>
                 </ul>
@@ -32,11 +32,22 @@
             </div>
         </form>
 
+        {if null === $Think.session.uname}
         <div class="am-topbar-right">
             <a href="{:url('index/user/register')}" target="_blank" class="am-btn am-btn-secondary am-topbar-btn am-btn-sm " >注册</a>
         </div>
         <div class="am-topbar-right">
             <a href="{:url('index/user/loginin')}" target="_blank" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">登录</a>
         </div>
+        {else}
+        <div class="am-topbar-right">
+            <a href="{:url('index/user/exitLogin')}" target="_blank" class="am-btn am-btn-danger am-topbar-btn am-btn-sm">退出</a>
+        </div>
+        <div class="am-topbar-right">
+            <a href="{:url('index/user/center')}" target="_blank" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">
+                欢迎你，<b>{$Think.session.uname}</b>
+            </a>
+        </div>
+        {/if}
     </div>
 </header>
