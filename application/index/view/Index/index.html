@@ -192,86 +192,33 @@
             </ul>
             <div class="am-tabs-bd">
                 <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
-  am-avg-md-3 am-avg-lg-4 am-gallery-imgbordered" data-am-gallery="{  }" >
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-imgbordered" data-am-gallery="{  }" >
+                        {volist name='lastedGoods' id='vo'}
                         <li>
                             <div class="am-gallery-item">
-                                <a href="#" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg"  alt="远方 有一个地方 那里种有我们的梦想"/>
-                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
+                                <a href="{:url('index/goods/detail')}?gid={$vo.id}" target="_blank">
+                                    <img src="__ROOT__/static/goods/upload/{$vo.img}"/>
+                                    <h3 class="am-gallery-title">{$vo.gname}</h3>
+                                    <div class="am-gallery-desc">{$vo.create_time|date='Y-m-d H:i:s',###}</div>
                                 </a>
                             </div>
                         </li>
-                        <li>
-                            <div class="am-gallery-item">
-                                <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
-                                    <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="am-gallery-item">
-                                <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
-                                    <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="am-gallery-item">
-                                <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
-                                    <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
-                                </a>
-                            </div>
-                        </li>
+                        {/volist}
                     </ul>
-
                 </div>
                 <div class="am-tab-panel am-fade" id="tab2">
-                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2
-  am-avg-md-3 am-avg-lg-4 am-gallery-imgbordered" data-am-gallery="{  }" >
+                    <ul data-am-widget="gallery" class="am-gallery am-avg-sm-2 am-avg-md-3 am-avg-lg-4 am-gallery-imgbordered" data-am-gallery="{  }" >
+                        {volist name='sameCityGoods' id='vo2'}
                         <li>
                             <div class="am-gallery-item">
-                                <a href="http://s.amazeui.org/media/i/demos/bing-1.jpg" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg"  alt="远方 有一个地方 那里种有我们的梦想"/>
-                                    <h3 class="am-gallery-title">远方 有一个地方 那里种有我们的梦想</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
+                                <a href="{:url('index/goods/detail')}?gid={$vo2.id}" class="">
+                                    <img src="__ROOT__/static/goods/upload/{$vo2.img}"  alt="远方 有一个地方 那里种有我们的梦想"/>
+                                    <h3 class="am-gallery-title">{$vo2.gname}</h3>
+                                    <div class="am-gallery-desc">{$vo2.create_time|date='Y-m-d H:i:s',###}</div>
                                 </a>
                             </div>
                         </li>
-                        <li>
-                            <div class="am-gallery-item">
-                                <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
-                                    <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="am-gallery-item">
-                                <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
-                                    <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
-                                </a>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="am-gallery-item">
-                                <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg" class="">
-                                    <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
-                                    <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
-                                    <div class="am-gallery-desc">2375-09-26</div>
-                                </a>
-                            </div>
-                        </li>
+                        {/volist}
                     </ul>
                 </div>
                 <div class="am-tab-panel am-fade" id="tab3">

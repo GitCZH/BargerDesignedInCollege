@@ -10,7 +10,7 @@ namespace app\index\controller;
 use think\Controller;
 use think\Request;
 
-class Trade extends Controller
+class Trade extends Base
 {
     /**
      * 我的订单页面

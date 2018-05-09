@@ -8,6 +8,7 @@
 namespace app\common\dataoper;
 use app\common\Factory;
 use app\common\Functions;
+use think\Db;
 
 class Goods
 {
@@ -88,5 +89,22 @@ class Goods
     {
         $model = Factory::getModelObj('goods');
         return $model->where(['status' => $status, 'islist' => 1])->count();
+    }
+
+    /**
+     * 获取最新上架的闲物
+     */
+    public function getLatestGoods()
+    {
+//        查询视图中的闲物图片关联的数据
+        return Db::view('goods_gimg')->order('create_time desc')->limit(8)->select();
+    }
+
+    /**
+     * 获取同城闲物
+     */
+    public function getSameCityGoods($pid, $cid)
+    {
+        return Db::query('select *from ex_goods_gimg where gpid=' . $pid . ' and gcid=' . $cid);
     }
 }

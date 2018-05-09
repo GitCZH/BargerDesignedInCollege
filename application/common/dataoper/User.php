@@ -22,7 +22,7 @@ class User
     }
     public static function checkLogin($params)
     {
-        session('uid', '111');
+        session('uid', '11');
         session('uname', 'loginName');
         return true;
     }
