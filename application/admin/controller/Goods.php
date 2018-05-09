@@ -28,31 +28,55 @@ class Goods extends Base
     /**
      *已审核商品列表
      */
-    public function goodsList()
+    public function goodsList(Request $request)
     {
         $goods = Factory::getOperObj('goods');
-        $goodsList = $goods->getGoodsList();
-        $goodsList = Functions::dataSetToArray($goodsList);
 
+        $page = (int)$request->param('page', 1);
+        $totalCounts = $goods->getTotalCountsByStatus(0);
+        $limit = 10;
+        $totalPage = ceil($totalCounts / $limit);
+        $unauditGoods = $goods->getUnauditGoods($page,$limit);
+        $this->assign('totalNum', $totalCounts);
+        $this->assign('totalpage', $totalPage);
+        if (empty($unauditGoods)) {
+            $this->assign('unauditGoods', $unauditGoods);
+            return $this->fetch();
+        }
+        $imgs = Factory::getOperObj('gimgs');
         $user = Factory::getOperObj('user');
         $category = Factory::getOperObj('category');
-        foreach($goodsList as &$item) {
-//            填充用户名
-            $dbUser = $user->getUserAccountById($item['uid']);
-            $item['uid'] = empty($user) ? '佚名' : $dbUser->getData()['loginname'];
-//            填充分类
-            $cats = explode('-', $item['cid']);
-            array_shift($cats);
-            $item['cid'] = '';
-            foreach($cats as $cat) {
-                $dbCat = $category->getById($cat);
-                if (!empty($dbCat)) {
-                    $item['cid'] .= $dbCat->getData()['catnameB'] . '>';
+        $unauditGoods = Functions::dataSetToArray($unauditGoods);
+        foreach ($unauditGoods as &$item) {
+            //        获取闲物的一张图片
+            $img = $imgs->getImgsByGid($item['id'], 0);
+            if (!empty($img)) {
+                $item['img'] = $img;
+            }
+//            获取发布人
+            $u = $user->getUserAccountById($item['uid']);
+            if (!empty($u)) {
+                $item['uid'] = $u->getData()['loginname'];
+            } else {
+                $item['uid'] = '佚名';
+            }
+//            获取所属分类
+            $catArr = explode('-', $item['cid']);
+            array_shift($catArr);
+            $catStr = '';
+            foreach ($catArr as $value) {
+                $cat = $category->getById($value);
+                if (!empty($cat)) {
+                    $catStr .= $cat->getData()['catnameB'] . '>';
                 }
             }
-            $item['cid'] = rtrim($item['cid'], '>');
+            $item['cid'] = rtrim($catStr, '>');
         }
-        dump($goodsList);
+//        dump($unauditGoods);exit;
+//        图片目录
+        $this->assign('imgpath', '/ExchangeGit/public/static/goods/upload/');
+        $this->assign('goodslist', $unauditGoods);
+        return $this->fetch();
     }
 
     /**
