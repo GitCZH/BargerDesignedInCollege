@@ -154,8 +154,34 @@ class Functions
     }
 
     /**
+     *省市代码转文字
+     */
+    public static function addrCodeToWord($pid, $cid = null, $aid = null)
+    {
+        $location = Factory::getOperObj('location');
+
+        $addr['province'] = $location->getProvinceByPid($pid);
+        if (!empty($cid)) {
+            $addr['city'] = $location->getCityByCid($cid);
+        }
+        if (!empty($aid)) {
+            $addr['area'] = $location->getAreaByAid($aid);
+        }
+        return $addr;
+    }
+
+    /**
      * 补充查询
      */
+
+    /**
+     * 生成交易订单编号
+     * 18位长
+     */
+    public static function generateTradeNum()
+    {
+        return strtoupper(uniqid(date('Ymd')));
+    }
 
     /**
      * 测试账号生成规则

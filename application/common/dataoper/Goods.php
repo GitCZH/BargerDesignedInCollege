@@ -107,4 +107,22 @@ class Goods
     {
         return Db::query('select *from ex_goods_gimg where gpid=' . $pid . ' and gcid=' . $cid);
     }
+
+    /**
+     * 更新物品浏览数
+     */
+    public function incScanNum($gid)
+    {
+        $model = Factory::getModelObj('goods');
+        return $model->where(['id' => $gid])->setInc('scannum');
+    }
+
+    /**
+     * 获取用户发布的且未被交易的闲置物品
+     */
+    public function getLeisureGoods($uid)
+    {
+        $model = Factory::getModelObj('goods');
+        return $model->where(['uid' => $uid, 'istrade' => 0, 'status' => 1])->select();
+    }
 }

@@ -44,7 +44,7 @@
             <a href="{:url('index/user/exitLogin')}" target="_blank" class="am-btn am-btn-danger am-topbar-btn am-btn-sm">退出</a>
         </div>
         <div class="am-topbar-right">
-            <a href="{:url('index/user/center')}" target="_blank" class="am-btn am-btn-primary am-topbar-btn am-btn-sm">
+            <a href="{:url('index/user/center')}" target="_blank" class="am-btn am-btn-primary am-topbar-btn am-btn-sm user-name" data-uid="{$Think.session.uid}">
                 欢迎你，<b>{$Think.session.uname}</b>
             </a>
         </div>

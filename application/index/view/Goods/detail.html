@@ -22,26 +22,26 @@
     <div class="am-panel am-panel-default">
         <div class="am-panel-bd am-g">
             <div class="am-u-sm-3" style="border-right: 2px solid #3BB4F2">
-                <img src="__ROOT__/static/demo/2.jpg" class="am-inline am-radius" width="120" alt="">
+                <img src="__ROOT__/static/avatars/{$user.avatar}" class="am-inline am-radius" width="120" alt="">
                 <div class="am-fr am-text-sm am-text-center">
-                    <p class="am-text-secondary">向阳而生</p>
-                    <p><span>信誉积分：</span><b class="am-text-danger">89</b></p>
-                    <p><span>性别：</span><b class="am-text-success">女</b></p>
+                    <p class="am-text-secondary">{$user.nickname}</p>
+                    <p><span>信誉积分：</span><b class="am-text-danger">{$user.credit}</b></p>
+                    <p><span>性别：</span><b class="am-text-success">{$user.sex = 1 ? '男' : '女'}</b></p>
                 </div>
             </div>
 
             <div class="am-u-sm-7 am-text-center">
                 <div class="am-u-sm-4">
                     <p>宝贝浏览次数</p>
-                    <p class="am-text-danger">999+</p>
+                    <p class="am-text-danger">{$goodsInfo.scannum}</p>
                 </div>
                 <div class="am-u-sm-4">
                     <p>最近编辑</p>
-                    <p class="am-text-danger">2018-01-01 12:12:12</p>
+                    <p class="am-text-danger">{$goodsInfo.update_time|date='Y-m-d H:i:s',###}</p>
                 </div>
                 <div class="am-u-sm-4">
                     <p>所在地</p>
-                    <p class="am-text-danger">北京市 北京市 大新区</p>
+                    <p class="am-text-danger">{$goodsInfo.glocation}</p>
                 </div>
             </div>
 
@@ -60,18 +60,11 @@
         <!--商品图片介绍-->
         <div data-am-widget="slider" class="am-slider am-slider-default" data-am-slider='{"animation":"slide","controlNav":"thumbnails"}' >
             <ul class="am-slides">
-                <li data-thumb="http://s.amazeui.org/media/i/demos/bing-1.jpg">
-                    <img src="http://s.amazeui.org/media/i/demos/bing-1.jpg">
+                {volist name='gimgs' id='vo' length='4'}
+                <li data-thumb="__ROOT__/static/goods/upload/{$vo.img}">
+                    <img src="__ROOT__/static/goods/upload/{$vo.img}">
                 </li>
-                <li data-thumb="http://s.amazeui.org/media/i/demos/bing-2.jpg">
-                    <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg">
-                </li>
-                <li data-thumb="http://s.amazeui.org/media/i/demos/bing-3.jpg">
-                    <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg">
-                </li>
-                <li data-thumb="http://s.amazeui.org/media/i/demos/bing-4.jpg">
-                    <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg">
-                </li>
+                {/volist}
             </ul>
         </div>
         <!--商品图片介绍  end-->
@@ -84,26 +77,18 @@
                 <li class=""><a href="[data-tab-panel-2]">安全保障</a></li>
             </ul>
             <div class="am-tabs-bd">
+                <!--介绍-->
                 <div data-tab-panel-0 class="am-tab-panel am-active">
+                    <p>{$goodsInfo.gdescribe}</p>
+                    {volist name='gimgs' id='vo'}
                     <figure data-am-widget="figure" class="am am-figure am-figure-default "   data-am-figure="{  pureview: 'true' }">
-                        <img src="http://s.amazeui.org/media/i/demos/pure-1.jpg?imageView2/0/w/640" data-rel="http://s.amazeui.org/media/i/demos/pure-1.jpg" alt="春天的花开秋天的风以及冬天的落阳"/>
+                        <img width="670" src="__ROOT__/static/goods/upload/{$vo.img}" data-rel="__ROOT__/static/goods/upload/{$vo.img}"/>
                         <figcaption class="am-figure-capition-btm">
-                            春天的花开秋天的风以及冬天的落阳
                         </figcaption>
                     </figure>
-                    <figure data-am-widget="figure" class="am am-figure am-figure-default "   data-am-figure="{  pureview: 'true' }">
-                        <img src="http://s.amazeui.org/media/i/demos/pure-1.jpg?imageView2/0/w/640" data-rel="http://s.amazeui.org/media/i/demos/pure-1.jpg" alt="春天的花开秋天的风以及冬天的落阳"/>
-                        <figcaption class="am-figure-capition-btm">
-                            春天的花开秋天的风以及冬天的落阳
-                        </figcaption>
-                    </figure>
-                    <figure data-am-widget="figure" class="am am-figure am-figure-default "   data-am-figure="{  pureview: 'true' }">
-                        <img src="http://s.amazeui.org/media/i/demos/pure-1.jpg?imageView2/0/w/640" data-rel="http://s.amazeui.org/media/i/demos/pure-1.jpg" alt="春天的花开秋天的风以及冬天的落阳"/>
-                        <figcaption class="am-figure-capition-btm">
-                            春天的花开秋天的风以及冬天的落阳
-                        </figcaption>
-                    </figure>
+                    {/volist}
                 </div>
+                <!--介绍   end-->
                 <div data-tab-panel-1 class="am-tab-panel ">
                     <ul class="am-comments-list am-comments-list-flip">
                         <li>
@@ -193,15 +178,15 @@
     <!--商品信息 left   end-->
     <!--商品信息  right-->
     <div class="am-u-sm-5">
-        <h2 class="am-text-primary am-text-center">名字 name</h2>
+        <h2 class="am-text-primary am-text-center">{$goodsInfo.gname}</h2>
         <p>
-            <b>成色：</b> <span class="am-text-danger">非全新</span>
+            <b>成色：</b> <span class="am-text-danger">{$goodsInfo.isnew == 0 ? '非全新' : '全新'}</span>
         </p>
-        <p><b>所在地：</b><span class="am-text-danger">北京市 城区</span></p>
-        <p><b>联系方式：</b><span class="am-text-danger">暂无</span></p>
+        <p><b>所在地：</b><span class="am-text-danger">{$goodsInfo.glocation}</span></p>
+        <p><b>联系方式：</b><span class="am-text-danger">{$user.phone}</span></p>
         <p><b>交易方式：</b><span class="am-text-danger">在线交易</span></p>
         <a href="#" class="am-btn am-btn-primary">加入收藏</a>
-        <a href="#" class="am-btn am-btn-success" data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 520}">立即交易</a>
+        <a href="#" id="trade-now" class="am-btn am-btn-success" data-am-modal="{target: '#doc-modal-2', closeViaDimmer: 0, width: 520}">立即交易</a>
         <br><br>
         <a href="#" class="am-btn am-btn-warning" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0, width: 520}">喜欢这个，给他留言</a>
         <hr class="am-divider">
@@ -301,18 +286,6 @@
                 <label for="local">收货地址:</label>
                 <br>
                 <div class="am-btn-group doc-js-btn-1" data-am-button id="local">
-                    <label class="am-btn am-btn-primary am-block">
-                        <input type="radio" name="options" value="选项 1" id="option1"> XXX XX XXX XXXXXXXXXX
-                    </label>
-                    <br>
-                    <label class="am-btn am-btn-primary am-block">
-                        <input type="radio" name="options" value="选项 1" id="option2"> XXX XXX XXX XXX
-                    </label>
-                    <br>
-                    <label class="am-btn am-btn-primary am-block">
-                        <input type="radio" name="options" value="选项 1" id="option3"> XXX XX XXX XXXXXXXXXX
-                    </label>
-                    <br>
                 </div>
             </div>
             <hr class="am-divider">
@@ -323,14 +296,15 @@
                         <input type="text" id="price" placeholder="输入你的出价">
                     </div>
                     <div class="am-form-group">
-                        <button class="am-btn am-btn-success">提交</button>
+                        <button class="am-btn am-btn-success" id="trade-buy">提交</button>
                     </div>
                 </div>
             </div>
             <div class="trade-exchange am-animation-slide-top am-hide">
                 <h4 class="am-text-warning">选择你要交换的物品</h4>
-                <ul data-am-widget="gallery" class="am-gallery am-avg-sm-1 am-gallery-default" data-am-gallery="{ pureview: true }" >
-                    <li>
+                <ul id="leisureGoods" data-am-widget="gallery" class="am-gallery am-avg-sm-1 am-gallery-default" data-am-gallery="{ pureview: true }" >
+
+                    <!--<li>
                         <div class="am-btn-group" data-am-button>
                             <label class="am-btn am-btn-success">
                                 <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
@@ -343,52 +317,10 @@
                                 <div class="am-gallery-desc">2375-09-26</div>
                             </a>
                         </div>
-                    </li>
-                    <li>
-                        <div class="am-btn-group" data-am-button>
-                            <label class="am-btn am-btn-success">
-                                <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
-                            </label>
-                        </div>
-                        <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-2.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-2.jpg"  alt="某天 也许会相遇 相遇在这个好地方"/>
-                                <h3 class="am-gallery-title">某天 也许会相遇 相遇在这个好地方</h3>
-                                <div class="am-gallery-desc">2375-09-26</div>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="am-btn-group" data-am-button>
-                            <label class="am-btn am-btn-success">
-                                <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
-                            </label>
-                        </div>
-                        <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-3.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-3.jpg"  alt="不要太担心 只因为我相信"/>
-                                <h3 class="am-gallery-title">不要太担心 只因为我相信</h3>
-                                <div class="am-gallery-desc">2375-09-26</div>
-                            </a>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="am-btn-group" data-am-button>
-                            <label class="am-btn am-btn-success">
-                                <input type="checkbox" class="needsclick" name="doc-js-btn" value="1"> 选择
-                            </label>
-                        </div>
-                        <div class="am-gallery-item">
-                            <a href="http://s.amazeui.org/media/i/demos/bing-4.jpg" class="">
-                                <img src="http://s.amazeui.org/media/i/demos/bing-4.jpg"  alt="终会走过这条遥远的道路"/>
-                                <h3 class="am-gallery-title">终会走过这条遥远的道路</h3>
-                                <div class="am-gallery-desc">2375-09-26</div>
-                            </a>
-                        </div>
-                    </li>
+                    </li>-->
                 </ul>
-                <p><span>共选择：</span><b class="am-text-danger">1</b>件</p>
-                <button class="am-btn am-btn-success">提交</button>
+                <p><span>共选择：</span><b class="am-text-danger" id="select-num">0</b>件</p>
+                <button class="am-btn am-btn-success" id="trade-exchange">提交</button>
             </div>
         </div>
     </div>
@@ -411,17 +343,76 @@
             autoplay: true,
             autoplaySpeed: 2000
         });
+
+//        点击立即交易按钮判断是否登录
+        $('#trade-now').click(function () {
+            if ($('.user-name').length == 0) {
+                alert('请先登录')
+                location.href = '{:url("index/user/loginin")}';
+            }
+//            获取收货地址
+            if ($('#local').children().length == 0) {
+                var url = '{:url("index/userinfo/getReceiveAddrs")}';
+                var uid = $('.user-name').attr('data-uid')
+                var data = {uid:uid}
+                $.ajax({
+                    url: url,
+                    dataType: 'json',
+                    type: 'get',
+                    data: data,
+                    success: function (res) {
+//                    console.log(res)
+                        if (res.errorCode == 0) {
+//                        遍历输出收货地址
+                            $.each(res.result, function (index, item) {
+                                var ele = '<label class="am-btn am-btn-primary am-block"><input type="radio" name="addr" value="' + item.id + '">' + item.province.province + item.city.city + item.area.area + item.detail + '</label><br/>'
+                                $('#local').append(ele)
+                            })
+                        }
+                    }
+                })
+            }
+        })
 //切换交易方式
         $('#trade-way').change(function () {
             var v = $(this).val()
-            console.log(v)
             if (v == 1) {
+//                直接购买方式
                 $('.trade-buy').removeClass('am-hide')
                 $('.trade-exchange').addClass('am-hide')
             }
             if (v == 2) {
+//                物物交换方式
                 $('.trade-buy').addClass('am-hide')
                 $('.trade-exchange').removeClass('am-hide')
+//                获取已发布[且未被交易]的闲置
+                var uid = '{$Think.session.uid}';
+                var url = '{:url("index/goods/getleisuregoods")}'
+                var data = {uid:uid}
+                $.ajax({
+                    url:url,
+                    data:data,
+                    dataType:'json',
+                    type:'get',
+                    success: function (res) {
+                        console.log(res)
+                        if (res.errorCode == 0) {
+                            if ($('#leisureGoods').children().length > 0) {
+                                return true
+                            }
+//                            查找到数据时，填充
+                            $.each(res.result, function (index, value) {
+                                var ele = '<li><div class="am-btn-group" data-am-button><label class="am-btn am-btn-success">' +
+                                        '<input type="checkbox" class="needsclick" name="doc-js-btn" value="' + value.id + '">选择</label></div>' +
+                                        '<div class="am-gallery-item"><a href="{:url(\'index/goods/detail\')}?pid=' + value.id + '">' +
+                                        '<img src="__ROOT__/static/goods/upload/' + value.img + '" /> ' +
+                                        '<h3 class="am-gallery-title">' + value.gname + '</h3>' +
+                                        '<div class="am-gallery-desc">' + value.create_time + '</div></a></div></li>'
+                                $('#leisureGoods').append(ele)
+                            })
+                        }
+                    }
+                })
             }
             if ( v == 0) {
                 $('.trade-buy').addClass('am-hide')
@@ -434,6 +425,60 @@
                 return false
             }
             alert('已举报')
+        })
+
+//        交易ajax   直接购买
+        $('#trade-buy').click(function () {
+
+        })
+
+//        更新选中的闲物数量   TODO  为动态生成的元素设置事件失败ing
+        $('.needsclick').click(function () {
+            alert(111)
+            var count = 0;
+            $(this).each(function (index, value) {
+                console.log(value.checked)
+                if (value.checked) {
+                    count++
+                }
+            })
+        })
+//        交易ajax   物物交换
+        $('#trade-exchange').click(function () {
+            var selectGoods = []
+            var gIndex = 0;
+            $('.needsclick').each(function (index, value) {
+                if (value.checked) {
+                    selectGoods[gIndex] = value.value
+                    gIndex++
+                }
+            })
+
+            if (selectGoods.length == 0) {
+                alert('你还没有选择要交换的物品呢')
+                return false
+            }
+//            获取选中的收货地址
+            var addrId = 0;
+            $('[name=addr]').each(function (index, ele) {
+                if (ele.checked) {
+                    addrId = ele.value
+                    return true
+                }
+            })
+//            发送交易请求
+            var url = '{:url("index/trade/tradeRequest")}'
+            var gid = '{$Think.get.gid}'
+            var data = {gid:gid, sgid:selectGoods, way:1, addr:addrId}
+            $.ajax({
+                url:url,
+                data:data,
+                dataType:'json',
+                type:'get',
+                success: function (res) {
+                    console.log(res)
+                }
+            })
         })
     });
 </script>

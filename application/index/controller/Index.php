@@ -16,9 +16,8 @@ class Index extends Base
     public function index() {
 //        获取登录用户的信息
         $uCredit = Factory::getOperObj('userCredit');
-        session('uid', 1);
         $userInfo = $uCredit->getUserDetailByUid(session('uid'));
-        $userInfo = $userInfo->getData();
+        $userInfo = empty($userInfo) ? [] : $userInfo->getData();
         if (!empty(session('uid') && empty($userInfo))) {
 //            return $this->success('完善个人信息', 'index/user/selfInfo');
         }
@@ -39,7 +38,7 @@ class Index extends Base
         $this->assign('lastedGoods', $lastedGoods);
 
 //        查询同城的闲物
-        $sameCityGoods = $goods->getSameCityGoods($userInfo['upid'], $userInfo['ucid']);
+        $sameCityGoods = empty($userInfo) ? [] : $goods->getSameCityGoods($userInfo['upid'], $userInfo['ucid']);
 //        dump($sameCityGoods);exit;
         $this->assign('sameCityGoods', $sameCityGoods);
 
