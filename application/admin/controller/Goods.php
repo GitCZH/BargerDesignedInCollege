@@ -36,11 +36,11 @@ class Goods extends Base
         $totalCounts = $goods->getTotalCountsByStatus(0);
         $limit = 10;
         $totalPage = ceil($totalCounts / $limit);
-        $unauditGoods = $goods->getUnauditGoods($page,$limit);
+        $unauditGoods = $goods->getGoodsList($page,$limit);
         $this->assign('totalNum', $totalCounts);
         $this->assign('totalpage', $totalPage);
         if (empty($unauditGoods)) {
-            $this->assign('unauditGoods', $unauditGoods);
+            $this->assign('goodslist', $unauditGoods);
             return $this->fetch();
         }
         $imgs = Factory::getOperObj('gimgs');

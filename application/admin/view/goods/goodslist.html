@@ -93,6 +93,9 @@
                                                             <span class="am-icon-trash-o"></span> 封禁
                                                         </button>
                                                         <button>添加到首页</button>
+                                                        <button type="button" data-uid="{$vol.id}" id="g-pass" class="am-btn am-btn-xs am-text-danger">
+                                                            <span class="am-icon-trash-o"></span> 通过
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -279,6 +282,26 @@
                 },
                 complete: function () {
 
+                }
+            })
+        })
+
+//        通过物品审核
+        $('#g-pass').click(function () {
+            var id = $(this).attr('data-uid')
+
+            var url = '{:url("admin/goods/passaudit")}'
+            var data = {id:id}
+            $.ajax({
+                url:url,
+                data:data,
+                dataType:'json',
+                type:'post',
+                success: function (res) {
+                    if (res.errorCode == 0) {
+                        alert('操作成功')
+                        location.reload()
+                    }
                 }
             })
         })
