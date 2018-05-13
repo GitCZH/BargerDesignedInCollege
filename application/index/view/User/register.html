@@ -34,32 +34,48 @@
 <hr class="am-divider">
 <div class="am-container">
     <div class="am-g">
-        <form method="post" action="{:url('index/user/checkLogin')}" class="am-form am-form-horizontal am-u-md-6 am-u-md-centered">
+        <div  class="am-form am-form-horizontal am-u-md-6 am-u-md-centered">
+            <div class="am-alert am-alert-danger" data-am-alert style="display: none;">
+                <p class="am-text-sm res am-text-fl">都不退愿陪着我。<small class="am-text-sm am-fr">3秒后自动关闭</small></p>
+            </div>
             <div class="am-form-group">
                 <label for="doc-ipt-3" class="am-u-sm-2 am-form-label">用户名</label>
                 <div class="am-u-sm-10">
-                    <input type="text" name="loginname" id="doc-ipt-3" placeholder="设置登录用户名">
+                    <div class="am-input-group">
+                        <span class="am-input-group-label"><i class="am-icon-user am-icon-fw"></i></span>
+                        <input type="text" name="loginname" id="doc-ipt-3" placeholder="设置登录用户名">
+                    </div>
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="doc-ipt-pwd-2" class="am-u-sm-2 am-form-label">密码</label>
                 <div class="am-u-sm-10">
-                    <input type="password" name="loginpwd" id="doc-ipt-pwd-2" placeholder="设置你的密码">
+                    <div class="am-input-group">
+                        <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
+                        <input type="password" name="loginpwd" id="doc-ipt-pwd-2" placeholder="设置你的密码">
+                    </div>
+
                 </div>
             </div>
 
             <div class="am-form-group">
                 <label for="doc-ipt-pwd-3" class="am-u-sm-2 am-form-label">确认密码</label>
-                <div class="am-u-sm-10">
-                    <input type="password" name="loginpwd" id="doc-ipt-pwd-3" placeholder="确认密码">
+                <div class="re-pwd am-u-sm-10 am-form-group">
+                    <div class="am-input-group">
+                        <span class="am-input-group-label"><i class="am-icon-lock am-icon-fw"></i></span>
+                        <input type="password" name="reloginpwd" id="doc-ipt-pwd-3" placeholder="确认密码">
+                    </div>
                 </div>
             </div>
 
             <div class="am-form-group">
-                <label for="doc-ipt-4" class="am-u-sm-2 am-form-label">用户名</label>
+                <label for="doc-ipt-4" class="am-u-sm-2 am-form-label">邮箱</label>
                 <div class="am-u-sm-10">
-                    <input type="text" name="loginname" id="doc-ipt-4" placeholder="设置登录邮箱">
+                    <div class="am-input-group ">
+                        <span class="am-input-group-label"><i class="am-icon-paper-plane am-icon-fw"></i></span>
+                        <input type="text" name="loginemail" id="doc-ipt-4" placeholder="设置登录邮箱">
+                    </div>
                     <small class="am-text-success">可以使用此邮箱与密码登录</small>
                 </div>
             </div>
@@ -70,8 +86,56 @@
                     <a href="{:url('index/user/loginin')}" target="_blank" class="am-btn am-btn-secondary am-margin-left-xl">已有账户？去登录</a>
                 </div>
             </div>
-        </form>
+        </div>
     </div>
 </div>
 </body>
+<script>
+    $(function () {
+
+//        确认密码框动态验证
+        $('[name=reloginpwd]').keyup(function () {
+            var loginPw = $('[name=loginpwd]').val()
+            if (this.value != loginPw) {
+                if (!$('.re-pwd').hasClass('am-form-error')) {
+                    $('.re-pwd').addClass('am-form-error')
+                }
+            } else {
+                $('.re-pwd').removeClass('am-form-error')
+            }
+        })
+        /**
+         * 注册按钮ajax
+         */
+        $('[type=submit]').click(function () {
+            var loginName = $('[name=loginname]').val()
+            var loginPw = $('[name=loginpwd]').val()
+            var reLoginPw = $('[name=reloginpwd]').val()
+            var loginEmail = $('[name=loginemail]').val()
+
+            if (loginPw  != reLoginPw) {
+                alert('两次密码不一致')
+                return false
+            }
+
+            var url = '{:url("index/user/checkRegister")}'
+            var data = {loginname:loginName, loginpwd:loginPw, loginemail:loginEmail}
+            $.ajax({
+                url:url,
+                data:data,
+                dataType:'json',
+                type:'post',
+                success: function (res) {
+                    if (res.errorCode != 0) {
+                        $('.res').html(res.result)
+                        $('.am-alert').attr('style', null)
+                        $('.am-alert').delay(3000).fadeOut()
+                    } else {
+                        location.href = '{:url("index/user/loginin")}'
+                    }
+                }
+            })
+        })
+    })
+</script>
 </html>

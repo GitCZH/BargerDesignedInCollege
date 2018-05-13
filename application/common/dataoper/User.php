@@ -7,7 +7,9 @@
  * Time: 21:25
  */
 namespace app\common\dataoper;
+use app\common\Factory;
 use app\common\Functions;
+use think\Cookie;
 
 class User
 {
@@ -20,12 +22,40 @@ class User
         self::$userObj = new \app\common\model\User();
         return self::$userObj;
     }
-    public static function checkLogin($params)
+
+    /**
+     * 验证登录
+     * @param $name
+     * @param $pwd
+     * @return int
+     */
+    public static function checkLogin($name, $pwd, $remember)
     {
-        session('uid', '11');
-        session('uname', 'loginName');
-        return true;
+        $model = Factory::getModelObj('user');
+
+        $res = $model->whereOr('loginname', $name)
+            ->whereOr('loginemail', $name)
+            ->find();
+        if (empty($res)) {
+            return 2;
+        }
+        if ($res->getData()['loginpwd'] != $pwd) {
+            return 3;
+        }
+//        保存session值
+        session('uid', $res->getData()['id']);
+        session('uname', $res->getData()['loginname']);
+        if ($remember) {
+            Cookie::forever('uid',$res->getData()['id']);
+            Cookie::forever('uname',$res->getData()['loginname']);
+        }
+        return 0;
     }
+
+    /**
+     * 退出登录
+     * @return bool
+     */
     public static function exitLogin()
     {
         session('uid', null);
@@ -42,6 +72,15 @@ class User
         $user = self::getUserModelObj();
 
         return true;
+    }
+
+    /**
+     * 检测是否是已注册的邮箱
+     */
+    public function checkEmailNew($email) {
+        $model = Factory::getModelObj('user');
+        $res = $model->where(['loginemail' => $email])->find();
+        return $res === null ? true : false;
     }
 
     /**

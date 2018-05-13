@@ -8,7 +8,9 @@
 namespace app\index\controller;
 use app\common\controller\UserCheck;
 use app\common\Error;
+use app\common\Factory;
 use think\Controller;
+use think\Cookie;
 use think\Request;
 use think\Validate;
 
@@ -39,16 +41,20 @@ class User extends Controller {
      */
     public function checkLogin(Request $request) {
         $params = $request->param();
-        $common = new UserCheck();
-        $res = $common->checkLogin($params);
-        $errCode = $res ? 0 : 1;
+        $errCode = \app\common\dataoper\User::checkLogin($params['loginName'], md5($params['loginPwd']), $params['remember']);
         $errArr = Error::getCodeMsgArr($errCode);
-        if ($res) {
-            $errArr['result'] = "登录失败，请重新输入账户信息！";
+        if ($errCode == 2) {
+            $errArr['result'] = '用户名不存在';
+        }
+        if ($errCode == 3) {
+            $errArr['result'] = "密码错误";
         }
         return json($errArr);
     }
 
+    /**
+     * 退出登录
+     */
     public function exitLogin() {
         $common = new UserCheck();
         if ($common->exitLogin()) {
@@ -56,12 +62,19 @@ class User extends Controller {
         }
     }
 
+    /**
+     * 注册页面
+     */
     public function register() {
         return $this->fetch();
     }
 
+    /**
+     * 验证注册接口
+     * @param Request $request
+     * @return \think\response\Json
+     */
     public function checkRegister(Request $request) {
-// TODO  验证邮箱唯一性
         $params = $request->param();
         $msg = [
             'loginname' =>  '用户名至少6个字符',
@@ -75,17 +88,24 @@ class User extends Controller {
         ], $msg);
         if(!$validate->check($params)) {
             $err = $validate->getError();
-            echo $err;
-            return;
+            $code = 1;
+            $errArr = Error::getCodeMsgArr($code);
+            $errArr['result'] = $err;
+            return json($errArr);
         }
-        $user = model('user');
-        if(!$this->checkEmailNew($params['loginemail'])) {
-            echo '邮箱已被使用';
-            return ;
+        $user = Factory::getOperObj('user');
+        if(!$user->checkEmailNew($params['loginemail'])) {
+            $err = '邮箱已被使用';
+            $code = 1;
+            $errArr = Error::getCodeMsgArr($code);
+            $errArr['result'] = $err;
+            return json($errArr);
         }
-        $res = $user->data($params, true)->save();
+        $res = $user->saveAccount($params);
         if($res) {
-            echo 'success';
+            $code = 0;
+            $errArr = Error::getCodeMsgArr($code);
+            return json($errArr);
         }
     }
 

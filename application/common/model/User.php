@@ -26,14 +26,4 @@ class User extends Model
         ];
         return $status[$val];
     }
-
-    /**
-     * 检测是否是已注册的邮箱
-     * @param $email
-     * @return bool
-     */
-    public function checkEmailNew($email) {
-        $res = $this->where(['loginemail' => $email])->find();
-        return $res === null ? true : false;
-    }
 }

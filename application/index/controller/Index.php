@@ -16,7 +16,8 @@ class Index extends Base
     public function index() {
 //        获取登录用户的信息
         $uCredit = Factory::getOperObj('userCredit');
-        $userInfo = $uCredit->getUserDetailByUid(session('uid'));
+        $uid = empty(session('uid')) ? cookie('uid') : session('uid');
+        $userInfo = $uCredit->getUserDetailByUid($uid);
         $userInfo = empty($userInfo) ? [] : $userInfo->getData();
         if (!empty(session('uid') && empty($userInfo))) {
 //            return $this->success('完善个人信息', 'index/user/selfInfo');
