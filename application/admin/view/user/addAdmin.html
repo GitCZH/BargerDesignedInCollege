@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>物物交换后台-新增管理员账户</title>
+    {include file="head"}
+</head>
+
+<body data-type="generalComponents">
+{include file="header"}
+    <div class="tpl-page-container tpl-page-header-fixed">
+        <div class="tpl-left-nav tpl-left-nav-hover">
+            <div class="tpl-left-nav-title">
+                Amaze UI 列表
+            </div>
+            <div class="tpl-left-nav-list">
+                {include file="menu"}
+            </div>
+        </div>
+
+        <div class="tpl-content-wrapper">
+            <div class="tpl-content-page-title">
+                Amaze UI 表单
+            </div>
+            <ol class="am-breadcrumb">
+                <li><a href="#" class="am-icon-home">首页</a></li>
+                <li><a href="#">表单</a></li>
+                <li class="am-active">Amaze UI 表单</li>
+            </ol>
+            <div class="tpl-portlet-components">
+                <div class="portlet-title">
+                    <div class="caption font-green bold">
+                        <span class="am-icon-code"></span> 表单
+                    </div>
+                </div>
+
+                <div class="tpl-block">
+                    <div class="am-g">
+                        <div class="tpl-form-body tpl-form-line">
+                            <div title="gform" class="am-form tpl-form-line-form">
+                                <div class="am-form-group">
+                                    <label  class="am-u-sm-3 am-form-label">登录账户
+                                        <span class="tpl-form-line-small-title">Login Name</span></label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" name="loginname" class="tpl-form-input" placeholder="请输入登录用户名">
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label  class="am-u-sm-3 am-form-label">登录邮箱
+                                        <span class="tpl-form-line-small-title">Login Email</span></label>
+                                    <div class="am-u-sm-9">
+                                        <input type="text" name="loginemail" class="tpl-form-input" placeholder="请输入登录邮箱">
+                                    </div>
+                                </div>
+
+                                <div class="am-form-group">
+                                    <label class="am-u-sm-3 am-form-label">登录密码
+                                        <span class="tpl-form-line-small-title">Login Password</span></label>
+                                    <div class="am-u-sm-9">
+                                        <input type="password" name="loginpwd" class="tpl-form-input" placeholder="请输入登录密码">
+                                    </div>
+                                </div>
+                                <!--TODO 添加角色选择-->
+                                <div class="am-form-group">
+                                    <div class="am-u-sm-9 am-u-sm-push-3">
+                                        <input type="submit" class="am-btn am-btn-primary tpl-btn-bg-color-success " value="提交">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+{include file="footerjs"}
+{include file="left-menujs"}
+</body>
+<script>
+    $(function () {
+//        表单提交前数据验证
+        $('[type=submit]').click(function () {
+
+            if ($('[name=loginname]').val() == '') {
+                alert('用户名')
+                return false
+            }
+            if ($('[name=loginemail]').val() == '') {
+                alert('用户邮箱必填')
+                return false
+            }
+            if ($('[name=loginpwd]').val() == '') {
+                alert('密码必填')
+                return false
+            }
+
+            var url = '{:url("admin/user/addAdminDo")}'
+            var data = {loginname:$('[name=loginname]').val(), loginpwd:$('[name=loginpwd]').val(), loginemail:$('[name=loginemail]').val()}
+            $.ajax({
+                url:url,
+                data:data,
+                dataType:'json',
+                type:'post',
+                success: function (res) {
+                    if (res.result != undefined) {
+                        alert(res.result)
+                    } else {
+                        alert(res.errorMsg)
+                    }
+                    if (res.errorCode == 0) {
+                        location.reload()
+                    }
+                }
+            })
+        })
+    })
+</script>
+</html>

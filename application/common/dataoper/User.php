@@ -24,6 +24,45 @@ class User
     }
 
     /**
+     * 添加后台管理成员
+     */
+    public function addAdmin($name, $email, $pwd)
+    {
+        $model = Factory::getModelObj('user');
+        return $model->allowField(true)->save(
+            [
+                'loginname' => $name,
+                'loginemail' => $email,
+                'loginpwd' => $pwd,
+                'foradmin' => 1
+            ]
+        );
+    }
+
+    /**
+     * 后台管理登录
+     */
+    public static function checkAdminLogin($name, $pwd)
+    {
+        $model = Factory::getModelObj('user');
+
+        $res = $model->whereOr('loginname', $name)
+            ->whereOr('loginemail', $name)
+            ->where('foradmin', 1)
+            ->find();
+        if (empty($res)) {
+            return 2;
+        }
+        if ($res->getData()['loginpwd'] != $pwd) {
+            return 3;
+        }
+//        保存session值
+        session('uid', $res->getData()['id']);
+        session('uname', $res->getData()['loginname']);
+        return 0;
+    }
+
+    /**
      * 验证登录
      * @param $name
      * @param $pwd

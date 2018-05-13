@@ -1,6 +1,6 @@
 <header class="am-topbar am-topbar-inverse admin-header">
     <div class="am-topbar-brand">
-        <a href="javascript:;" class="tpl-logo">
+        <a href="{:url('admin/index/index')}" class="tpl-logo">
             <img src="__STATIC__/admin/assets/img/logo.png" alt="">
         </a>
     </div>
@@ -43,7 +43,7 @@
                                 <span class="tpl-dropdown-content-photo">
                       <img src="__STATIC__/admin/assets/img/user02.png" alt=""> </span>
                                 <span class="tpl-dropdown-content-subject">
-                      <span class="tpl-dropdown-content-from"> 禁言小张 </span>
+                      <span class="tpl-dropdown-content-from"> {$Think.session.uname} </span>
                                 <span class="tpl-dropdown-content-time">10分钟前 </span>
                                 </span>
                             <span class="tpl-dropdown-content-font"> Amaze UI 的诞生，依托于 GitHub 及其他技术社区上一些优秀的资源；Amaze UI 的成长，则离不开用户的支持。 </span>
@@ -108,15 +108,13 @@
 
             <li class="am-dropdown" data-am-dropdown data-am-dropdown-toggle>
                 <a class="am-dropdown-toggle tpl-header-list-link" href="javascript:;">
-                    <span class="tpl-header-list-user-nick">禁言小张</span><span class="tpl-header-list-user-ico"> <img src="__STATIC__/admin/assets/img/user01.png"></span>
+                    <span class="tpl-header-list-user-nick">{$Think.session.uname}</span><span class="tpl-header-list-user-ico"> <img src="__STATIC__/admin/assets/img/user01.png"></span>
                 </a>
                 <ul class="am-dropdown-content">
-                    <li><a href="#"><span class="am-icon-bell-o"></span> 资料</a></li>
-                    <li><a href="#"><span class="am-icon-cog"></span> 设置</a></li>
-                    <li><a href="#"><span class="am-icon-power-off"></span> 退出</a></li>
+                    <li><a href="{:url('admin/user/exitlogin')}"><span class="am-icon-power-off"></span> 退出</a></li>
                 </ul>
             </li>
-            <li><a href="###" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
+            <li><a href="{:url('admin/user/exitlogin')}" class="tpl-header-list-link"><span class="am-icon-sign-out tpl-header-list-ico-out-size"></span></a></li>
         </ul>
     </div>
 </header>

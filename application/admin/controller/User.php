@@ -7,6 +7,8 @@
  */
 namespace app\admin\controller;
 use app\common\controller\UserCheck;
+use app\common\Error;
+use app\common\Factory;
 use app\common\Functions;
 use app\index\model\UserCredit;
 use think\Request;
@@ -18,23 +20,51 @@ class User extends Base
     }
     public function checkLogin (Request $request) {
         $params = $request->param();
-        $business = new \app\common\controller\UserCheck();
-        if ($business->checkLogin($params)) {
-            $data['errCode'] = 0;
-            $data['errMsg'] = 'success';
-        } else {
-            $data['errCode'] = -1;
-            $data['errMsg'] = 'wrong';
+        $user = Factory::getOperObj('user');
+        $code = $user->checkAdminLogin($params['loginname'], md5($params['loginpwd']));
+        $errArr = Error::getCodeMsgArr($code);
+        if ($code == 2) {
+            $errArr['result'] = '用户名不存在';
         }
-        return json_encode($data);
+        if ($code == 3) {
+            $errArr['result'] = "密码错误";
+        }
+        return json($errArr);
     }
 
     public function exitLogin()
     {
-        $business = new UserCheck();
-        if ($business->exitLogin()) {
+        $user = Factory::getOperObj('user');
+        if ($user->exitLogin()) {
             $this->success('成功退出', 'user/login');
         }
+    }
+
+    /**
+     * 添加后台管理员账户
+     */
+    public function addAdmin()
+    {
+        return $this->fetch();
+    }
+
+    public function addAdminDo(Request $request)
+    {
+        $params = $request->param();
+        $user = Factory::getOperObj('user');
+
+        if(!$user->checkEmailNew($params['loginemail'])) {
+            $err = '邮箱已被使用';
+            $code = 1;
+            $errArr = Error::getCodeMsgArr($code);
+            $errArr['result'] = $err;
+            return json($errArr);
+        }
+
+        $res = $user->addAdmin($params['loginname'], $params['loginemail'], $params['loginpwd']);
+        $code = $res ? 0 : 1;
+        $errArr = Error::getCodeMsgArr($code);
+        return json($errArr);
     }
 
     /**
