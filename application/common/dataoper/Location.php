@@ -28,6 +28,10 @@ class Location
         return $model->getAreas($cid);
     }
 
+    /**
+     * @param $pid
+     * @return array
+     */
     public function getProvinceByPid($pid)
     {
         $model = Factory::getModelObj('location');

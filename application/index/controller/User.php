@@ -6,15 +6,17 @@
  * Time: 22:04
  */
 namespace app\index\controller;
+use app\common\Cons;
 use app\common\controller\UserCheck;
 use app\common\Error;
 use app\common\Factory;
+use app\common\Functions;
 use think\Controller;
 use think\Cookie;
 use think\Request;
 use think\Validate;
 
-class User extends Controller {
+class User extends Base {
 
     /**
      * 登录模板
@@ -107,6 +109,103 @@ class User extends Controller {
             $errArr = Error::getCodeMsgArr($code);
             return json($errArr);
         }
+    }
+
+    /**
+     * 个人中心页
+     */
+    public function center()
+    {
+//        获取个人信息
+
+        return $this->fetch();
+    }
+
+    /**
+     * 录入个人信息页
+     */
+    public function selfInfo()
+    {
+        $userC = Factory::getOperObj('userCredit');
+        $location = Factory::getOperObj('location');
+        $userDetail = $userC->getUserDetailByUid(session('uid'));
+        if (!empty($userDetail)) {
+            $this->assign('userInfo', $userDetail->getData());
+//            获取省市信息
+            $city = $location->getCityByCid($userDetail->getData()['ucid']);
+            $area = $location->getAreaByAid($userDetail->getData()['uaid']);
+            $this->assign('city', $city);
+            $this->assign('area', $area);
+        }
+//        获取省份信息
+        $provinces = $location->getProvinces();
+        $this->assign('provinces', $provinces);
+        return $this->fetch();
+    }
+
+    /**
+     * 保存信息
+     * @param Request $request
+     */
+    public function saveSelfInfo(Request $request)
+    {
+        $params = $request->param();
+        $params['idnum'] = session('uid');
+        $avatar = $request->file('avatar');
+//        上传头像
+        if (!empty($avatar)) {
+            $res = Functions::uploads($avatar, Cons::UPLOAD_USER_AVATAR_PATH);
+            if (!$res) {
+                Functions::logs(session('uname') . '<>' . session('uid') . '用户头像上传失败' . var_export($res, true));
+                $params['avatar'] = 'tmp.jpg';
+            } else {
+                $params['avatar'] = $res->getSaveName();
+            }
+        }
+//        保存数据
+//        判断是新增还是更新信息
+        $userC = Factory::getOperObj('userCredit');
+        $res = $userC->getUserDetailByUid(session('uid'));
+        $res = empty($res) ? $userC->saveOne($params) : $userC->updateByUid(session('uid'), $params);
+        if (!$res) {
+            return $this->error('操作失败', 'index/user/selfInfo');
+        }
+        return $this->success('操作成功', 'index/user/selfInfo');
+    }
+
+    /**
+     * 收货地址页
+     */
+    public function receiveAddrs()
+    {
+//        查询已有的收货地址
+        $addr = Factory::getOperObj('addr');
+        $addrs = $addr->getReceiveAddrs(session('uid'));
+        $addrs = empty($addrs) ? [] : Functions::dataSetToArray($addrs);
+
+        $location = Factory::getOperObj('location');
+        //        获取省份信息
+        $provinces = $location->getProvinces();
+        $this->assign('provinces', $provinces);
+//        省市代码转换
+        foreach($addrs as &$item) {
+            $item['str'] = Functions::addrCodeToWord($item['apid'], $item['acid'], $item['aaid']);
+        }
+        $this->assign('addrs', $addrs);
+        return $this->fetch();
+    }
+
+    /**
+     * 保存收货地址
+     */
+    public function saveReceiveAddrs(Request $request)
+    {
+        $params = $request->param();
+        $params['uid'] = session('uid');
+        $addr = Factory::getOperObj('addr');
+
+        $res = isset($params['addrId']) ? $addr->updateById($params, $params['addrId']) : $addr->saveOne($params);
+        return $res ? $this->success('操作成功', 'index/user/receiveAddrs') : $this->error('操作失败', 'index/user/receiveAddrs');
     }
 
 }

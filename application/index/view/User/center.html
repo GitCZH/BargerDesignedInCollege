@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Exchange-新增商品</title>
+    <meta charset="UTF-8">
+    {include file='assets'}
+</head>
+
+<body data-type="generalComponents">
+{include file="header"}
+<div class="am-container">
+
+    {include file='menu'}
+    <div class="am-u-md-11">
+        <div data-am-widget="intro" class="am-intro am-cf am-intro-default">
+            <div class="am-intro-hd">
+                <h2 class="am-intro-title">你好 <b>{$Think.session.uname}</b></h2>
+                <span class="am-intro-more am-intro-more-top ">欢迎来到个人中心</span>
+            </div>
+
+            <div class="am-g am-intro-bd">
+                <div class="am-intro-left am-u-sm-5">
+                    <img src="__ROOT__/static/demo/2.jpg" />
+                </div>
+                <div class="am-intro-right am-u-sm-7">
+                    <p>Cortana 恐怕是用户急于更新到 WP8.1 Update 开发者预览版的原因之一</p>
+                    <p>Cortana 中国版特有的新图标（面团，带眼睛，可在 Cortana 设置中切换回圆圈），使用的是中文语言，也同样支持 Cortana 笔记本。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file='footer'}
+</body>
+<script>
+    $(function () {
+        $('[name=gpid]').change(function () {
+//            获取此省份下的市区
+            var pid = $(this).val()
+            if (pid == 0) {
+//                清空市区和区县下拉框 TODO
+                $('[name=gcid]').children('option:first').nextAll().remove()
+                $('[name=gaid]').children('option:first').nextAll().remove()
+                return
+            }
+            var url = '{:url("admin/location/getcities")}'
+            var data = {pid:pid}
+            $.ajax({
+                url:url,
+                type:'get',
+                dataType:'json',
+                data:data,
+                success: function (res) {
+                    console.log(res)
+                    if (res.errorCode != 0) {
+                        return
+                    }
+//                        先清空已有的信息
+                    $('[name=gcid]').children('option:first').nextAll().remove()
+//                    填充市区信息
+                    $.each(res.result, function(index, item){
+                        $('[name=gcid]').append('<option value="'+ item.cityid +'">' + item.city + '</option>')
+                    })
+                }
+            })
+        })
+
+        /**
+         * 获取区县接口
+         */
+        $('[name=gcid]').change(function () {
+//            获取此市区下的区县
+            var cid = $(this).val()
+            if (cid == 0) {
+//                清空区县数据 TODO
+                $('[name=gaid]').children('option:first').nextAll().remove()
+                return
+            }
+            var url = '{:url("admin/location/getareas")}'
+            var data = {cid:cid}
+            $.ajax({
+                url:url,
+                type:'get',
+                dataType:'json',
+                data:data,
+                success: function (res) {
+                    if (res.errorCode != 0) {
+                        return
+                    }
+//                        先清空已有的信息
+                    $('[name=gaid]').children('option:first').nextAll().remove()
+//                    填充区县信息
+                    $.each(res.result, function(index, item){
+                        $('[name=gaid]').append('<option value="'+ item.areaid +'">' + item.area + '</option>')
+                    })
+                }
+            })
+        })
+
+//        表单提交前数据验证
+        $('[name=gform]').submit(function () {
+            if (gform.gname.value == '') {
+                alert('闲物名必填')
+                return false
+            }
+            if (gform.gdescribe.value == '') {
+                alert('描述必填')
+                return false
+            }
+        })
+    })
+</script>
+</html>

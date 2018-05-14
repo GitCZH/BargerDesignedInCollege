@@ -7,8 +7,8 @@
 
     <div class="am-collapse am-topbar-collapse" id="doc-topbar-collapse">
         <ul class="am-nav am-nav-pills am-topbar-nav">
-            <li class="am-active"><a href="{:url('index/index/index')}">首页</a></li>
-            <li><a href="#">发布闲置</a></li>
+            <li class="{if $Request.action != 'publishgoods'} am-active {/if}"><a href="{:url('index/index/index')}">首页</a></li>
+            <li class="{if $Request.action == 'publishgoods'} am-active {/if}"><a href="{:url('index/goods/publishGoods')}">发布闲置</a></li>
             <li class="am-dropdown" data-am-dropdown>
                 <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
                     我的闲置 <span class="am-icon-caret-down"></span>

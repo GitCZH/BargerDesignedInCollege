@@ -18,4 +18,22 @@ class Addr
         $model = Factory::getModelObj('addr');
         return $model->where(['uid' => $uid])->select();
     }
+
+    /**
+     * 新增收货地址
+     */
+    public function saveOne(array $datas)
+    {
+        $model = Factory::getModelObj('addr');
+        return $model->allowField(true)->save($datas);
+    }
+
+    /**
+     * 更新收货地址
+     */
+    public function updateById(array $datas, $id)
+    {
+        $model = Factory::getModelObj('addr');
+        return $model->allowField(true)->save($datas, ['id' => $id]);
+    }
 }

@@ -74,6 +74,7 @@ class User
 
         $res = $model->whereOr('loginname', $name)
             ->whereOr('loginemail', $name)
+            ->where('foradmin', 0)
             ->find();
         if (empty($res)) {
             return 2;

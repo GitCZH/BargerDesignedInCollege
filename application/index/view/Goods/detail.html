@@ -62,7 +62,7 @@
             <ul class="am-slides">
                 {volist name='gimgs' id='vo' length='4'}
                 <li data-thumb="__ROOT__/static/goods/upload/{$vo.img}">
-                    <img src="__ROOT__/static/goods/upload/{$vo.img}">
+                    <img width="730" height="410" src="__ROOT__/static/goods/upload/{$vo.img}">
                 </li>
                 {/volist}
             </ul>
@@ -463,7 +463,7 @@
             $('[name=addr]').each(function (index, ele) {
                 if (ele.checked) {
                     addrId = ele.value
-                    return true
+                    return
                 }
             })
             if (!addrId) {

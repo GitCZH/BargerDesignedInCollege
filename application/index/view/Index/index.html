@@ -165,8 +165,8 @@
 <div class="md-md am-container">
     <div class="am-u-sm-3">
         <div>
-            <img width="120" src="__ROOT__/static/demo/2.jpg" class="am-img-thumbnail">
-            <span>Hi, Boy</span>
+            <img width="120" src="__ROOT__/static/avatars/{$userInfo.avatar ?: 'tmp.jpg'}" class="am-img-thumbnail">
+            <span>Hi, {$userInfo.nickname ?: 'boy'}</span>
             <hr class="am-divider">
             <div class="am-panel am-panel-secondary">
                 <div class="am-panel-hd">

@@ -8,337 +8,207 @@
 <body>
 {include file='header'}
 <div class="am-container">
-    <div class="am-panel am-panel-default">
-        <div class="am-panel-bd">
-            <h3 class="am-text-danger">我的订单</h3>
+    {include file='menu'}
+    <div class="am-u-md-11">
+        <div class="am-container">
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-bd">
+                    <h3 class="am-text-danger">我的订单</h3>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-<!--订单列表-->
-<div class="am-container">
-    <div class="am-panel am-panel-default">
-        <div class="am-panel-bd am-g">
-            <h3 class="am-text-danger">订单筛选</h3>
-            <div class="am-u-sm-4">
-                <select data-am-selected>
-                    <option value="a">近三个月的交易</option>
-                    <option value="b">今年的交易</option>
-                    <option value="o">2017年的交易</option>
-                    <option value="m">2016年的交易</option>
-                    <option value="d">2016年以前的交易</option>
-                </select>
-            </div>
-            <div class="am-u-sm-8">
-                <div class="am-input-group am-u-sm-8">
-                    <span class="am-input-group-label"><i class="am-icon-search am-icon-fw"></i></span>
-                    <input type="text" class="am-form-field" placeholder="输入关键词搜索...">
-                </div>
-                <div class="am-u-sm-4">
-                    <button class="am-btn am-btn-success">搜索</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="am-tabs" data-am-tabs>
-        <ul class="am-tabs-nav am-nav am-nav-tabs">
-            <li class="am-active"><a href="#tab1">全部交易</a></li>
-            <li><a href="#tab2">交易待接受</a></li>
-            <li><a href="#tab3">交易中</a></li>
-            <li><a href="#tab4">交易已完成</a></li>
-        </ul>
-        <div class="am-tabs-bd">
-            <div class="am-tab-panel am-fade am-in am-active" id="tab1">
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+        <!--订单列表-->
+        <div class="am-container">
+            <div class="am-panel am-panel-default">
+                <div class="am-panel-bd am-g">
+                    <h3 class="am-text-danger">订单筛选</h3>
+                    <div class="am-u-sm-4">
+                        <select data-am-selected name="time">
+                            <option value="0">近一个月的交易</option>
+                            <option value="1">今年的交易</option>
+                            <option value="2">2017年的交易</option>
+                            <option value="3">2017年以前的交易</option>
+                        </select>
                     </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
+                    <div class="am-u-sm-8">
+                        <div class="am-input-group am-u-sm-8">
+                            <span class="am-input-group-label"><i class="am-icon-search am-icon-fw"></i></span>
+                            <input type="text" name="keyWord" class="am-form-field" placeholder="输入关键词搜索...">
                         </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">直接购买</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[交易完成]</span><br>
-                            <a href="#">申请售后</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
+                        <div class="am-u-sm-4">
+                            <button class="am-btn am-btn-success">搜索</button>
                         </div>
                     </div>
-                    <hr class="am-divider">
-                </div>
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
-                    </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">取物交换</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[请求已发送]</span> <br>
-                            <span class="am-text-warning">等待对方接受</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
-                    </div>
-                    <hr class="am-divider">
-                </div>
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
-                    </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">直接购买</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[对方已接受]</span><br>
-                            <a href="#">交易中</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
-                    </div>
-                    <hr class="am-divider">
                 </div>
             </div>
-            <div class="am-tab-panel am-fade" id="tab2">
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+            <div class="am-tabs" data-am-tabs>
+                <ul class="am-tabs-nav am-nav am-nav-tabs">
+                    <li class="am-active" data-tid="-1" data-tab="tab1"><a href="#tab1">全部交易</a></li>
+                    <li data-tid="0" data-tab="tab2"><a href="#tab2">交易待接受</a></li>
+                    <li data-tid="1" data-tab="tab3"><a href="#tab3">交易中</a></li>
+                    <li data-tid="2" data-tab="tab4"><a href="#tab4">交易已完成</a></li>
+                </ul>
+                <div class="am-tabs-bd">
+                    <div class="am-tab-panel am-fade am-in am-active" id="tab1">
+                        {volist name='tradeOrders' id='vo' empty='还没任何交易呢'}
+                        <div>
+                            <div class="am-container">
+                                <div class="am-u-sm-3"><b>{$vo.create_time|date='Y-m-d H:i:s',###}</b></div>
+                                <div class="am-u-sm-6">订单号：<b>{$vo.tradenum}</b></div>
+                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">{$vo.sUName}</a></div>
+                            </div>
+                            <hr class="am-divider">
+                            <div class="am-container">
+                                <div class="am-u-sm-2">
+                                    <img src="__ROOT__/static/goods/upload/{$vo.img}" width="200" height="120" class="am-img-thumbnail am-radius">
+                                    <span>Unsitheic Kiius {$vo.gname}</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">{$vo.tradway == 1 ? '物物交换' : '直接购买'}</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">[{$vo.tradeStatus[0]}]</span><br>
+                                    <span class="am-text-warning am-text-sm">{$vo.tradeStatus[1]}</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">{$vo.bUName}</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="{:url('index/trade/tradeDetail')}?tid={$vo.id}" target="_blank">订单详情</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">评价</a>
+                                </div>
+                            </div>
+                            <hr class="am-divider">
+                        </div>
+                        {/volist}
                     </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">取物交换</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[请求已发送]</span> <br>
-                            <span class="am-text-warning">等待对方接受</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
+                    <div class="am-tab-panel am-fade" id="tab2">
+                        <h3 class="am-text-center am-text-primary">还没有交易~</h3>
                     </div>
-                    <hr class="am-divider">
-                </div>
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+                    <div class="am-tab-panel am-fade" id="tab3">
+                        <h3 class="am-text-center am-text-primary">还没有交易~</h3>
+                        <!--<div>
+                            <div class="am-container">
+                                <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
+                                <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
+                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+                            </div>
+                            <hr class="am-divider">
+                            <div class="am-container">
+                                <div class="am-u-sm-2">
+                                    <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
+                                    <span>Unsitheic Kiius</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">直接购买</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">[对方已接受]</span><br>
+                                    <a href="#">交易中</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">Self</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">订单详情</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">评价</a>
+                                </div>
+                            </div>
+                            <hr class="am-divider">
+                        </div>-->
                     </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">取物交换</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[请求已发送]</span> <br>
-                            <span class="am-text-warning">等待对方接受</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
+                    <div class="am-tab-panel am-fade" id="tab4">
+                        <h3 class="am-text-center am-text-primary">还没有交易~</h3>
+                        <!--<div>
+                            <div class="am-container">
+                                <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
+                                <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
+                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+                            </div>
+                            <hr class="am-divider">
+                            <div class="am-container">
+                                <div class="am-u-sm-2">
+                                    <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
+                                    <span>Unsitheic Kiius</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">直接购买</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">[交易完成]</span><br>
+                                    <a href="#">申请售后</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">Self</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">订单详情</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">评价</a>
+                                </div>
+                            </div>
+                            <hr class="am-divider">
+                        </div>-->
                     </div>
-                    <hr class="am-divider">
-                </div>
-            </div>
-            <div class="am-tab-panel am-fade" id="tab3">
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
-                    </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">直接购买</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[对方已接受]</span><br>
-                            <a href="#">交易中</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
-                    </div>
-                    <hr class="am-divider">
-                </div>
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
-                    </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">直接购买</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[对方已接受]</span><br>
-                            <a href="#">交易中</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
-                    </div>
-                    <hr class="am-divider">
-                </div>
-            </div>
-            <div class="am-tab-panel am-fade" id="tab4">
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
-                    </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">直接购买</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[交易完成]</span><br>
-                            <a href="#">申请售后</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
-                    </div>
-                    <hr class="am-divider">
-                </div>
-                <div>
-                    <div class="am-container">
-                        <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                        <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                        <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
-                    </div>
-                    <hr class="am-divider">
-                    <div class="am-container">
-                        <div class="am-u-sm-2">
-                            <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
-                            <span>Unsitheic Kiius</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">直接购买</span>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <span class="am-text-success">[交易完成]</span><br>
-                            <a href="#">申请售后</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">Self</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">订单详情</a>
-                        </div>
-                        <div class="am-u-sm-2">
-                            <a href="#">评价</a>
-                        </div>
-                    </div>
-                    <hr class="am-divider">
                 </div>
             </div>
         </div>
+        <!--订单列表  end-->
     </div>
 </div>
-<!--订单列表  end-->
 {include file='footer'}
 </body>
+<script>
+    $(function () {
+        $('.am-nav-tabs').children().click(function () {
+            var tradeStatus = $(this).attr('data-tid')
+            var tab = $(this).attr('data-tab')
+            var tabObj = $('#' + tab)
+//            查询的时间
+            var time = $('[name=time] option:selected').val()
+//            查询的关键词
+            var keyWord = $('[name=keyWord]').val()
+//            -1 全部交易  0 请求待接受  1 交易中  2 交易完成[被拒绝]
+            var url = '{:url("index/trade/getTradesByStatusAjax")}'
+            var data = {tradestatus:tradeStatus, selectTime:time, keyWord:keyWord}
+            $.ajax({
+                url:url,
+                data:data,
+                dataType:'json',
+                type:'get',
+                success: function (res) {
+                    console.log(res)
+                    if (res.errorCode == 0) {
+//                        填充数据
+                        $.each(res.result, function (index, value) {
+                            var appendStr = '<div>' +
+                                    '<div class="am-container"><div class="am-u-sm-3"><b>' + value.create_time + '</b></div><div class="am-u-sm-6">订单号：<b>' + value.tradenum + '</b></div><div class="am-u-sm-3"><a href="#" class="am-text-warning">' + value.sUName + '</a></div></div><hr class="am-divider"><div class="am-container"><div class="am-u-sm-2"><img src="__ROOT__/static/goods/upload/' + value.img +'" width="200" height="120" class="am-img-thumbnail am-radius"><span>Unsitheic Kiius ' + value.gname + '</span></div>' +
+                                    '<div class="am-u-sm-2">' +
+                                    '<span class="am-text-success">' + (value.tradway == 1 ? "物物交换" : "直接购买") +'</span>' +
+                                    '</div>' +
+                                    '<div class="am-u-sm-2">' +
+                                    '<span class="am-text-success">[' + value.tradestatus[0] + ']</span><br>' +
+                                    '<span class="am-text-warning am-text-sm">' + value.tradestatus[0] + '</span></div>' +
+                                    '<div class="am-u-sm-2">' +
+                                    '<a href="#">'+ value.bUName + '</a></div>' +
+                                    '<div class="am-u-sm-2">' +
+                                    '<a href="{:url(\'index/trade/tradeDetail\')}?tid=' + value.id +'" target="_blank">订单详情</a></div>' +
+                                    '<div class="am-u-sm-2">' +
+                                    '<a href="#">评价</a></div></div><hr class="am-divider"></div>'
+
+                            tabObj.empty()
+                            tabObj.append(appendStr)
+                        })
+                    }
+                }
+            })
+        })
+    })
+</script>
 </html>

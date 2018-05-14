@@ -37,6 +37,15 @@ class Goods
     }
 
     /**
+     * 更新物品信息
+     */
+    public function updateGoods(array $datas, $id)
+    {
+        $model = Factory::getModelObj('goods');
+        return $model->allowField(true)->save($datas, ['id' => $id]);
+    }
+
+    /**
      * 闲物审核通过
      */
     public function passAudit($id)

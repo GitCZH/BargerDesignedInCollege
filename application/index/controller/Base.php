@@ -11,8 +11,12 @@ use think\Controller;
 class Base extends Controller
 {
     protected $toLoginUrl = [
-        'index/ucenter',
-        'index/trade'
+//        'index/ucenter',
+//        'index/trade',
+        'index/user/loginin',
+        'index/user/checklogin',
+        'index/user/register',
+        'index/user/checkregister'
     ];
     /**
      * index模块初始化
@@ -25,7 +29,8 @@ class Base extends Controller
         $action = strtolower($request->action());
         $module = strtolower($request->module());
 
-        if (!session('uid') && in_array($module . '/' . $controller, $this->toLoginUrl)) {
+
+        if (!session('uid') && !in_array($module . '/' . $controller . '/' . $action, $this->toLoginUrl)) {
 //            未登录时跳转到登录
             $this->redirect('index/user/loginIn');
         }

@@ -6,6 +6,8 @@
  * Time: 21:50
  */
 namespace app\common\dataoper;
+use app\common\Factory;
+
 class UserCredit
 {
 
@@ -37,5 +39,24 @@ class UserCredit
     {
         $userCreditObj = self::getUserModelObj();
         return $userCreditObj->where(['idnum' => $uid])->update(['credit' => $credit]);
+    }
+
+    /**
+     * 添加数据
+     * save()  成功返回1
+     */
+    public function saveOne(array $datas)
+    {
+        $userC = Factory::getModelObj('userCredit');
+        return $userC->allowField(true)->save($datas);
+    }
+
+    /**
+     * 根据uid 修改数据
+     */
+    public function updateByUid($uid, $datas)
+    {
+        $userC = Factory::getModelObj('userCredit');
+        return $userC->allowField(true)->save($datas, ['idnum' => $uid]);
     }
 }

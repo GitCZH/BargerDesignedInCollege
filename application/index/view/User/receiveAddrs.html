@@ -1,0 +1,178 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Exchange-个人信息</title>
+    <meta charset="UTF-8">
+    {include file='assets'}
+</head>
+
+<body data-type="generalComponents">
+{include file="header"}
+<div class="am-container">
+    {include file='menu'}
+
+    <div class="am-u-md-11" style="min-height: 400px;">
+        <form name="sForm" class="am-form" method="post" enctype="multipart/form-data" action="{:url('index/user/saveReceiveAddrs')}">
+            <fieldset>
+                <legend>添加收货地址</legend>
+                <div class="am-form-group">
+                    <div class="am-g">
+                        <div class="am-u-sm-4">
+                            <span>省份 | 直辖市：</span>
+                            <select data-am-selected="{searchBox: 1}" name="apid">
+                                <option value="0">请选择</option>
+                                {volist name='provinces' id='vo'}
+                                <option value="{$vo.provinceid}">{$vo.province}</option>
+                                {/volist}
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                        <div class="am-u-sm-4">
+                            <span>市 | 县：</span>
+                            <select data-am-selected="{searchBox: 1}" name="acid">
+                                <option value="0">请选择</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                        <div class="am-u-sm-4">
+                            <span>区 | 镇：</span>
+                            <select data-am-selected="{searchBox: 1}" name="aaid">
+                                <option value="0">请选择</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label >详细地址</label>
+                    <b class="am-text-danger">*</b>
+                    <textarea name="adetail" rows="5" ></textarea>
+                </div>
+                <p><button type="submit" class="am-btn am-btn-success am-btn-block">提交</button></p>
+            </fieldset>
+        </form>
+        {volist name='addrs' id='vo2' empty='添加一个收货地址吧~'}
+        <form name="sForm" class="am-form" method="post" enctype="multipart/form-data" action="{:url('index/user/saveReceiveAddrs')}">
+            <fieldset>
+                <legend>我的收货地址</legend>
+                <div class="am-form-group">
+                    <div class="am-g">
+                        <input type="hidden" name="addrId" value="{$vo2.id}">
+                        <div class="am-u-sm-4">
+                            <span>省份 | 直辖市：</span>
+                            <select data-am-selected="{searchBox: 1}" name="apid">
+                                <option value="0">请选择</option>
+                                {volist name='provinces' id='vo'}
+                                <option value="{$vo.provinceid}" {if $vo2.apid == $vo.provinceid} selected {/if}>{$vo.province}</option>
+                                {/volist}
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                        <div class="am-u-sm-4">
+                            <span>市 | 县：</span>
+                            <select data-am-selected="{searchBox: 1}" name="acid">
+                                <option value="0">请选择</option>
+                                <option value="{$vo2.acid}" selected>{$vo2.str.city.city}</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                        <div class="am-u-sm-4">
+                            <span>区 | 镇：</span>
+                            <select data-am-selected="{searchBox: 1}" name="aaid">
+                                <option value="0">请选择</option>
+                                <option value="{$vo2.aaid}" selected>{$vo2.str.area.area}</option>
+                            </select>
+                            <span class="am-form-caret"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label>详细地址</label>
+                    <b class="am-text-danger">*</b>
+                    <textarea name="adetail" rows="5" >{$vo2.adetail}</textarea>
+                </div>
+                <p><button type="submit" class="am-btn am-btn-success am-btn-block">提交</button></p>
+            </fieldset>
+        </form>
+        {/volist}
+
+    </div>
+</div>
+{include file='footer'}
+</body>
+<script>
+    $(function () {
+        $('[name=apid]').change(function () {
+//            获取此省份下的市区
+            var pid = $(this).val()
+            if (pid == 0) {
+//                清空市区和区县下拉框 TODO
+                $('[name=acid]').children('option:first').nextAll().remove()
+                $('[name=aaid]').children('option:first').nextAll().remove()
+                return
+            }
+            var url = '{:url("admin/location/getcities")}'
+            var data = {pid:pid}
+            $.ajax({
+                url:url,
+                type:'get',
+                dataType:'json',
+                data:data,
+                success: function (res) {
+                    console.log(res)
+                    if (res.errorCode != 0) {
+                        return
+                    }
+//                        先清空已有的信息
+                    $('[name=acid]').children('option:first').nextAll().remove()
+//                    填充市区信息
+                    $.each(res.result, function(index, item){
+                        $('[name=acid]').append('<option value="'+ item.cityid +'">' + item.city + '</option>')
+                    })
+                }
+            })
+        })
+
+        /**
+         * 获取区县接口
+         */
+        $('[name=acid]').change(function () {
+//            获取此市区下的区县
+            var cid = $(this).val()
+            if (cid == 0) {
+//                清空区县数据 TODO
+                $('[name=aaid]').children('option:first').nextAll().remove()
+                return
+            }
+            var url = '{:url("admin/location/getareas")}'
+            var data = {cid:cid}
+            $.ajax({
+                url:url,
+                type:'get',
+                dataType:'json',
+                data:data,
+                success: function (res) {
+                    if (res.errorCode != 0) {
+                        return
+                    }
+//                        先清空已有的信息
+                    $('[name=aaid]').children('option:first').nextAll().remove()
+//                    填充区县信息
+                    $.each(res.result, function(index, item){
+                        $('[name=aaid]').append('<option value="'+ item.areaid +'">' + item.area + '</option>')
+                    })
+                }
+            })
+        })
+
+//        表单提交前数据验证
+        $('[name=sForm]').submit(function () {
+            if (this.adetail.value == '') {
+                alert('请完善信息')
+                return false
+            }
+        })
+    })
+</script>
+</html>

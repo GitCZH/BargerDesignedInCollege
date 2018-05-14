@@ -155,6 +155,7 @@ class Functions
 
     /**
      *省市代码转文字
+     * @return array
      */
     public static function addrCodeToWord($pid, $cid = null, $aid = null)
     {

@@ -1,0 +1,20 @@
+<!--个人中心的左侧菜单栏-->
+<!-- 链接触发器， href 属性为目标元素 ID -->
+<div class="am-u-md-1">
+    <a href="#doc-oc-demo1" data-am-offcanvas>展开菜单</a>
+</div>
+<!-- 侧边栏内容 -->
+<div id="doc-oc-demo1" class="am-offcanvas">
+    <div class="am-offcanvas-bar">
+        <div class="am-offcanvas-content">
+            <ul class="am-nav">
+                <li class="am-active"><a href="#">个人中心</a></li>
+                <li><a href="{:url('index/trade/tradeList')}">交易中心</a></li>
+                <li><a href="#">我的闲物</a></li>
+                <li><a href="{:url('index/user/receiveAddrs')}">地址管理</a></li>
+                <li><a href="{:url('index/user/selfInfo')}">我的信息</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--侧边栏   end-->

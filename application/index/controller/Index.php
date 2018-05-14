@@ -20,7 +20,9 @@ class Index extends Base
         $userInfo = $uCredit->getUserDetailByUid($uid);
         $userInfo = empty($userInfo) ? [] : $userInfo->getData();
         if (!empty(session('uid') && empty($userInfo))) {
-//            return $this->success('完善个人信息', 'index/user/selfInfo');
+            return $this->success('完善个人信息', 'index/user/selfInfo');
+        } else {
+            $this->assign('userInfo', $userInfo);
         }
 
 //        查询最新上架的闲物
