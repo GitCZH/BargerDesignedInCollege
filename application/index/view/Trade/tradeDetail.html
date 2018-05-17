@@ -14,7 +14,7 @@
             <div class="am-panel am-panel-default">
                 <div class="am-panel-bd">
                     <h3 class="am-text-danger">
-                        Order Name <b class="am-text-success am-margin-left">[直接购买]</b>
+                        交易方式： <b class="am-text-success am-margin-left">[{$selves[0]['tradway'] == 0 ? '直接购买' : '物物交换'}]</b>
                     </h3>
                 </div>
             </div>
@@ -28,132 +28,118 @@
                     <hr class="am-divider">
                     <div>
                         <h4 class="am-text-warning">我的物品</h4>
+                        {volist name='selves' id='vo'}
                         <div>
                             <div class="am-container">
-                                <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                                <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+                                <div class="am-u-sm-3"><b>{$vo.create_time|date='Y-m-d H:i:s',###}</b></div>
+                                <div class="am-u-sm-6">订单号：<b>{$vo.tradenum}</b></div>
+                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">{$vo.sUName}</a></div>
                             </div>
                             <hr class="am-divider">
                             <div class="am-container am-scrollable-vertical">
                                 <div class="am-u-sm-4">
-                                    <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
+                                    <img src="__ROOT__/static/goods/upload/{$vo.img}" width="200" height="120" class="am-img-thumbnail am-radius">
                                     <br>
                                     <a href="#">
-                                        Unsitheic Kiius Unsitheic Kiius
-                                        Unsitheic Kiius Unsitheic Kiius Unsitheic
-                                        Kiius Unsitheic Kiius
+                                        {$vo.gname}
                                     </a>
                                 </div>
                                 <div class="am-u-sm-2">
+                                    {if $vo.tradestatus != 4}
                                     <span class="am-badge am-badge-success am-radius">发起请求</span>
                                     <span class="am-icon-chevron-circle-right am-text-primary"></span>
                                     <br>
-                                    <span class="am-badge am-badge-success am-radius">接受请求</span>
-                                    <span class="am-icon-chevron-circle-right am-text-primary"></span>
+                                    <span class="am-badge am-radius {if $vo.tradestatus >= 1}am-badge-success{/if}">接受请求</span>
+                                    <span class="am-icon-chevron-circle-right {if $vo.tradestatus >= 1}am-text-primary{/if}"></span>
                                     <br>
-                                    <span class="am-badge am-badge-default am-radius">交易中</span>
-                                    <span class="am-icon-chevron-circle-right am-text-default"></span>
+                                    <span class="am-badge am-radius {if $vo.tradestatus >= 1}am-badge-success{/if}">交易中</span>
+                                    <span class="am-icon-chevron-circle-right {if $vo.tradestatus >= 1}am-text-primary{/if}"></span>
                                     <br>
-                                    <span class="am-badge am-badge-default am-radius">交易完成</span>
+                                    <span class="am-badge am-radius {if $vo.tradestatus >= 2}am-badge-success{/if}">交易完成</span>
+                                    {else /}
+                                    <span class="am-badge am-badge-default am-radius">交易被拒绝</span>
+                                    {/if}
                                 </div>
                                 <div class="am-u-sm-1">
-                                    <a href="#">Self</a>
+                                    <a href="#">{$vo.bUName}</a>
                                 </div>
                                 <div class="am-u-sm-3">
+                                    {if $vo.tradestatus == 1}
                                     <div>
-                                        <button class="am-btn am-btn-secondary" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0}">添加状态信息</button>
+                                        <button onclick="activeModal(this.title);" title="{$vo.id}" class="am-btn am-btn-secondary btn-process" data-am-modal="{target: '#doc-modal-1', closeViaDimmer: 0}">添加状态信息</button>
                                     </div>
+                                    {/if}
                                     <ul class="am-list am-text-sm">
+                                        {volist name='vo.process' id='vop' empty='暂无最新消息'}
                                         <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
+                                            <span>{$vop.create_time|date='Y-m-d H:i:s',###}</span>
+                                            <span>{$vop.process}</span>
                                         </li>
-                                        <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
-                                        </li>
-                                        <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
-                                        </li>
-                                        <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
-                                        </li>
+                                        {/volist}
                                     </ul>
                                 </div>
                                 <div class="am-u-sm-2">
-                                    <a href="#" class="am-btn am-btn-primary">更新交易状态</a>
+                                    <a href="#" class="am-btn am-btn-primary" disabled>确认收货</a>
                                 </div>
                             </div>
                             <hr class="am-divider">
                         </div>
+                        {/volist}
                     </div>
                     <div>
                         <h4 class="am-text-warning">对方的物品</h4>
+                        {volist name='sales' id='svo'}
                         <div>
                             <div class="am-container">
-                                <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
-                                <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
-                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">Thris</a></div>
+                                <div class="am-u-sm-3"><b>{$svo.create_time|date='Y-m-d H:i:s',###}</b></div>
+                                <div class="am-u-sm-6">订单号：<b>{$svo.tradenum}</b></div>
+                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">{$svo.sUName}</a></div>
                             </div>
                             <hr class="am-divider">
                             <div class="am-container am-scrollable-vertical">
                                 <div class="am-u-sm-4">
-                                    <img src="__ROOT__/static/demo/2.jpg" width="200" height="120" class="am-img-thumbnail am-radius">
+                                    <img src="__ROOT__/static/goods/upload/{$svo.img}" width="200" height="120" class="am-img-thumbnail am-radius">
                                     <br>
                                     <a href="#">
-                                        Unsitheic Kiius Unsitheic Kiius
-                                        Unsitheic Kiius Unsitheic Kiius Unsitheic
-                                        Kiius Unsitheic Kiius
+                                        {$svo.gname}
                                     </a>
                                 </div>
-                                <!-- 状态更新-->
                                 <div class="am-u-sm-2">
+                                    {if $svo.tradestatus != 4}
                                     <span class="am-badge am-badge-success am-radius">发起请求</span>
                                     <span class="am-icon-chevron-circle-right am-text-primary"></span>
                                     <br>
-                                    <span class="am-badge am-badge-success am-radius">接受请求</span>
-                                    <span class="am-icon-chevron-circle-right am-text-primary"></span>
+                                    <span class="am-badge am-radius {if $svo.tradestatus >= 1}am-badge-success{/if}">接受请求</span>
+                                    <span class="am-icon-chevron-circle-right {if $svo.tradestatus >= 1}am-text-primary{/if}"></span>
                                     <br>
-                                    <span class="am-badge am-badge-default am-radius">交易中</span>
-                                    <span class="am-icon-chevron-circle-right am-text-default"></span>
+                                    <span class="am-badge am-radius {if $svo.tradestatus >= 1}am-badge-success{/if}">交易中</span>
+                                    <span class="am-icon-chevron-circle-right {if $svo.tradestatus >= 1}am-text-primary{/if}"></span>
                                     <br>
-                                    <span class="am-badge am-badge-default am-radius">交易完成</span>
+                                    <span class="am-badge am-radius {if $svo.tradestatus >= 2}am-badge-success{/if}">交易完成</span>
+                                    {else /}
+                                    <span class="am-badge am-badge-default am-radius">交易被拒绝</span>
+                                    {/if}
                                 </div>
-                                <!--状态更新  end-->
                                 <div class="am-u-sm-1">
-                                    <a href="#">Sale</a>
+                                    <a href="#">{$svo.bUName}</a>
                                 </div>
-                                <!--流程信息-->
                                 <div class="am-u-sm-3">
                                     <ul class="am-list am-text-sm">
+                                        {volist name='svo.process' id='svop' empty='暂无最新消息'}
                                         <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
+                                            <span>{$svop.create_time|date='Y-m-d H:i:s',###}</span>
+                                            <span>{$svop.process}</span>
                                         </li>
-                                        <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
-                                        </li>
-                                        <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
-                                        </li>
-                                        <li>
-                                            <span>2018-01-01 11:11:11</span>
-                                            <span>已交付快递公司</span>
-                                        </li>
+                                        {/volist}
                                     </ul>
                                 </div>
-                                <!--流程信息   end-->
                                 <div class="am-u-sm-2">
-                                    <span>更新交易状态</span>
+                                    <span onclick="ackReceive(this.title)" title="{$svo.id}" class="am-btn am-btn-primary" {if $svo.tradestatus != 1} disabled {/if}>确认收货</span>
                                 </div>
                             </div>
                             <hr class="am-divider">
                         </div>
+                        {/volist}
                     </div>
                 </div>
             </div>
@@ -170,11 +156,58 @@
         </div>
         <div class="am-modal-bd">
             <hr class="am-divider">
-            <textarea name="process-info" id="" cols="30" rows="10" placeholder="输入流程信息..." class="am-form-field"></textarea>
+            <textarea name="process-info" title="" id="" cols="30" rows="10" placeholder="输入流程信息..." class="am-form-field"></textarea>
             <br>
-            <button class="am-btn am-btn-success">提交</button>
+            <button class="am-btn am-btn-success" onclick="addInfo();">提交</button>
         </div>
     </div>
 </div>
 </body>
+<script>
+    function ackReceive(tid){
+        if (!confirm('确认已收到物品？')) {
+            return false
+        }
+
+        var url = '{:url("index/trade/ackReceiveGoods")}'
+        var data = {tid:tid}
+        $.ajax({
+            url:url,
+            data:data,
+            dataType:'json',
+            type:'get',
+            success: function (res) {
+                alert(res.errorMsg)
+                if (res.errorCode == 0) {
+                    location.reload()
+                }
+            }
+        })
+    }
+
+    function addInfo(){
+        var tArea = $('[name=process-info]')
+        var tId = tArea.attr('title')
+        var tInfo = tArea.val()
+
+        var url = '{:url("index/trade/addTradeInfo")}'
+        var data = {tid:tId, info:tInfo}
+        $.ajax({
+            url:url,
+            data:data,
+            dataType:'json',
+            type:'post',
+            success: function (res) {
+                alert(res.errorMsg)
+                if (res.errorCode == 0){
+                    location.reload()
+                }
+            }
+        })
+    }
+
+    function activeModal(tid) {
+        $('[name=process-info]').attr('title', tid)
+    }
+</script>
 </html>

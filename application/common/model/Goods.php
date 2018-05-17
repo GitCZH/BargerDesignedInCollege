@@ -13,4 +13,11 @@ class Goods extends Model
     protected $table = 'ex_goods';
     protected $autoWriteTimestamp = true;
 
+    /**
+     * 更新信息  by id
+     */
+    public function updateGoods(array $data, $id)
+    {
+        return $this->allowField(true)->save($data, ['id' => $id]);
+    }
 }

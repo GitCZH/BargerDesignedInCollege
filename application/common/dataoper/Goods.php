@@ -42,7 +42,8 @@ class Goods
     public function updateGoods(array $datas, $id)
     {
         $model = Factory::getModelObj('goods');
-        return $model->allowField(true)->save($datas, ['id' => $id]);
+//        ????  当使用save 更新时，在foreach中只会使第一个记录成功，后面的都是失败
+        return $model->where(['id' => $id])->update($datas);
     }
 
     /**
@@ -106,7 +107,12 @@ class Goods
     public function getLatestGoods()
     {
 //        查询视图中的闲物图片关联的数据
-        return Db::view('goods_gimg')->order('create_time desc')->limit(8)->select();
+        return Db::query('select *from ex_goods_gimg WHERE uid != ' . session('uid') . ' and istrade=\'0\' order by create_time desc limit 8');
+        return Db::view('goods_gimg')
+            ->where('uid', 'eq', session('uid'))
+            ->order('create_time desc')
+            ->limit(8)
+            ->select();
     }
 
     /**
@@ -114,7 +120,7 @@ class Goods
      */
     public function getSameCityGoods($pid, $cid)
     {
-        return Db::query('select *from ex_goods_gimg where gpid=' . $pid . ' and gcid=' . $cid);
+        return Db::query('select *from ex_goods_gimg where gpid=' . $pid . ' and gcid=' . $cid . ' and uid !=' . session('uid') . ' and istrade=0');
     }
 
     /**

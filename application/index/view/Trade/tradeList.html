@@ -36,9 +36,6 @@
                             <span class="am-input-group-label"><i class="am-icon-search am-icon-fw"></i></span>
                             <input type="text" name="keyWord" class="am-form-field" placeholder="输入关键词搜索...">
                         </div>
-                        <div class="am-u-sm-4">
-                            <button class="am-btn am-btn-success">搜索</button>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -53,10 +50,19 @@
                     <div class="am-tab-panel am-fade am-in am-active" id="tab1">
                         {volist name='tradeOrders' id='vo' empty='还没任何交易呢'}
                         <div>
+                            {if $vo.request == 0}
+                            <!--收到的交易请求-->
                             <div class="am-container">
-                                <div class="am-u-sm-3"><b>{$vo.create_time|date='Y-m-d H:i:s',###}</b></div>
-                                <div class="am-u-sm-6">订单号：<b>{$vo.tradenum}</b></div>
-                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">{$vo.sUName}</a></div>
+                                <div class="am-u-sm-4"> <b class="am-text-danger">我收到的请求:&nbsp;</b> <br><b>{$vo.create_time|date='Y-m-d H:i:s',###}</b></div>
+                                <div class="am-u-sm-5">订单号：<br><b>{$vo.tradenum}</b></div>
+                                <div class="am-u-sm-3">
+                                    <a href="#" class="am-text-warning">卖家：{$vo.sUName}</a>
+                                    <br>
+                                    {if $vo.tradestatus == 0}
+                                    <a href="{:url('index/trade/requestDone')}?tradnum={$vo.tradenum}&signal=1" class="am-btn am-btn-success">同意</a>
+                                    <a href="{:url('index/trade/requestDone')}?tradnum={$vo.tradenum}&signal=0" class="am-btn am-btn-danger">拒绝</a>
+                                    {/if}
+                                </div>
                             </div>
                             <hr class="am-divider">
                             <div class="am-container">
@@ -75,13 +81,46 @@
                                     <a href="#">{$vo.bUName}</a>
                                 </div>
                                 <div class="am-u-sm-2">
-                                    <a href="{:url('index/trade/tradeDetail')}?tid={$vo.id}" target="_blank">订单详情</a>
+                                    <a href="{:url('index/trade/tradeDetail')}?tid={$vo.tradenum}" target="_blank">订单详情</a>
                                 </div>
                                 <div class="am-u-sm-2">
                                     <a href="#">评价</a>
                                 </div>
                             </div>
                             <hr class="am-divider">
+                            {/if}
+                            {if $vo.request == 1}
+                            <!--发送的交易请求-->
+                            <div class="am-container">
+                                <div class="am-u-sm-3"> <b class="am-text-danger">我发送的请求&nbsp;</b><b>{$vo.create_time|date='Y-m-d H:i:s',###}</b></div>
+                                <div class="am-u-sm-6">订单号：<b>{$vo.tradenum}</b></div>
+                                <div class="am-u-sm-3"><a href="#" class="am-text-warning">卖家：{$vo.sUName}</a></div>
+                            </div>
+                            <hr class="am-divider">
+                            <div class="am-container">
+                                <div class="am-u-sm-2">
+                                    <img src="__ROOT__/static/goods/upload/{$vo.img}" width="200" height="120" class="am-img-thumbnail am-radius">
+                                    <span>Unsitheic Kiius {$vo.gname}</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">{$vo.tradway == 1 ? '物物交换' : '直接购买'}</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <span class="am-text-success">[{$vo.tradeStatus[0]}]</span><br>
+                                    <span class="am-text-warning am-text-sm">{$vo.tradeStatus[1]}</span>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">{$vo.bUName}</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="{:url('index/trade/tradeDetail')}?tid={$vo.tradenum}" target="_blank">订单详情</a>
+                                </div>
+                                <div class="am-u-sm-2">
+                                    <a href="#">评价</a>
+                                </div>
+                            </div>
+                            <hr class="am-divider">
+                            {/if}
                         </div>
                         {/volist}
                     </div>
@@ -90,7 +129,8 @@
                     </div>
                     <div class="am-tab-panel am-fade" id="tab3">
                         <h3 class="am-text-center am-text-primary">还没有交易~</h3>
-                        <!--<div>
+                        <!--
+                        <div>
                             <div class="am-container">
                                 <div class="am-u-sm-3"><b>2018-01-01 12:12:12</b></div>
                                 <div class="am-u-sm-6">订单号：<b>1111110000</b></div>
@@ -120,7 +160,8 @@
                                 </div>
                             </div>
                             <hr class="am-divider">
-                        </div>-->
+                        </div>
+                        -->
                     </div>
                     <div class="am-tab-panel am-fade" id="tab4">
                         <h3 class="am-text-center am-text-primary">还没有交易~</h3>
@@ -170,6 +211,11 @@
             var tradeStatus = $(this).attr('data-tid')
             var tab = $(this).attr('data-tab')
             var tabObj = $('#' + tab)
+//            当已有数据时，不再发送ajax请求
+            console.log(tabObj.children('div').length)
+            if (tabObj.children('div').length != 0) {
+                return true
+            }
 //            查询的时间
             var time = $('[name=time] option:selected').val()
 //            查询的关键词
@@ -186,25 +232,13 @@
                     console.log(res)
                     if (res.errorCode == 0) {
 //                        填充数据
+                        tabObj.empty()
                         $.each(res.result, function (index, value) {
-                            var appendStr = '<div>' +
-                                    '<div class="am-container"><div class="am-u-sm-3"><b>' + value.create_time + '</b></div><div class="am-u-sm-6">订单号：<b>' + value.tradenum + '</b></div><div class="am-u-sm-3"><a href="#" class="am-text-warning">' + value.sUName + '</a></div></div><hr class="am-divider"><div class="am-container"><div class="am-u-sm-2"><img src="__ROOT__/static/goods/upload/' + value.img +'" width="200" height="120" class="am-img-thumbnail am-radius"><span>Unsitheic Kiius ' + value.gname + '</span></div>' +
-                                    '<div class="am-u-sm-2">' +
-                                    '<span class="am-text-success">' + (value.tradway == 1 ? "物物交换" : "直接购买") +'</span>' +
-                                    '</div>' +
-                                    '<div class="am-u-sm-2">' +
-                                    '<span class="am-text-success">[' + value.tradestatus[0] + ']</span><br>' +
-                                    '<span class="am-text-warning am-text-sm">' + value.tradestatus[0] + '</span></div>' +
-                                    '<div class="am-u-sm-2">' +
-                                    '<a href="#">'+ value.bUName + '</a></div>' +
-                                    '<div class="am-u-sm-2">' +
-                                    '<a href="{:url(\'index/trade/tradeDetail\')}?tid=' + value.id +'" target="_blank">订单详情</a></div>' +
-                                    '<div class="am-u-sm-2">' +
-                                    '<a href="#">评价</a></div></div><hr class="am-divider"></div>'
-
-                            tabObj.empty()
-                            tabObj.append(appendStr)
+                            tabObj.append(value)
                         })
+                    } else if (res.errorCode == 2) {
+                        tabObj.empty()
+                        tabObj.append('<h3 class="am-text-warning am-text-center">暂无数据</h3>')
                     }
                 }
             })
